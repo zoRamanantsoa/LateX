@@ -31,14 +31,11 @@
 	// Edit the following property to change export directory
 	"latex-workshop.latex.outDir": "./PDF",
 	"latex-workshop.latex.autoClean.run": "onBuilt",
-	"latex-workshop.latex.build.forceRecipeUsage": false,
 	"latex-workshop.synctex.afterBuild.enabled": true,
 	"latex-workshop.view.pdf.viewer": "tab",
 	"latex-workshop.latex.clean.subfolder.enabled": true,
-	"latex-workshop.latex.magic.args": [
-		"-output-directory=PDF", // to change the output directory
-		"%DOC%"
-	],
+	// Old setting deprecated — use "#latex-workshop.latex.build.enableMagicComments" instead.
+	"latex-workshop.latex.build.enableMagicComments": true,
 	// Remove / comment the next 3 lines to remove dark view for pdf
 	"latex-workshop.view.pdf.color.dark.pageColorsBackground": "#171717", // For Dark Viewwer
 	"latex-workshop.latex.autoBuild.run": "never",
@@ -48,6 +45,7 @@
 	"latex-workshop.latex.pdfWatch.delay": 500,
 	//"latex-workshop.latex.watch.delay": 500, // Deprecated. See here: https://github.com/sanjib-sen/WebLaTex/issues/8
 	"latex-workshop.codespaces.portforwarding.openDelay": 20000,
+	"latex-workshop.formatting.latex": "latexindent",
 	"grammarly.files.include": [
 		"**/*.tex"
 	],

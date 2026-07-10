@@ -1,0 +1,361 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{cds_valuation_with_cir}{book}{}
+      \name{author}{1}{}{%
+        {{hash=fde86efecc481c495199276b74eea387}{%
+           family={Alma\bibnamedelimb P.\bibnamedelimi Bimbabou\bibnamedelima Maboulou1},
+           familyi={A\bibinitperiod\bibinitdelim P\bibinitperiod\bibinitdelim B\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Hopolang\bibnamedelimb P.\bibnamedelimi Mashele},
+           giveni={H\bibinitperiod\bibinitdelim P\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Scientific Research Publishing}%
+      }
+      \strng{namehash}{fde86efecc481c495199276b74eea387}
+      \strng{fullhash}{fde86efecc481c495199276b74eea387}
+      \strng{bibnamehash}{fde86efecc481c495199276b74eea387}
+      \strng{authorbibnamehash}{fde86efecc481c495199276b74eea387}
+      \strng{authornamehash}{fde86efecc481c495199276b74eea387}
+      \strng{authorfullhash}{fde86efecc481c495199276b74eea387}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Credit Derivative Valuation and Parameter Estimation for Multi-Factor Affine CIR-Type Hazard Rate Model}
+      \field{year}{2015}
+      \true{nocite}
+    \endentry
+    \entry{martingale_calcul_stochastique}{book}{}
+      \name{author}{1}{}{%
+        {{hash=ffd59db7de1e5abd48f79c80c942fddd}{%
+           family={Berglund},
+           familyi={B\bibinitperiod},
+           given={Nils},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Université d’Orléans}%
+      }
+      \strng{namehash}{ffd59db7de1e5abd48f79c80c942fddd}
+      \strng{fullhash}{ffd59db7de1e5abd48f79c80c942fddd}
+      \strng{bibnamehash}{ffd59db7de1e5abd48f79c80c942fddd}
+      \strng{authorbibnamehash}{ffd59db7de1e5abd48f79c80c942fddd}
+      \strng{authornamehash}{ffd59db7de1e5abd48f79c80c942fddd}
+      \strng{authorfullhash}{ffd59db7de1e5abd48f79c80c942fddd}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Martingales et calcul stochastique}
+      \field{year}{2012}
+    \endentry
+    \entry{credit_default_swap}{book}{}
+      \name{author}{1}{}{%
+        {{hash=a2b05127f663952d2e92bf61e7243ca1}{%
+           family={Christopher\bibnamedelimb L.\bibnamedelimi Culp},
+           familyi={C\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={Bettina\bibnamedelimb J.\bibnamedelimi Starkle},
+           giveni={B\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim S\bibinitperiod},
+           suffix={Andria\bibnamedelimb Van\bibnamedelimb Der\bibnamedelima Merwe},
+           suffixi={A\bibinitperiod\bibinitdelim V\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Palgrave Macmillan}%
+      }
+      \strng{namehash}{a2b05127f663952d2e92bf61e7243ca1}
+      \strng{fullhash}{a2b05127f663952d2e92bf61e7243ca1}
+      \strng{bibnamehash}{a2b05127f663952d2e92bf61e7243ca1}
+      \strng{authorbibnamehash}{a2b05127f663952d2e92bf61e7243ca1}
+      \strng{authornamehash}{a2b05127f663952d2e92bf61e7243ca1}
+      \strng{authorfullhash}{a2b05127f663952d2e92bf61e7243ca1}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Credit Default Swaps}
+      \field{year}{2028}
+    \endentry
+    \entry{credit_risk}{book}{}
+      \name{author}{1}{}{%
+        {{hash=2e0eb7570a9a5bb267aed3e159b17da0}{%
+           family={Darrell\bibnamedelima Duffie},
+           familyi={D\bibinitperiod\bibinitdelim D\bibinitperiod},
+           given={Kenneth\bibnamedelimb J.\bibnamedelimi Singleton},
+           giveni={K\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Princeton University Press}%
+      }
+      \strng{namehash}{2e0eb7570a9a5bb267aed3e159b17da0}
+      \strng{fullhash}{2e0eb7570a9a5bb267aed3e159b17da0}
+      \strng{bibnamehash}{2e0eb7570a9a5bb267aed3e159b17da0}
+      \strng{authorbibnamehash}{2e0eb7570a9a5bb267aed3e159b17da0}
+      \strng{authornamehash}{2e0eb7570a9a5bb267aed3e159b17da0}
+      \strng{authorfullhash}{2e0eb7570a9a5bb267aed3e159b17da0}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Credit Risk: Pricing, Measurement, and Management}
+      \field{year}{2003}
+    \endentry
+    \entry{ensta_cours}{book}{}
+      \name{author}{1}{}{%
+        {{hash=9e5a6ba3dd8cd7f002785c6175c8c21c}{%
+           family={Delmas},
+           familyi={D\bibinitperiod},
+           given={Jean-François},
+           giveni={J\bibinithyphendelim F\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Les Presses de l’ENSTA}%
+      }
+      \strng{namehash}{9e5a6ba3dd8cd7f002785c6175c8c21c}
+      \strng{fullhash}{9e5a6ba3dd8cd7f002785c6175c8c21c}
+      \strng{bibnamehash}{9e5a6ba3dd8cd7f002785c6175c8c21c}
+      \strng{authorbibnamehash}{9e5a6ba3dd8cd7f002785c6175c8c21c}
+      \strng{authornamehash}{9e5a6ba3dd8cd7f002785c6175c8c21c}
+      \strng{authorfullhash}{9e5a6ba3dd8cd7f002785c6175c8c21c}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Introduction au calcul des probabilités et à la statistique}
+      \field{year}{2010}
+    \endentry
+    \entry{statistique_inferentielle}{book}{}
+      \name{author}{1}{}{%
+        {{hash=7dc53e3276357e5c41abb48ba91a0360}{%
+           family={DUSART},
+           familyi={D\bibinitperiod},
+           given={Pierre},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Université de Limoges}%
+      }
+      \strng{namehash}{7dc53e3276357e5c41abb48ba91a0360}
+      \strng{fullhash}{7dc53e3276357e5c41abb48ba91a0360}
+      \strng{bibnamehash}{7dc53e3276357e5c41abb48ba91a0360}
+      \strng{authorbibnamehash}{7dc53e3276357e5c41abb48ba91a0360}
+      \strng{authornamehash}{7dc53e3276357e5c41abb48ba91a0360}
+      \strng{authorfullhash}{7dc53e3276357e5c41abb48ba91a0360}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Cours de Statistiques inférentielles}
+      \field{year}{2018}
+    \endentry
+    \entry{calcul_stochastique_diffusion}{book}{}
+      \name{author}{1}{}{%
+        {{hash=26a43c1fb1fe7e6e009e348faee0dd42}{%
+           family={Francis\bibnamedelima Comets},
+           familyi={F\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={Thierry\bibnamedelima Meyre},
+           giveni={T\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Dunod}%
+      }
+      \strng{namehash}{26a43c1fb1fe7e6e009e348faee0dd42}
+      \strng{fullhash}{26a43c1fb1fe7e6e009e348faee0dd42}
+      \strng{bibnamehash}{26a43c1fb1fe7e6e009e348faee0dd42}
+      \strng{authorbibnamehash}{26a43c1fb1fe7e6e009e348faee0dd42}
+      \strng{authornamehash}{26a43c1fb1fe7e6e009e348faee0dd42}
+      \strng{authorfullhash}{26a43c1fb1fe7e6e009e348faee0dd42}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Calcul stochastique et modèles de diffusions}
+      \field{year}{2015}
+    \endentry
+    \entry{martingales_finance}{book}{}
+      \name{author}{1}{}{%
+        {{hash=ec45d084ab2aeab14f9c73f6c42b7baa}{%
+           family={Giraud},
+           familyi={G\bibinitperiod},
+           given={Christophe},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Universite Paris Saclay}%
+      }
+      \strng{namehash}{ec45d084ab2aeab14f9c73f6c42b7baa}
+      \strng{fullhash}{ec45d084ab2aeab14f9c73f6c42b7baa}
+      \strng{bibnamehash}{ec45d084ab2aeab14f9c73f6c42b7baa}
+      \strng{authorbibnamehash}{ec45d084ab2aeab14f9c73f6c42b7baa}
+      \strng{authornamehash}{ec45d084ab2aeab14f9c73f6c42b7baa}
+      \strng{authorfullhash}{ec45d084ab2aeab14f9c73f6c42b7baa}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{MARTINGALES POUR LA FINANCE}
+    \endentry
+    \entry{art_of_credit_derivatives}{book}{}
+      \name{author}{1}{}{%
+        {{hash=b8384bc820574854a4dcc56d6672b409}{%
+           family={Joao\bibnamedelima Gracia},
+           familyi={J\bibinitperiod\bibinitdelim G\bibinitperiod},
+           given={Serge\bibnamedelima Goossens},
+           giveni={S\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {WILEY}%
+      }
+      \strng{namehash}{b8384bc820574854a4dcc56d6672b409}
+      \strng{fullhash}{b8384bc820574854a4dcc56d6672b409}
+      \strng{bibnamehash}{b8384bc820574854a4dcc56d6672b409}
+      \strng{authorbibnamehash}{b8384bc820574854a4dcc56d6672b409}
+      \strng{authornamehash}{b8384bc820574854a4dcc56d6672b409}
+      \strng{authorfullhash}{b8384bc820574854a4dcc56d6672b409}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The Art of Credit Derivatives: Demystifying the Black Swan}
+      \field{year}{2010}
+    \endentry
+    \entry{stat_ingenieur}{book}{}
+      \name{author}{1}{}{%
+        {{hash=51343c4bbf51d124515c5d082fd85751}{%
+           family={Jourdain},
+           familyi={J\bibinitperiod},
+           given={Benjamin},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{51343c4bbf51d124515c5d082fd85751}
+      \strng{fullhash}{51343c4bbf51d124515c5d082fd85751}
+      \strng{bibnamehash}{51343c4bbf51d124515c5d082fd85751}
+      \strng{authorbibnamehash}{51343c4bbf51d124515c5d082fd85751}
+      \strng{authornamehash}{51343c4bbf51d124515c5d082fd85751}
+      \strng{authorfullhash}{51343c4bbf51d124515c5d082fd85751}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Probabilit´es et statistique pour l’ing´enieur}
+      \field{year}{2018}
+    \endentry
+    \entry{cir_modeling}{book}{}
+      \name{author}{1}{}{%
+        {{hash=667bab17fbeb41ae693f14b1fc1f5474}{%
+           family={Miao},
+           familyi={M\bibinitperiod},
+           given={Zan},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {linaeus university}%
+      }
+      \strng{namehash}{667bab17fbeb41ae693f14b1fc1f5474}
+      \strng{fullhash}{667bab17fbeb41ae693f14b1fc1f5474}
+      \strng{bibnamehash}{667bab17fbeb41ae693f14b1fc1f5474}
+      \strng{authorbibnamehash}{667bab17fbeb41ae693f14b1fc1f5474}
+      \strng{authornamehash}{667bab17fbeb41ae693f14b1fc1f5474}
+      \strng{authorfullhash}{667bab17fbeb41ae693f14b1fc1f5474}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{CIR Modeling of Interest Rates}
+      \field{year}{2018}
+    \endentry
+    \entry{credit_derivatives_handbook}{book}{}
+      \name{author}{1}{}{%
+        {{hash=0f66243b51780c20fde3b5c1dede7bc2}{%
+           family={Morgan},
+           familyi={M\bibinitperiod},
+           given={JP},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {JP Morgan}%
+      }
+      \strng{namehash}{0f66243b51780c20fde3b5c1dede7bc2}
+      \strng{fullhash}{0f66243b51780c20fde3b5c1dede7bc2}
+      \strng{bibnamehash}{0f66243b51780c20fde3b5c1dede7bc2}
+      \strng{authorbibnamehash}{0f66243b51780c20fde3b5c1dede7bc2}
+      \strng{authornamehash}{0f66243b51780c20fde3b5c1dede7bc2}
+      \strng{authorfullhash}{0f66243b51780c20fde3b5c1dede7bc2}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Credit Derivatives Handbook}
+      \field{year}{2006}
+    \endentry
+    \entry{processus_stochastique}{book}{}
+      \name{author}{1}{}{%
+        {{hash=6da646bab1931f50ca4ca3b6d5c6d9de}{%
+           family={Notes\bibnamedelimb de\bibnamedelima cours},
+           familyi={N\bibinitperiod\bibinitdelim d\bibinitperiod\bibinitdelim c\bibinitperiod},
+           given={Introduction},
+           giveni={I\bibinitperiod},
+           prefix={aux\bibnamedelimb processus\bibnamedelima stochastiques},
+           prefixi={a\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim s\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {École Nationale de la Statistique et de l'Administration Économique (ENSAE)}%
+      }
+      \strng{namehash}{6da646bab1931f50ca4ca3b6d5c6d9de}
+      \strng{fullhash}{6da646bab1931f50ca4ca3b6d5c6d9de}
+      \strng{bibnamehash}{6da646bab1931f50ca4ca3b6d5c6d9de}
+      \strng{authorbibnamehash}{6da646bab1931f50ca4ca3b6d5c6d9de}
+      \strng{authornamehash}{6da646bab1931f50ca4ca3b6d5c6d9de}
+      \strng{authorfullhash}{6da646bab1931f50ca4ca3b6d5c6d9de}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Nicolas Chopin}
+    \endentry
+    \entry{cours_integrations}{book}{}
+      \name{author}{1}{}{%
+        {{hash=a8e3b6cdd4b18558485fe97432dc4105}{%
+           family={Ralambo},
+           familyi={R\bibinitperiod},
+           given={Alain},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Université d'Antananarivo}%
+      }
+      \strng{namehash}{a8e3b6cdd4b18558485fe97432dc4105}
+      \strng{fullhash}{a8e3b6cdd4b18558485fe97432dc4105}
+      \strng{bibnamehash}{a8e3b6cdd4b18558485fe97432dc4105}
+      \strng{authorbibnamehash}{a8e3b6cdd4b18558485fe97432dc4105}
+      \strng{authornamehash}{a8e3b6cdd4b18558485fe97432dc4105}
+      \strng{authorfullhash}{a8e3b6cdd4b18558485fe97432dc4105}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Notes sur l'intégration de Lebesgue}
+      \field{year}{2014}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
