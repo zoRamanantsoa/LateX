@@ -1,0 +1,34 @@
+\documentclass{report}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\usepackage{biblatex}
+\usepackage[french]{babel}
+\nocite{cds_valuation_with_cir}
+\addbibresource{references.bib}
+
+% \includeonly{parts/part_three}
+
+\newtheorem{definition}{Définition}
+\newtheorem{theorem}{Théorème}
+
+\include{acronyms}
+
+\begin{document}
+
+\include{title_page}
+
+\tableofcontents
+
+\include{parts/part_one}
+\include{parts/part_two}
+% \include{parts/part_three}
+
+% \printglossary[type=\acronymtype,title=Liste des abréviations]
+
+% \printbibliography
+
+\end{document}

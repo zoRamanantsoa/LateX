@@ -1,0 +1,809 @@
+
+\part{RAPPELS ET DEFINITIONS}
+% Part 1 — Préliminaires Théoriques
+
+Dans cette partie, nous allons présenter les concepts de Dérivés Crédits et particulièrement de \gls{cds}. Ensuite, nous allons introduire les notions mathématiques essentielles nécessaires à la modélisation du risque de crédit et des \gls{cds}. Puis nous finirons par nous intéresser aux méthodes pour l'estimation des paramètres du modèle.
+
+
+\chapter{Présentation des Credit Default Swap}
+
+\section{Credit Dérivé}
+
+\begin{definition}\label{def:credit_derive}
+Un \emph{dérivé de crédit} est un contrat financier entre deux parties, une acheteuse et une vendeuse de protection, pour se prémunir du risque de crédit, notamment le défaut de paiement, qu'une autre entité, dite entité de référence (entreprise ou état), a contracté avec l'acheteuse de protection.
+
+La valeur du paiement en cas de réalisation du défaut dépend de l'importance du risque que l'entité de référence puisse ou non honorer ses engagements.
+
+\noindent\textit{Source : \cite{credit_derivatives_handbook}, Introduction.}
+\end{definition}
+
+Il existe plusieurs type de dérivés de crédit, mais dans notre étude nous allons nous intéresser au \gls{cds} qui est le plus courant.
+
+
+\section{Credit Default Swap (CDS)}
+
+\begin{definition}\label{def:CDS}
+Le \glsentrylong{cds} (\gls{cds}), ou Swap de défaut de crédit, est un type de dérivé de crédit dans laquelle l'acheteur de protection contracte une assurance envers le vendeur de protection, d'un montant dit notionnel spécifié dans ledit contrat, face au risque d'un événement de crédit de la part de l'entité de référence.
+
+\noindent\textit{Source : \cite{art_of_credit_derivatives}, Credit Default Swaps.}
+\end{definition}
+
+L'acheteur d'une part verse une prime périodique au vendeur du contrat jusqu'à la date de maturité du contrat ou jusqu'à l'avènement d'un évènement de crédit. Cette prime est calculée en fonction de la durée du contrat et du notionnel, et elle est actualisée à chaque période en fonction de l'évolution de la probabilité de l'évènement de crédit.
+
+Le vendeur d'autre part s'engage à payer une indemnité à l'acheteur du contrat en cas d'évènement de de crédit. 
+
+Si un événement de crédit se produit, l'acheteur, d'un coté, verse le restant de la prime dû entre la date de l'événement et la date de paiement de la dernière prime, puis remet l'obligation de l'entité de référence qui a fait défaut. 
+De l'autre coté, le vendeur verse le montant du notionnel à l'acheteur.
+
+
+\begin{definition}\label{def:valeur_notionnelle}
+Le notionnel ou valeur notionnelle est la valeur du \gls{cds}, c'est-à-dire c'est le montant garanti par le contrat face au risque de crédit de l'entité. Il est également utilisée pour calculer les paiements des primes à verser par l'acheteur de la protection.
+\end{definition}
+
+
+\begin{definition}\label{def:maturite}
+En finance, la maturité désigne le temps qui sépare la date à laquelle une obligation ou un contrat est émise, et la date à laquelle la valeur nominale de cette obligation est remboursée.
+\end{definition}
+
+
+\begin{definition}\label{def:paiement_contingent}
+Le paiement contingent désigne le versement que le vendeur de protection doit effectuer auprès de l'acheteur si un événement de crédit, tel que prévu et décrit contractuellement, survient.
+\end{definition}
+
+Les cocontractants doivent définir de quelle manière le vendeur de protection peut effectuer le paiement contingent (il peut notemment être de nature physique ou directement par cash).
+
+
+\begin{definition}\label{def:prime}
+La prime du \gls{cds} est le coût périodique payé par l'acheteur de protection au vendeur pour se prémunir contre le risque de défaut de l'entité de référence.
+\end{definition}
+
+
+\section{Les types de CDS}
+
+On peut classifier les \gls{cds} selon la source du risque de crédit à partir duquel sa valeur est déterminée.
+
+On distingue 3 types de \gls{cds}:
+\begin{itemize}
+    \item les \gls{cds} sur entité unique (single-name \gls{cds}) ;
+    \item les \gls{cds} multi-entités (multi-name \gls{cds}) ;
+    \item les \gls{cds} adossés à des actifs (asset-backed \gls{cds})
+\end{itemize}
+
+\noindent\textit{Source : \cite{credit_default_swap}, Primary \gls{cds} Product Types.}
+
+\subsection{Les CDS sur entité unique (single-name CDS)}
+Pour les \gls{cds} sur entité unique, le risque de crédit repose sur les crédits contractés par une entité unique. Dans ce cas, le \gls{cds} peut inclure tout ou un ensemble spécifique des dettes de l'entité de référence.
+
+\noindent\textit{Source : \cite{credit_default_swap}, Single-Name \gls{cds}s.}
+
+\subsection{Les CDS multi-entités (multi-name CDS)}
+
+Dans le cas d'un \gls{cds} mutli-entités, le risque de crédit repose sur plus d'une entité de référence sous-jacente. Les \gls{cds} mutli-entités peuvent elles-mêmes être divisés en 
+
+\begin{itemize}
+    \item \gls{cds} sur portefeuille (portfolio \gls{cds}): la protection porte sur un portefeuille constitué de plusieurs entités, et elle fournit une indemnité pour chacune d'entre elle ou pour une partie d'entre elles. Dans ce cas ci, bien que la protection soit globale, le coût du contrat \gls{cds} est beaucoup plus cher en raison de l'étendue même de la protection.
+    \item \gls{cds} sur panier (basket \gls{cds}): la protection touche également plusieurs entités, mais on définit au préalable un scénario sur lequel on se réfère pour déclencher l'indémnisation. Le scénario peut concerner le nombre et l'ordre de défaut. Des exemples de scénario utilisés sont: First-to-default (paiement au premier defaut), nth-to-default (paiement au n-ième défaut), last-to-default (paiement si tous font défaut). Les \gls{cds} sur panier sont beaucoup moins cher par rapport au \gls{cds} sur portefeuille car le paiement de l'indemnité est beaucoup plus restreint en fonction du scénario prédéfini.
+    \item \gls{cds} sur indice (index \gls{cds}): c'est un \gls{cds} portant sur un portefeuille d’entités standardisé par le marché. Contrairement au \gls{cds} sur portefeuille, où l’investisseur choisit librement les entités de référence, le \gls{cds} sur indice impose un panier prédéfini que l’investisseur ne peut pas modifier (par exemple l’indice iTraxx Europe). L’indemnisation s’effectue à chaque défaut d’une entité du panier, proportionnellement à son poids dans l’indice. La standardisation du contrat confère aux \gls{cds} sur indice une forte liquidité et une transparence des prix.
+    \item \gls{cds} sur indice par tranches (Tranched Index \gls{cds}): c'est un \gls{cds} qui ne couvre qu’une partie des pertes d’un indice de crédit. L’indemnisation n’intervient que lorsque les pertes dépassent un certain seuil, et elle est plafonnée à un niveau maximum. L’investisseur ne se protège donc pas contre chaque défaut individuellement, mais contre un niveau global de pertes du portefeuille.
+\end{itemize}
+
+\noindent\textit{Source : \cite{credit_default_swap}, Multi-Name \gls{cds}s.}
+
+\subsection{Les CDS adossés à des actifs (Asset-Backed CDSs)}
+Un \gls{cds} adossé à des actifs est un \gls{cds} dont la référence est un produit financier structuré reposant sur un ensemble d’actifs. L’investisseur ne supporte pas le risque d’une entreprise individuelle ou d'un portefeuille d'entreprises, mais celui d’un ensemble d’actifs financiers ou de titres de référence spécifiques.
+
+\noindent\textit{Source : \cite{credit_default_swap}, Asset-Backed \gls{cds}s.}
+
+\medskip
+
+\noindent Dans notre étude, nous nous intéresserons au cas des \gls{cds} sur entité unique.
+
+
+\section{Le risque de crédit}
+
+\subsection{La qualité de crédit}
+
+\begin{definition}
+    Selon le site \href{https://groww.in/p/average-credit-quality}{groww.in}, la qualité de crédit désigne la capacité d'un emprunteur (une entreprise, un État, ou toute autre entité) à rembourser ses dettes. Elle reflète le niveau de risque qu'un prêteur ou investisseur prend en lui accordant un crédit.
+\end{definition}
+
+En pratique, la qualité de crédit est souvent mesurée par des notes attribuées par des agences spécialisées comme Moody's, Standard \& Poor's ou Fitch. Par exemple :
+
+\begin{itemize}
+    \item Une note AAA = excellente qualité de crédit (très faible risque)
+    \item Une note D = défaut de paiement (risque maximum)
+\end{itemize}
+
+Quand la qualité de crédit d'un émetteur se dégrade, les investisseurs exigent un taux d'intérêt plus élevé pour compenser le risque supplémentaire, ce qui fait baisser la valeur de marché de ses obligations.
+
+\subsection{Définition du risque de crédit}
+Le risque de crédit est le risque qu'un émetteur ou une contrepartie fasse défaut face à ses engagements, ou que la valeur de ses obligations diminue suite à une dégradation de sa qualité de crédit.
+
+\noindent\textit{Source : \cite{credit_risk},  A Brief Zoology of Risks.}
+
+Ainsi le risque de crédit désigne la probabilité qu'un événement de crédit se produise, ainsi que l'impact financier qui en découlerait.
+
+
+\section{Les évènements de crédit}
+
+\begin{definition}\label{def:evenement_credit}
+
+Selon le site \href{https://www.lafinancepourtous.com/outils/dictionnaire/evenement-de-credit/}{La finance pour tous}, un événement de crédit est un événement qui survient à l'entité de référence et qui l'empêche d'honorer ses engagements face à l'acheteur du contrat \gls{cds}, et qui par conséquent déclenche le paiement de l'indémnité (paiement contingent) prévue par le contrat du \gls{cds} par le vendeur de protection à son encontre.
+
+Selon le site de l'\href{https://www.isda.org/}{\gls{idsa}}, les événements de crédits comprennent notemment:
+\begin{itemize}
+    \item Faillite : incapacité à rembourser ses dettes et faire face à ses obligations financières
+    \item Défaut de paiement : incapacité d'honorer ses engagements financiers à une échéance prévue
+    \item Restructuration : modification non prévue initialement de l'accord entre l'entité de référence et les détenteurs d'une obligation en raison de la détérioration de la solvabilité ou de la situation financière de l'entité de référence, concernant :
+    \begin{itemize}
+        \item la réduction des intérêts ou du principal
+        \item le report du paiement des intérêts ou du principal
+        \item le changement de devise (autre qu'une Devise Autorisée)
+        \item la subordination contractuelle: un créancier accepte que sa créance ne soit remboursée qu'après le règlement total d'un autre créancier
+    \end{itemize}
+    \item Répudiation/moratoire : une autorité gouvernementale habilitée (ou l'entité de référence) répudie (nie ou refuse officiellement de reconnaitre) ou impose un moratoire (suspend ou gèle temporairement), et un défaut de paiement ou une restructuration survient.
+    \item Accélération d'obligation : une ou plusieurs obligations deviennent exigibles et payables à la suite de la survenance d'un défaut ou d'une autre condition ou événement décrit, autre qu'un défaut de paiement requis.
+\end{itemize}
+\end{definition}
+
+
+\section{Relation entre risque de credit, taux de defaut et spread de credit}
+
+\subsection{Spread de credit}
+Selon le site \href{https://www.lafinancepourtous.com/outils/dictionnaire/spread-ou-ecart-de-credit/}{la finance pour tous}, le spread de crédit désigne l'écart de taux d'intérêt entre une obligation risquée et une obligation de référence de même maturité, généralement un emprunt d'État considéré comme sans risque. Plus cet écart est large, plus le risque associé à l'obligation est élevé.
+
+\subsection{Taux de defaut}
+Selon le site \href{https://www.bourse-apprentissage.com/taux-de-defaut/}{Bourse apprentissage}, le taux de défaut mesure la proportion d'emprunteurs qui ne font pas face à leurs obligations de remboursement sur une période donnée. Il constitue un indicateur clé pour les créanciers et les investisseurs dans leur évaluation du risque associé à un portefeuille de prêts ou d'obligations. Il se calcule en rapportant le nombre de défaillances constatées au nombre total de prêts émis sur la même période, et s'exprime en pourcentage. 
+
+\medskip
+
+Ainsi, le risque de crédit, le taux de défaut et le spread de crédit entretiennent une relation de cause à effet. Le taux de défaut mesure la fréquence historique à laquelle les emprunteurs ont manqué à leurs obligations, alimentant ainsi l'estimation du risque de crédit. Ce risque est ensuite traduit sur les marchés financiers par le spread de crédit, qui représente la prime exigée par les investisseurs pour compenser la probabilité de défaut. Ainsi, lorsque le taux de défaut d'un émetteur augmente, le marché perçoit un risque de crédit plus élevé, ce qui se traduit mécaniquement par un élargissement du spread de crédit.
+
+
+
+\chapter{Probabilités et Modélisation}
+
+\section{Espaces Probabilisables et Filtrations}
+
+\subsection{Espace de probabilité}
+
+\begin{definition}\label{def:espace_metrique}
+Un espace métrique est un ensemble au sein duquel une notion de distance entre les éléments de l'ensemble est définie.
+\end{definition}
+
+\begin{definition}\label{def:tribu}
+Une tribu, ou $\sigma$-algèbre, ou plus rarement corps de Borel, sur un ensemble X est un ensemble non vide de parties de X, stable par passage au complémentaire et par union dénombrable.
+
+\noindent\textit{Source : \cite{ensta_cours},  Espaces probabilisés - Probabilités.}
+
+\end{definition}
+
+\begin{definition}\label{def:tribu_borelienne}
+La tribu borélienne, ou tribu de Borel, ou tribu des boréliens, sur un espace topologique $\mathcal{X}$ est la plus petite tribu sur $\mathcal{X}$ contenant tous les ensembles ouverts.
+
+\noindent\textit{Source : \cite{cours_integrations}, Tribu Borélienne (exemple fondamental de tribu).}
+\end{definition}
+
+\begin{definition}\label{def:espace_probabilisable}
+Un espace probabilisable, également appelé espace mesurable, est un couple $(\mathcal{X}, \mathcal{A})$ où $\mathcal{X}$ est un ensemble et $\mathcal{A}$ est une tribu sur $\mathcal{X}$.
+
+\noindent\textit{Source : \cite{ensta_cours},  Espaces probabilisés - Probabilités.}
+\end{definition}
+
+\begin{definition}\label{def:fonction_mesurable}
+Une fonction $f:E \rightarrow F$ est dite $(\mathcal{E}, \mathcal{F})$-mesurable si la tribu image réciproque par $f$ de la tribu $\mathcal{F}$ 
+est incluse dans $\mathcal{E}$, c'est-à-dire si:
+$\forall \mathcal{B} \in \mathcal{F}, f^{-1}(\mathcal{B}) \in \mathcal{E}$
+
+\noindent\textit{Source : \cite{cours_integrations},  Applications mesurables.}
+\end{definition}
+
+\begin{definition}\label{Probabilité}
+Une probabilité (ou une mesure de probabilité) est une fonction
+$\mathbb{P}$ de l’ensemble des évènements $\mathcal{F}$ vers [0, 1] telle que:
+    \begin{itemize}
+        \item $\mathbb{P}(\Omega) = 1$ et $\mathbb{P}(\emptyset) = 0$
+        \item $\mathbb{P}$ est $\sigma-additive$, c'est-à-dire que si $(A_i, i \in I)$ est une collection finie ou dénombrable d’évènements $(Ai \in \mathcal{F} \text{ pour tout } i \in I)$ disjoints deux à deux, alors $\mathbb{P}(\bigcup_{i \in I} A_i) = \sum_{i \in I}\mathbb{P}(A_i)$
+    \end{itemize}
+
+\noindent\textit{Source : \cite{ensta_cours},  Espaces probabilisés - Probabilités. Définition I.1}
+\end{definition}
+
+\begin{definition}\label{def:espace_probabilise}
+Un espace probabilisé, ou espace de probabilité, est un triplet $(\Omega, \mathcal{A}, \mathcal{P})$
+où $(\Omega, \mathcal{A})$ est un espace probabilisable et $\mathcal{P}$ est une probabilité sur cet espace.
+
+\noindent\textit{Source : \cite{ensta_cours},  Espaces probabilisés - Probabilités. Définition I.1}
+\end{definition}
+
+
+
+\subsection{Variable aléatoire}
+
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace probabilisé. 
+
+\begin{definition}\label{def:variable_aleatoire}
+On appelle variable aléatoire réelle de $\Omega$ vers $E$, toute application $X$ mesurable de $(\Omega, \mathcal{F})$ dans $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$.
+
+\noindent\textit{Source : \cite{ensta_cours},  Variables aléatoires. Définition II.1}
+\end{definition}
+
+\begin{definition}\label{def:esperance}
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace probabilisé. Soit $X$ une variable aléatoire réelle positive \gls{ps}, c'est-à-dire $\mathbb{P}(X \ge 0) = 1.$
+
+On définit son espérance $\mathbb{E}[X]$ comme la limite croissante, éventuellement infinie, suivante:
+$$\mathbb{E}[X] = lim_{n\rightarrow\infty}\sum^{\infty}_{k = 0}\frac{k}{2^n}\mathbb{P}(\frac{k}{2^n} \le X \le \frac{k + 1}{2^n})$$
+
+\noindent\textit{Source : \cite{ensta_cours},  Espérance d’une variable aléatoire quelconque}
+\end{definition}
+
+\begin{definition}\label{def:va_integrable}
+Soit $X$ une variable aléatoire réelle.
+
+On dit qu'elle est intégrable si $\mathbb{E}[|X|] < \infty$. Dans ce cas-là, on définit son espérance par:
+$$\mathbb{E}[X] = \mathbb{E}[X\mathbb{1}_{X \ge 0}] - \mathbb{E}[|X|\mathbb{1}_{X < 0}]$$
+où $\mathbb{1}$ désigne la fonction indicatrice.
+
+\noindent\textit{Source : \cite{ensta_cours},  Espérance d’une variable aléatoire quelconque}
+\end{definition}
+
+
+\subsection{Processus stochastique}
+
+\begin{definition}\label{def:processus_stochastique}
+Soit $(E, \mathcal{E})$ un espace mesurable.
+
+Un processus stochastique à valeurs dans $(E, \mathcal{E})$ est une suite $\{X_n\}_{n \in N}$ de variables aléatoires à valeurs dans $(E, \mathcal{E})$, définies sur un même espace probabilisé $(\Omega, \mathcal{F}, \mathbb{P})$ (autrement dit, chaque $X_n$ est une application $\mathcal{F}$-$\mathcal{E}$ mesurable de $Ω \text{ dans } E$). 
+
+\noindent\textit{Source : \cite{martingale_calcul_stochastique},  Processus stochastique}
+\end{definition}
+
+Dans le cas où $N = \mathbb{R} \text{ ou } \mathbb{R}^+$, on dit que $X$ est une fonction aléatoire.
+Dans celui où $N = \mathbb{Z}^d \text{ ou } \mathbb{R}^d$, on dit que $X$ est un champ aléatoire.
+Dans le cas où $N = \{1, ..., n\}$ est un ensemble d'indice fini, on parle d'un vecteur aléatoire.
+\noindent\textit{Source : \cite{calcul_stochastique_diffusion},  Processus stochastique}
+
+\begin{definition}\label{def:processus_croissant}
+On appelle processus croissant un processus $(Y_t)_{t \in N}$ tel que: $\forall t, Yt \le Yt+1 \text{ \gls{ps}}$.
+
+\noindent\textit{Source : \cite{processus_stochastique},  Décomposition de Doob - processus croissant}
+\end{definition}
+
+\begin{definition}\label{def:processus_continu}
+Un processus $(X_t)_{t \ge 0}$ est dit continu (respectivement continu à gauche) lorsque pour tout $\omega \in \Omega$ les trajectoires $t \rightarrow X_t(\omega)$ sont continues (respectivement continues à gauche).
+\end{definition}
+
+
+\subsection{Filtration}
+
+\begin{definition}\label{def:sous_tribu}
+Soit $(\Omega, \mathcal{F})$ un espace mesurable. Une sous-tribu de $\mathcal{F}$ est une sous-famille $\mathcal{F_1} \subset \mathcal{F}$ qui est également une tribu.
+
+\noindent\textit{Source : \cite{martingale_calcul_stochastique},  Sous-tribus et filtrations}
+\end{definition}
+
+\begin{definition}\label{def:filtration}
+Soit $(\Omega, \mathcal{F}, \mathbb{P})$ un espace probabilisé. Une filtration de $(\Omega, \mathcal{F}, \mathbb{P})$ est une suite croissante de sous-tribus:
+$$\mathcal{F_0} \subset \mathcal{F_1} \subset ... \subset \mathcal{F_n} \subset ... \subset \mathcal{F}$$.
+
+On dit que $(\Omega, \mathcal{F}, \{\mathcal{F_n}\}, \mathbb{P})$ est un espace probabilisé filtré.
+
+\noindent\textit{Source : \cite{martingale_calcul_stochastique},  Filtration, processus adapté}
+\end{definition}
+
+\begin{definition}\label{def:filtration_adaptée}
+Soit $\{X_n\}_{n \in N}$ un processus stochastique sur $(\Omega, \mathcal{F}, \mathbb{P})$. On dit que le processus est
+adapté à la filtration $\{\mathcal{F}_n\}$ si $X_n$ est mesurable par rapport à $\mathcal{F}_n$ pour tout n.
+
+Un choix minimal de filtration adaptée est la filtration canonique (ou naturelle):
+$$\mathcal{F}_n = \sigma(X_0, X_1, ..., X_n)$$
+Dans ce cas, $\mathcal{F}_n$ représente l’information disponible au temps n, si l’on observe le processus stochastique.
+
+\noindent\textit{Source : \cite{martingale_calcul_stochastique},  Filtration, processus adapté}
+\end{definition}
+
+
+On considère un espace probabilisé $(\Omega, \mathcal{F}, \mathcal{P})$ muni d'une filtration $(\mathcal{F}_t)_{t \ge 0}$ satisfaisant la propriété d'augmentation usuelle :
+\begin{itemize}
+  \item $\mathcal{F}_s \subseteq \mathcal{F}_t$ pour $s \le t$ (croissance de l'information),
+  \item $\mathcal{F}_0$ contient les événements de probabilité nulle,
+  \item la filtration est continue à droite.
+\end{itemize}
+
+
+\subsection{Décomposition de Doob}
+
+\begin{definition}\label{def:processus_previsible}
+On appelle processus prévisible pour la filtration $(\mathcal{F}_t)_{t \in N}$ un processus $(Y_t)_{t \in N}$ tel que: $\forall t, Yt+1 \text{ est Ft mesurable}$.
+
+\noindent\textit{Source : \cite{processus_stochastique},  Décomposition de Doob - processus previsible}
+\end{definition}
+
+\begin{definition}\label{def:theoreme_decomposition_doob}
+Soit $(X_t)_{t \in N}$ une sous-martingale pour la filtration $(\mathcal{F}_t)_{t \in N}$.
+Alors on a la décomposition:
+$$X_t = M_t + Y_t$$
+où $(M_t)$ est une martingale, et $Y_t$ est un processus croissant prévisible.
+
+Si on rajoute la condition $Y_0 = 0$, cette décomposition est unique. Elle s’appelle “décomposition de Doob” de $(X_t)$ et le processus $(Y_t)$ s’appelle le “compensateur de $(X_t)$”.
+
+\noindent\textit{Source : \cite{processus_stochastique}, Théorème de décomposition de Doob}
+\end{definition}
+
+
+\subsection{Temps d'arrêt}
+
+\begin{definition}\label{def:temps_arret}
+Soit $\{X_n\}_{n \in N}$ un processus stochastique et soit $\mathcal{F}_n = \sigma(X_0, ..., X_n)$ la filtration canonique.
+
+Une variable aléatoire $N$ à valeurs dans $\overline{\mathbb{N}} = \mathbb{N} \cup \{\infty\}$ est un temps d'arrêt si $\{N = n\} \in \mathcal{F}_n \text{ pour tout } n \in \mathbb{N}$
+
+\noindent\textit{Source : \cite{martingale_calcul_stochastique},  Temps d’arrêt}
+\end{definition}
+
+
+
+\section{Mouvement Brownien}
+
+\subsection{Martingale}
+
+Soit $(\Omega, \mathcal{F}, \{\mathcal{F}_n\}_n, \mathbb{P})$ un espace probabilisé filtré.
+
+
+\begin{definition}\label{def:martingale}
+
+Une martingale par rapport à la filtration $\{\mathcal{F_n}\}_n$ est un processus stochastique $\{X_n\}_{n \in \mathbb{N}}$ tel que:
+    \begin {itemize}
+        \item $\mathbb{E}(|X_n|) < \infty \text{ pour tout n } \in \mathbb{N}$ (1)
+    	\item $(X_n)_{n \in \mathbb{N}}$ est adaptée à la filtration
+    		$(\mathcal{F}_n)_n$ (2)
+        \item $\mathbb{E}(X_{n+1}|\mathcal{F_n}) = X_n \text{ pour tout n } \in \mathbb{N}$ (3)
+    \end {itemize}
+
+\noindent\textit{Source : \cite{martingale_calcul_stochastique},  Martingales}
+\end{definition}
+
+\begin{definition}\label{def:sur_martingale}
+Une surmartingale est un processus stochastique $\{X_n\}_{n \in \mathbb{N}}$ qui vérifie les conditions (1) et (2) tel que:
+$$\mathbb{E}(X_{n+1}|\mathcal{F_n}) \le X_n \text{ pour tout n } \in \mathbb{N}$$
+
+\noindent\textit{Source : \cite{martingale_calcul_stochastique},  Martingales}
+\end{definition}
+
+\begin{definition}\label{def:sous_martingale}
+Une sous-martingale est un processus stochastique $\{X_n\}_{n \in \mathbb{N}}$ qui vérifie les conditions (1) et (2) tel que:
+$$\mathbb{E}(X_{n+1}|\mathcal{F}_n) \ge X_n \text{ pour tout n } \in \mathbb{N}$$
+
+\noindent\textit{Source : \cite{martingale_calcul_stochastique},  Martingales}
+\end{definition}
+
+
+\subsection{Probabilité risque-neutre}
+
+\begin{definition}\label{def:mesure_risque_neutre}
+On dit que $\mathcal{P}^*$ est une probabilité risque-neutre si
+\begin{itemize}
+    \item $\mathcal{P}^*$ est équivalente à la probabilité réelle $\mathcal{P}$, c'est-à-dire $\mathcal{P}^*(A) = 0$ ssi $\mathcal{P}(A) = 0$,
+    \item $(S_n/\mathcal{E}_n(U))_{n\leq N}$ est une martingale sous $\mathcal{P}^*$ où $S_n$ est une variable aléatoire $\mathcal{F}_n-mesurable$ et $\mathcal{E}_n(U)$ est un processus déterministe ou adapté
+\end{itemize}
+
+\noindent\textit{Source : \cite{martingales_finance},  Probabilité risque-neutre}
+\end{definition}
+
+
+\subsection{Définition du Mouvement Brownien}
+
+\begin{definition}\label{def:lois_gaussienes}
+Une variable aléatoire réelle gaussienne (ou normale) de moyenne $m$ et de variance $t$, noté $\mathcal{N}(m, t)$ est une variable aléatoire réelle dont la loi admet pour densité par rapport à la mesure Lebesgue:
+$$\frac{1}{\sqrt{2\pi t}}\exp(-\frac{(x -m)^2}{2t})$$
+
+\noindent\textit{Source : \cite{martingales_finance},  Loi Gaussienne}
+\end{definition}
+
+\begin{definition}\label{def:mouvement_brownien}
+Un mouvement brownien, ou processus de Wiener, $W = (W_t)_{t \ge 0}$ est un processus à valeurs réelles tel que:
+\begin {itemize}
+	\item $W$ est continue
+    \item $W_0 = 0$ et pour tout $t$ positif, la variable aléatoire $W_t$ suit une loi $\mathcal{N}(0, t)$
+    \item $\forall s, t > 0$, l'accroissement $W_{t+s} - W_t$ est indépendant de $\mathcal{F}_t$ et suit une loi $\mathcal{N}(0, s)$
+\end {itemize}
+
+\noindent\textit{Source : \cite{martingales_finance},  Définition du mouvement brownien}
+\end{definition}
+
+
+
+\section{Le Modèle de Cox--Ingersoll--Ross (CIR)}
+
+
+\subsection{Équations Différentielles Stochastiques}
+
+\begin{definition}\label{def:eds}
+Soient $\sigma: \mathbb{R} \rightarrow \mathbb{R}_+, \text{ } b:\mathbb{R} \rightarrow \mathbb{R}$ un mouvement brownien $B$ et une variable aléatoire $X_0$ définis sur le même espace $(\Omega, \mathcal{A}, \mathbb{P})$, avec $X_0$ et $B$ indépendants.
+
+L'équation:
+$$dX(t) = b(X(t))dt + \sigma(X(t))dB(t), \text{ }X(0) = X_0$$
+est appelée une \gls{eds}.
+Les coefficients $b$ et $\sigma$ sont appelés respectivement dérive et coefficient de diffusion.
+
+\noindent\textit{Source : \cite{calcul_stochastique_diffusion},  \gls{eds}}
+\end{definition}
+
+
+\subsection{Le modèle CIR}
+
+\begin{definition}\label{def:cir_modele}
+Le modèle \gls{cir} est défini par l'\gls{eds}:
+$$dX_t = a(b - X_t)dt + \sigma\sqrt{X_t}\,dW_t$$
+
+où $X(0) = X_0$, $\{W_t = W(t)\}$ est un mouvement brownien standard unidimensionnel.
+
+$a$ est appelé vitesse de retour à la moyenne, $b$ est la moyenne de long terme, et $\sigma$ est le taux de volatilité.
+
+\noindent\textit{Source : \cite{cir_modeling},  The \glsentrylong{cir} Model}
+
+Ce modèle est particulièrement utilisé en finance pour modéliser les évolutions des taux d'intérêts.
+\end{definition}
+
+
+\subsection{Propriétés du modèle CIR}
+
+Le modèle \gls{cir} possède les propriétés suivantes:
+
+\begin{enumerate}
+    \item Non-négativité: le modèle \gls{cir} ne peut pas devenir négatif. Par ailleurs, nous pouvons même aller plus loin en assurant la stricte positivité lorsqu'on arrive à satisfaire la condition suivante, dite condition de Feller: $2ab > \sigma^2$.
+    \item Retour vers la moyenne: la valeur de $X_t$ tend à se stabiliser autour de la moyenne à long terme $b$
+    \item Son espérance conditionnelle est : $$\mathbb{E}[X_t \mid \mathcal{F}_s] = X_s \exp(-a(t-s)) + b(1 - \exp(-(a(t-s))$$
+    \item Sa variance conditionnelle est: $$Var[X_t \mid \mathcal{F}_s] = X_s \frac{\sigma^2}{a}[\exp(-a(t-s)) - \exp(-2a(t-s))] + b \frac{\sigma^2}{2a}[1 - \exp(-a(t-s))]^2$$
+    \item Le processus \gls{cir} est un processus de Markov : son état futur ne dépend que de son état présent, et non de tout son passé
+    \item Le processus appartient à la classe des modèles affines, par conséquent la survie conditionnelle peut s'écrire sous la forme:
+    $$\mathbb{E}[\exp(-\int_t^T X_s ds) \mid \mathcal{F}_t] = \Phi(t, T) - \Psi(t, T)X(t)$$
+    où les fonctions déterministes $\Phi$ et $\Psi$ sont données explicitement par
+    \[
+    \Phi(t,T) = \frac{2ab}{\sigma^2}\ln\left(\frac{2h \, e^{(a+h)(T-t)/2}}{2h + (a+h)\left(e^{h(T-t)}-1\right)}\right),
+    \]
+    \[\Psi(t,T) = \frac{2\left(e^{h(T-t)}-1\right)}{2h + (a+h)\left(e^{h(T-t)}-1\right)},
+    \]
+    \[
+    h = \sqrt{a^2 + 2 \sigma^2}
+    \]
+\end{enumerate}
+
+
+\subsection{Généralisation au cas multifactoriel}
+
+Le modèle \gls{cir} peut s'étendre au cas multifactoriel avec la relation:
+
+$$\lambda_t = \sum_{i = 1}^n X_i(t)$$
+
+où les $X_i$ sont des processus \gls{cir} indépendants, avec
+
+$$dX_i(t) = a_i(b_i - X_i(t)) + \sigma_i \sqrt{X_i(t)}dW_i(t)$$
+
+Les propritétés du modèle sont les mêmes que pour le cas monofactoriel.
+
+En outre, on a les formules suivantes pour:
+
+\begin{itemize}
+    \item l'espérance conditionnelle: $$\mathbb{E}[\lambda_t \mid \mathcal{F}_s] = \sum_{i = 1}^n \mathbb{E}[X_i(t) \mid \mathcal{F}_s]$$
+    \item la variance conditionnelle: $$Var(\lambda_t \mid \mathcal{F}_s) = \sum_{i = 1}^n Var(X_i(t) \mid \mathcal{F}_s)$$
+    \item la survie conditionnelle: $$\mathbb{E} [\exp(-\int_t^T \lambda_s ds) \mid \mathcal{F}_t] = \exp\left( \sum_{i = 1}^n \left( \Phi_i(t, T) - \Psi_i(t, T)X_i(t) \right) \right)$$ où les fonctions déterministes $\Phi$ et $\Psi$ sont données explicitement par
+    \[
+    \Phi_i(t,T) = \frac{2a_ib_i}{\sigma_i^2}\ln\left(\frac{2h_i \, e^{(a_i+h_i)(T-t)/2}}{2h_i + (a_i+h_i)\left(e^{h_i(T-t)}-1\right)}\right),
+    \]
+    \[\Psi_i(t,T) = \frac{2\left(e^{h_i(T-t)}-1\right)}{2h_i + (a_i+h_i)\left(e^{h_i(T-t)}-1\right)},
+    \]
+    \[
+    h_i = \sqrt{a_i^2 + 2\sigma_i^2}
+    \]
+\end{itemize}
+
+
+\chapter{Méthode d'estimation}
+
+
+\section{Rappels sur les convergences}
+
+\begin{definition}\label{def:convergence_ps}
+On dit qu'une suite de variables aléatoires $(X_n, n\in \mathbb{N})$ définies sur le même espace probabilisé converge presque sûrement si:
+$$\mathbb{P}(lim_{n \rightarrow \infty} inf X_n = lim_{n \rightarrow \infty} sup X_n) = 1$$
+
+\noindent\textit{Source : \cite{ensta_cours}, Convergence presque sûre}
+\end{definition}
+
+\begin{definition}\label{def:convergence_proba}
+On dit qu'une suite de variables aléatoires $(X_n, n\in \mathbb{N})$ définies sur le même espace probabilisé converge en probabilité vers une variable aléatoire $X$ si:
+$$\forall \epsilon > 0, \text{ } lim_{n \rightarrow \infty} \mathbb{P}(|X_n -X| > \epsilon) = 0$$
+
+\noindent\textit{Source : \cite{ensta_cours}, Convergence en probabilité}
+\end{definition}
+
+\begin{definition}\label{def:convergence_loi}
+On dit qu'une suite de variables aléatoires $(X_n, n\in \mathbb{N})$ converge en loi vers une variable aléatoire $X$ si pour toute fonction $g$ à valeurs réelles, bornée et continue, on a:
+$$lim_{n \rightarrow \infty} \mathbb{E}[g(X_n)] = \mathbb{E}[g(X)]$$
+
+\noindent\textit{Source : \cite{ensta_cours}, Convergence en loi}
+\end{definition}
+
+\begin{definition}\label{def:tcl}
+Soit une suite $(X_n)$ de variables aléatoires définies sur le même espace de probabilité, suivant la même loi $D$ et dont l’espérance $\mu$ et l’écart-type $\sigma$ communes existent et soient finis $(\sigma \ne 0)$. On suppose que les $(X_n)$ sont indépendantes. Considérons la somme $S_n = X_1 + · · · + X_n$. Alors l’espérance de $S_n$ est $n\mu$ et son écart-type vaut $\sigma\sqrt{n}$ et $\frac{S_n - n\mu}{\sigma\sqrt{n}}$ converge en loi vers une variable aléatoire normale centrée réduite.
+
+\noindent\textit{Source : \cite{statistique_inferentielle},  Théorème central limite}
+\end{definition}
+
+
+\section{Statistique}
+
+\begin{definition}\label{def:echantillon}
+Soit $X$ une variable aléatoire sur un référentiel $\Omega$. 
+Un échantillon de $X$ de taille $n$ est un n-uplet $(X_1, . . . , X_n)$ de variables aléatoires indépendantes de même loi que $X$. La loi de $X$ sera appelée loi mère. Une réalisation de cet échantillon est un n-uplet de réels $(x_1, . . . , x_n)$ où $X_i(\omega) = x_i$.
+
+\noindent\textit{Source : \cite{statistique_inferentielle},  Echantillonnage}
+\end{definition}
+
+\begin{definition}\label{def:statistique}
+Soit $(X_1, . . . , X_n)$ un échantillon d'une variable aléatoire $X$.
+On appelle statistique sur un n-échantillon $(X_1, . . . , X_n)$ une fonction cet échantillon.
+\end{definition}
+
+\begin{definition}\label{def:moyenne_empirique}
+On appelle moyenne de l’échantillon ou moyenne empirique, la statistique notée $X$
+définie par:
+$$\overline{X} = \frac{1}{n}\sum_{i = 1}^n X_i$$
+
+\noindent\textit{Source : \cite{statistique_inferentielle},  Moyenne empirique}
+\end{definition}
+
+\begin{definition}\label{def:loi_faible_grands_nombres}
+Soit $(X_n, n \in \mathbb{N}^*)$ une suite de variables aléatoires indépendantes de même loi et telles que $\mathbb{E}[X_n^2] < \infty$. Alors la moyenne empirique $\overline{X}$ converge en probabilité vers $\mathbb{E}[X_1]$
+
+\noindent\textit{Source : \cite{ensta_cours}, Loi faible des grands nombres}
+\end{definition}
+
+\begin{definition}\label{def:loi_forte_grands_nombres}
+Soit $(X_n, n \in \mathbb{N}^*)$ une suite de variables aléatoires indépendantes de même loi et telles que $\mathbb{E}[|X_n|] < \infty$. Alors la moyenne empirique $\overline{X}$ converge presque sûrement vers $\mathbb{E}[X_1]$, de plus $lim_{n \rightarrow \infty} \mathbb{E}[|\overline{X}_n - \mathbb{E}[X_1]|] = 0$
+
+\noindent\textit{Source : \cite{ensta_cours},   Loi forte des grands nombres}
+\end{definition}
+
+\begin{definition}\label{def:variance_empirique}
+On appelle Variance empirique, la statistique notée $\tilde{S}^2(X)$ définie par:
+$$\tilde{S}^2(X) = \frac{1}{n}\sum_{i = 1}^n (X_i - \overline{X})^2$$
+
+\noindent\textit{Source : \cite{statistique_inferentielle},  Variance empirique}
+\end{definition}
+
+
+\section{Estimateur statistique}
+
+On suppose que l'on observe un échantillon $X = (X_1, ..., X_n)$ où les variables aléatoires $X_i$ sont indépendantes et identiquement distribuées et que leur loi commune est dans une famille de probabilités $\mathcal{P} = \{P_\theta, \theta \in \Theta\} \text{ où } \Theta \subset \mathbb{R}^d$.
+
+On s'intéresse à l'estimation de $g(\theta)$ où $g: \Theta \rightarrow \mathbb{R}^q$.
+
+\begin{definition}\label{def:estimateur}
+On appelle estimateur de $g(\theta)$ toute statistique $Z$ construite à partir de l'échantillon $X$, à valeurs dans l'image $g(\Theta)$ de $\Theta$ par $g$.
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Estimateur}
+\end{definition}
+
+
+\subsection{Méthode des moments}
+
+\begin{definition}\label{def:methode_moments}
+La méthode des moments consiste à trouver une fonction $m$, inversible et continue, et une fonction mesurable $\varphi$ telles que $\mathbb{E}_\theta[|\varphi(X_1)|] < \infty$ et $m(\theta) = \mathbb{E}_\theta[\varphi(X_1)]$ pour tout $\theta \in \Theta$.
+
+Un estimateur des moments de $\theta$ est alors:
+$$\hat{\theta}_n = m^{-1}(\frac{1}{n}\sum_{i = 1}^n \varphi(X_i))$$
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Méthode des moments}
+\end{definition}
+
+
+\subsection{Maximum de vraisemblance}
+
+\begin{definition}\label{def:vraisemblance}
+Pour $x = (x_1, ..., x_n)$ fixé, on appelle la vraisemblance de la réalisation $x$ la fonction:
+$$\theta \in \Theta \rightarrow p_n(x, \theta)$$
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Estimateur}
+\end{definition}
+
+\begin{definition}\label{def:maximum_vraisemblance}
+On suppose que pour toute réalisation $x = (x_1, ..., x_n)$ de l'échantillon $X = (X_1, ..., X_n)$, il existe une unique valeur $\theta_n(x) \in \Theta$ qui maximise la vraisemblance de la réalisation $x: p_n(x, \theta_n(x)) = max_{\theta \in \Theta}p_n(x, \theta).$
+
+Alors la statistique $\hat{\theta}_n = \theta_n(X)$ est appelée Estimateur du Maximum de Vraisemblance de $\theta$.
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Estimateur du Maximum de Vraisemblance}
+\end{definition}
+
+
+\section{Propriétés d'un estimateur}
+La qualité des estimateurs s'exprime par leur convergence, leur biais, leur efficacité et leur robustesse.
+
+
+\subsection{Convergence}
+
+\begin{definition}\label{def:estimateur_convergent}
+Une suite $(Z_n)_{n \ge 1} d'estimateurs de g(\theta)$ avec $Z_n$ construit à partir de $(X_1, ..., X_n)$ est dite:
+\begin{itemize}
+    \item convergent lorsque $\forall \theta \in \Theta$, $Z_n$ converge en probabilité vers $g(\theta)$ sous $\mathbb{P_\theta}$
+    \item fortement convergente si $\forall \theta \in \Theta, \mathbb{P}_\theta$converge \gls{ps} vers $g(\theta) \text{ lorsque } n \rightarrow +\infty$
+    \item asymptotiquement normale si $\forall \theta \in \Theta \subset \mathbb{R}^d$, il existe une matrice de covariance $\Sigma(\theta) \in \mathbb{R}^{q\text{ x }q}$ telle que sous $\mathbb{P}_\theta, \sqrt{n}(Z_n - g(\theta))$ converge en loi vers $Y \sim \mathcal{N}(0, \sigma(\theta)) \text{ lorsque } n \rightarrow +\infty$ 
+\end{itemize}
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Estimateur}
+\end{definition}
+
+\subsection{Estimateur préférable}
+
+\begin{definition}\label{def:risque_quadratique}
+Soient $X_1, ..., X_n$ à valeurs dans $\mathcal{X} = R^d$ des variables aléatoires indépendantes et de même loi. Soit $\delta$ un estimateur de carré intégrable de $g(\theta)$.
+Pour mesurer l'erreur entre l'estimateur et le paramètre, on définit la fonction de risque quadratique:
+$$R(\delta, \theta) = \mathbb{E}_\theta[(\delta -g(\theta))(\delta -g(\theta))^t]$$
+
+\noindent\textit{Source : \cite{ensta_cours},  Risque quadratique}
+\end{definition}
+
+\begin{definition}\label{def:estimateur_preferable}
+On dit que $\delta_1$ est un estimateur préférable à $\delta_2$ si:
+$$\forall \theta \in \Theta, R(\delta_1, \theta) \le R(\delta_2, \theta)$$.
+Si de plus $R(\delta_1, \theta) \ne R(\delta_2, \theta)$ pour au moins une valeur de $\theta \in \Theta$, on dit que l'estimateur $\delta_2$ est inadmissible.
+
+\noindent\textit{Source : \cite{ensta_cours},  Estimateur préférable}
+\end{definition}
+
+
+\subsection{Biais}
+
+\begin{definition}\label{def:biais}
+Un estimateur $\delta$ de $g(\theta)$ est intégrable si $\mathbb{E}_\theta[|\delta|] < +\infty \text{ pour tout } \theta \in \Theta$.
+Le biais d'un estimateur est défini par: $\mathbb{E}_\theta[\delta] - g(\theta)$.
+
+Un estimateur $\delta$ est dit sans biais de $g(\theta)$, s'il est intégrable et si le biais est nul pour tout $\theta \in \Theta$.
+
+\noindent\textit{Source : \cite{ensta_cours},  Estimateur sans biais}
+\end{definition}
+
+
+\subsection{Efficacité}
+
+\begin{definition}\label{def:information_fisher}
+On définit l'information de Fisher par:
+$$I(\theta) = \mathbb{E}_\theta[\frac{\partial log p}{\partial\theta}(X_1; \theta)(\frac{\partial log p}{\partial\theta}(X_1; \theta))^t]$$
+
+\noindent\textit{Source : \cite{ensta_cours},  Information de Fisher}
+\end{definition}
+
+\begin{definition}\label{def:borne_fdcr}
+On considère un modèle régulier. On suppose que le paramètre $\theta$ est réel et que la fonction $g$ est à valeurs réelles et de classe $C^1$. Soit $\delta$ un estimateur de carré intégrable, régulier et sans biais de $g(\theta)$. On suppose que $I(\theta) > 0$. Alors si la taille de l'échantillon est $n$, on a:
+$$\forall \theta \in \Theta, R(\delta, \theta) = Var_\theta(\delta) \ge \frac{1}{n}\frac{g^\prime(\theta)^2}{I(\theta)}$$.
+La borne $\frac{1}{n}\frac{g^\prime(\theta)^2}{I(\theta)}$ est appelée la borne \gls{fdcr} du modèle d'échantillonnage.
+
+\noindent\textit{Source : \cite{ensta_cours},  Borne \gls{fdcr}}
+\end{definition}
+
+\begin{definition}\label{def:estimateur_efficace}
+Un estimateur sans biais atteignant la borne \gls{fdcr} est dit efficace.
+
+\noindent\textit{Source : \cite{ensta_cours},  Estimateur efficace}
+\end{definition}
+
+
+\subsection{Estimateur optimal}
+
+\begin{definition}\label{def:stat_exhaustive}
+Une statistique $S$ est exhaustive si la loi conditionnelle de l'échantillon $(X_1, ..., X_n)$ sachant $S$ est indépendante du paramètre $\theta$.
+
+\noindent\textit{Source : \cite{ensta_cours},  Statistique exhaustive}
+\end{definition}
+
+\begin{definition}\label{statistique totale}
+Une statistique $S$ est totale si $\mathbb{E}_\theta[|h(S)|] < \infty \text{ et si } \mathbb{E}_\theta[h(S)] = 0, \forall \theta \in \Theta \text{ implique } h(S) = 0, \forall \theta \in \Theta$
+
+\noindent\textit{Source : \cite{ensta_cours},  Statistique totale}
+\end{definition}
+
+\begin{definition}\label{def:estimateur_optimal}
+Soit $\delta$ un estimateur de $g(\theta)$ de carré intégrable et sans biais. On dit que $\delta$ est un estimateur optimal dans la famille des estimateurs sans biais de $g(\theta)$ s'il est préférable à toute autre estimateur sans biais de $g(\theta)$.
+
+\noindent\textit{Source : \cite{ensta_cours},  Estimateur optimal}
+\end{definition}
+
+
+\subsection{Estimateur asymptotiquement normale}
+
+\begin{definition}\label{def:asymptotiquement_normale}
+Une suite d'estimateurs $(\delta_n, n \in \mathbb{N}^*)$ de $g(\theta)$, où $\delta_n$ est une fonction de l'échantillon n, est asymptotiquement normale si pour tout $P_{\theta_0} \in \mathcal{P}$, la suite $(\sqrt{n}(\delta_n - g(\theta_0)), n \in \mathbb{N}^*$ converge en loi vers une loi gaussienne $\mathcal{N}(0, \Sigma(\theta_0))$.
+
+La matrice $\Sigma(\theta_0)$ est appelée matrice de covariance asymptotique de la suite d'estimateurs.
+
+\noindent\textit{Source : \cite{ensta_cours},  Estimateur asymptotiquement normale}
+\end{definition}
+
+\begin{definition}\label{def:propriete_emv}
+Dans un modèle régulier, l'Estimateur du Maximum de Vraisemblance est fortement convergent et asymptotiquement normale.
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Estimateur du Maximum de Vraisemblance}
+\end{definition}
+
+\begin{definition}\label{def:propriete_estimateur_moments}
+Soit $\varphi$ une fonction telle que, $\forall \theta \in \Theta, \mathbb{E}_\theta[|\varphi(X_1)|^2] < \infty \text{ et } \mathbb{E}_\theta[\varphi(X_1)] = \theta$ et $m^{-1}$ de classe $C^1$.
+Alors l'estimateur $m^{-1}(\frac{1}{n}\sum_{i = 1}^n \varphi(X_i))$ est fortement convergent et asymptotiquement normale.
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Estimateur des moments}
+\end{definition}
+
+\section{Intervalle de confiance}
+
+\begin{definition}\label{def:intervalle_confiance}
+Soit $\alpha \in ]0, 1[$. On dit qu'un intervalle $I(X_1, ..., X_n)$ qui s'exprime en fonction de l'échantillon est un intervalle de confiance pour $g(\theta)$ de niveau $1 - \alpha$ si:
+$$\forall \theta \in \Theta, \mathbb{P}_\theta(g(\theta) \in I(X_1, ..., X_n)) = 1 - \alpha$$
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Intervalle de confiance}
+\end{definition}
+
+\begin{definition}\label{def:quantile}
+Soit $Y$ une variable aléatoire réelle de fonction de répartition $F(y) = \mathbb{P}(Y \le y)$. Pour $r \in ]0, 1[$, on appelle quantile (ou fractile) d'ordre $r$ de la loi de $Y$ le nombre:
+$$q_r = inf\{y \in \mathbb{R}, F(y) \ge r\}$$
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Quantile}
+\end{definition}
+
+
+\section{Tests d'hypothèse}
+
+\begin{definition}\label{def:test_hyptothèse}
+On appelle test d'hypothèse une règle de décision qui au vu de l'observation $X$ permet de décider si $\theta$ est dans l'ensemble $H_0$ appelé hypothèse nulle (celle que l'on considère vrai à priori) ou si $\theta$ est dans l'ensemble $H_1$ appelé hyptohèse alternative.
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Test d'hypothèse}
+\end{definition}
+
+\begin{definition}\label{def:region_critique}
+Un test est déterminé par sa région critique $W$ qui constitue un sous-ensemble des valeurs possibles de $X = (X_1, ..., X_n)$. Lorsque l'on observe $x = (x_1, ..., x_n)$,
+\begin{itemize}
+    \item si $x \in W$, alors on rejette $H_0$ et on accepte $H_1$
+    \item sinon, alors on accepte $H_0$ et on rejette $H_1$
+\end{itemize}
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Région critique}
+\end{definition}
+
+\begin{definition}\label{def:erreur_premiere_espece}
+On appelle erreur de première espèce le rejet d'$H_0$ à tort. Elle est mesurée par le risque de première espèce: $\theta \in H_0 \rightarrow \mathbb{P}_\theta(W)$.
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Erreur de première espèce}
+\end{definition}
+
+\begin{definition}\label{def:erreur_seconde_espece}
+On appelle erreur de seconde espèce le rejet d'$H_1$ à tort. Elle est mesurée par le risque de seconde espèce: $\theta \in H_1 \rightarrow \mathbb{P}_\theta(W^c) = 1 - \rho_W(\theta)$ où $\rho_W: \theta \in H_1 \rightarrow \mathbb{P}_\theta(W)$ s'appelle puissance du test.
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Erreur de seconde espèce}
+\end{definition}
+
+\begin{definition}\label{def:niveau_test}
+On appelle niveau du test le nombre: $\alpha_W = \sup_{\theta \in H_0} \mathbb{P}_\theta(W)$
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Niveau du test}
+\end{definition}
+
+\begin{definition}\label{def:p-valeur}
+Lorsqu'on observe $x = (x_1, ..., x_n)$, on appelle $p-valeur$ du test la probabilité sous $H_0$ que la statistique de test, notée $\zeta_n$, prenne des valeurs plus défavorables pour l'acceptation de $H_0$ que celle $\zeta_n^{obs}$ observée.
+
+\noindent\textit{Source : \cite{stat_ingenieur},  p-valeur}
+\end{definition}
+
+\begin{definition}\label{def:regle_acceptation}
+Si la $p-valeur$ est supérieure au niveau $\alpha$ du test, on accepte $H_0$. Sinon, on rejette $H_0$.
+L'écart de la $p-valeur$ avec $\alpha$ quantifie la marge avec laquelle on accepte ou rejette $H_0$.
+
+\noindent\textit{Source : \cite{stat_ingenieur},  Règle d'acceptation}
+\end{definition}
+
+\begin{definition}\label{def:convergent_asymptotique}
+Soit $(W_n)_n$ une suite de régions critiques où $n$ désigne la taille de l'échantillon. La suite de tests $(W_n)_n$ est dite:
+\begin{itemize}
+    \item convergente si: $\forall \theta \in H_1, \lim_{n \rightarrow +\infty} \mathbb{P}_\theta(W_n) = 1$
+    \item de niveau asymptotique $\alpha$ si: $\lim_{n \rightarrow +\infty} \sup_{\theta \in H_0}\mathbb{P}_\theta(W_n) = \alpha$
+\end{itemize}
+\end{definition}
+

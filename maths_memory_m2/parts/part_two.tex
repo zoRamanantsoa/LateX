@@ -1,0 +1,594 @@
+
+\part{Modélisation et valorisation du risque de crédit}
+
+Dans cette deuxième partie, nous développons un cadre de modélisation du risque de crédit fondé sur un modèle d’intensité de défaut de type \gls{cir} multi-facteurs, avant de montrer comment ce cadre permet la valorisation des Credit Default Swaps dans un univers risque-neutre. Puis nous finirons sur une méthode d'estimation des paramètres du modèle.
+
+
+\chapter{Cadre probabiliste et modélisation du défaut}
+
+\section{Cadre probabiliste}
+
+Soit l'espace probabilisé filtré $(\Omega, \mathcal{F}, \mathbb{F} = \{F_t\}_{t \ge 0}, \mathbf{P})$ satisfaisant les conditions de complétude et de continuité à droite. $\Omega$ représente l'univers des scénarios économique possible. $\mathcal{F}$ est une $\sigma \text{-algèblre sur } \Omega$, elle représente l'ensemble de tous les événements possible sur $\Omega$ et auxquels on peut attacher une probabilité. $\{F_t\}_{t \ge 0}$ est une filtration sur $\Omega$, elle représente l'ensemble de l'information disponible sur le marché à la date $t$. Et enfin, $\mathbf{P}$ désigne la mesure de probabilité sur $(\Omega, \mathcal{F})$.
+
+
+Sur cet espace nous considérons un mouvement brownien standard $W = (W_t)_{t \ge 0}$ et $\mathbf{G} = (\mathcal{G}_t)_{t \ge 0}$ une filtration brownienne bidimensionnelle. Nous supponsons que $(W, W^*)$ est un mouvement brownien bidimensionnel sur l'espace filtré $(\Omega, \mathbf{G}, \mathbf{P})$. Donc $\mathcal{G}_t$ est la plus petite filtration qui rend les deux processus $W \text{ et } W^*$ adaptés. Concrètement, $\mathbf{G}$ représente la filtration des facteurs de risque purs, c'est-à-dire l'ensemble de l'information disponible sur les facteurs de risque sur le marché.
+
+
+Soit $\tau$ une variable aléatoire positive représentant le temps de défaut: c'est l'instant aléatoire auquel l'entité de référence fait face à un événement de crédit. $\tau$ n'est pas un temps d'arrêt dans la filtration $\mathbf{G}$, cela veut dire que le temps de défaut ne peut être connu ni prédit à partir des données du marché. Posons $H_t = \mathbf{1}_{\{\tau \le t\}}$ la variable aléatoire constatant la réalisation du défaut avant ou à la date $t$.
+
+
+Introduisons la filtration auxilliaire $\mathbf{H} = (\mathcal{H}_t)_{t \ge 0} \text{ où } H_t = \sigma\{\mathbf{1}_{\tau \le s}, s \le t\}$ qui contient l'inforamtion indiquant si le défaut est déja survenu avant ou à l'instant $t$. A partir de cette seconde filtration nous pouvons alors compléter la filtration $\mathbf{G}$ pour avoir l'intégralité de l'information nécessaire pour la valorisation des dérivé de crédit.
+
+
+On définit la filtration $\mathbf{F} = (\mathcal{F}_t)_{t \ge 0}$ telle que:
+$$\mathcal{F}_t = \bigcap_{s > t} (\mathcal{G}_s \lor \mathcal{H}_s) = \mathcal{G_t} \lor \sigma(H_s, s \le t)$$
+où $\lor$ désigne la tribu engendrée par la réunion des deux informations. Cette filtration contient alors à la fois l'information dans la filtration $\mathbf{G}$ et la filtration $\mathbf{H}$. Elle représente l'ensemble des informations sur les facteurs de risques économiques sur le marché ainsi que la survenance ou non de l'événement de défaut avant la date $t$.
+
+Dans cette nouvelle filtration $\mathbf{F}$, le temps de défaut $\tau$ devient alors un temps d'arrêt: $\forall t \ge 0, \{\tau \le t\} \in \mathcal{F}_t$.
+
+
+\section{Modélisation du défaut}
+
+Maintenant que nous avons posé le cadre probabiliste pour notre étude, intéressons nous maintenant à la modélisation du défaut. Pour ce faire nous introduisons les notions suivantes: la probabilité de survie $S(0, t)$ à l'instant $t$, l'intensité de défaut $\lambda(t)$ à l'instant $t$ et la survie conditionnelle à deux dates $t$ et $T$ $G(t, T)$.
+
+
+\subsection{La probabilité de survie et l'intensité de défaut}
+
+$S(0, t)$ désigne la probabilité qu'au temps $t$, l'entité de référence n'ai pas encore fait face à un événement de crédit. $G(t, T)$ désigne la probabilité sachant l'information $\mathcal{F}_t$, vue à la date $t$, que l'entité survive jusqu'à la date future $T$. $\lambda(t)$ quant à elle représente le taux de défaillance ou risque de crédit instantanné.
+
+A partir de ces définitions, on a les formulations mathématiques suivantes:
+\begin{align*}
+    S(0, t) &= P(\tau > t) \\
+    G(t, T) &= P(\tau > T \mid \mathcal{F}_t), \text{ } T \ge t \\
+    \lambda(t) &= \lim_{\Delta t \rightarrow 0} \frac{P(t < \tau \le t + \Delta t \mid \mathcal{F}_t)}{\Delta t \mathbf{1}_{\{\tau > t\}}}
+\end{align*}
+Sous hypothèses standards, on a:
+\begin{equation}
+    \mathbf{P}(t < \tau \le t + \Delta t \mid \mathcal{F}_t) = \lambda_t \mathbf{1}_{\{\tau > t\}} \Delta t + o(\Delta t)
+    \label{eq:relation_survie_intensite}
+\end{equation}
+
+
+\subsection{Compensation du processus de défaut}
+
+Intéressons nous maintenant à la structure stochastique du défaut $H(t)$ lui-même. 
+
+On remarque que: $H_{t + \Delta t} - H_t = \mathbf{1}_{\{t < \tau \le t + \Delta t\}}$. Ainsi,  partir de la relation \ref{eq:relation_survie_intensite}  on a:
+\begin{align*}
+\mathbb{E}[H_{t + \Delta t} - H_t \mid \mathcal{F}_t] &= \lambda_t \mathbf{1}_{\{\tau > t\}} \Delta t + o(\Delta t) \\
+\intertext{On veut chercher un processus croissant $N_t$ tel que $M_t = H_t - N_t$ soit une martingale dans la filtration $\mathcal{F}_t$. Considérons $N_t$ tel que $dN_t = \lambda_t \mathbf{1}_{\{\tau > t\}} dt$, donc en intégrant entre $0$ et $t$, on a:}
+N_t &= \int_0^t \lambda_s \mathbf{1}_{\{\tau > s\}}ds \\
+N_t &= \int_0^{t \land \tau} \lambda_s ds
+\end{align*}
+En effet, si $s > \tau$, alors $\mathbf{1}_{\{\tau > s\}} = 0$, et si $s < \tau$, alors $\mathbf{1}_{\{\tau > s\}} = 1$.
+
+Vérifion que $M_t = H_t - \int_0^{t \land \tau} \lambda_s ds$ est une martingale. Considérons $0 \le s < t$, on a:
+\begin{align*}
+    \mathbb{E}[M_t - M_s \mid \mathcal{F}_t] &= \mathbb{E}[(H_t - \int_0^t \mathbf{1}_{\{u < \tau\}}\lambda_u du) - (H_s - \int_0^s \mathbf{1}_{\{u < \tau\}} \lambda_udu) \mid \mathcal{F}_t] \\
+    &= \mathbb{E}[H_t - H_s - \int_0^t \mathbf{1}_{\{u < \tau\}} \lambda_u du + \int_0^s \mathbf{1}_{\{u < \tau\}} \lambda_udu \mid \mathcal{F}_t] \\
+    &= \mathbb{E}[H_t - H_s \mid \mathcal{F}_t] - \mathbb{E}[\int_0^t \mathbf{1}_{\{u < \tau\}} \lambda_u du - \int_0^s \mathbf{1}_{\{u < \tau\}} \lambda_udu \mid \mathcal{F}_t] \\
+    \mathbb{E}[M_t - M_s \mid \mathcal{F}_t] &= \mathbb{E}[H_t - H_s \mid \mathcal{F}_t] - \mathbb{E}[\int_s^t \mathbf{1}_{\{u < \tau\}} \lambda_udu \mid \mathcal{F}_t] \\
+    \intertext{Or, par définition de l'intensité, $\mathbb{E}[H_t - H_s \mid \mathcal{F}_t] = \mathbb{E}[\int_s^t \mathbf{1}_{\{u < \tau\}} \lambda_udu \mid \mathcal{F}_t]$. Donc,}
+    \mathbb{E}[M_t - M_s \mid \mathcal{F}_t] &= 0
+\end{align*}
+
+D'où $M_t$ est une martingale et d'après le théorème de doob-meyer \ref{def:theoreme_decomposition_doob}, le défaut $H_t$ peut alors être décomposé de manière unique tel que:
+\begin{equation}
+    H_t = M_t + \int_0^{t \land \tau} \lambda_s ds
+    \iff
+    M_t = H_t - \int_0^{t \land \tau} \lambda_s ds
+    \label{eqs:compensateur}
+\end{equation}
+
+En outre, à partir de cette formule, on déduit celle de la différentielle de $H_t$:
+\begin{equation}
+    dH_t = \mathbf{1}_{\{\tau > t\}} \lambda_t dt + dM_t
+    \label{eq:differentiel_compensateur}
+\end{equation}
+
+Ainsi le risque $H_t$ peut donc être décomposé en une partie imprévisible, la martingale $M_t$ qui représente la surprise du défaut, et une partie prévisible $\int_0^{t \land \tau} \lambda_s ds$ qui est le compensateur et qui capture la tendance du processus.
+
+\bigskip
+
+Dans la prochaine section, nous introduisons la formule de réduction, qui permet d’exprimer le prix d’un actif risqué en le ramenant à une espérance sous une mesure probabiliste appropriée. Cette approche constitue un outil central pour la valorisation des flux futurs du \gls{cds} en présence de risque de crédit.
+
+
+\subsection{Calcul de la formule de réduction}
+
+Posons $L_t = \mathbf{1}_{\{\tau > t\}}\exp(\int_0^t \lambda_s ds)$. On a:
+\begin{align*}
+    L_t &= \mathbf{1}_{\{\tau > t\}}\exp(\int_0^t \lambda_s ds) \\
+    &= (1 - H_t)\exp(\int_0^t \lambda_s ds) \\
+    L_t &= (1 -H_t) \exp(A_t) \text{, où } A_t = \int_0^t \lambda_s ds
+\end{align*}
+
+Montrons que $L_t$ est une martingale:
+\begin{align*}
+    dL_t &= d[(1- H_t)\exp(A_t)] \\
+    &= \exp(A_t)d(1 - H_t) + (1 - H_t)d(\exp(A_t)) \\
+    &= - \exp(A_t)dH_t + (1 - H_t)\exp(A_t) \lambda_t dt \\
+    dL_t &= - \exp(A_t)dH_t + \mathbf{1}_{\{\tau > t\}} \exp(A_t) \lambda_t dt \\
+    \intertext{Or $dH_t = dM_t + \mathbf{1}_{\{\tau > t\}}\lambda_t dt$, alors}
+    dL_t &= - \exp(A_t)[dM_t + \mathbf{1}_{\{\tau > t\}}\lambda_t dt] + \exp(A_t) \mathbf{1}_{\{\tau > t\}} \lambda_t dt \\
+    &= - \exp(A_t)dM_t - \exp(A_t)\mathbf{1}_{\{\tau > t\}}\lambda_t dt + \exp(A_t) \mathbf{1}_{\{\tau > t\}} \lambda_t dt \\
+    dL_t &= - \exp(A_t) dM_t \\
+    L_t &= L_0 - \int_0^t \exp(A_s)dM_s
+\end{align*}
+
+Le processus $M$ est une $(\mathcal{F}_t)$-martingale. Le processus $A_t$ est adapté, continu et à variation finie, donc il est prévisible. On en déduit que $\exp(A_t)$ est également prévisible. De plus $\exp(A_t)$ est localement borné sur tout intervalle compact, le processus est admissible pour l'intégrale stochastique par rapport à $M$. Par le théorème d’intégration stochastique des martingales $\int_0^t \exp(A_s)dM_s$ est une $(\mathcal{F})_t$-martingale et par conséquent $L_t$ est une $(\mathcal{F})_t$-martingale.
+
+Soit $X \in G_T$ et $Y = X \exp(-\int_0^T \lambda_s ds) \in G_T$. Calculons maintenant $\mathbb{E}[L_TY \mid \mathcal{F}_t]$.
+\begin{align*}
+    L_TY &= [L_0 - \int_0^T \exp(As)dM_s]Y \\
+    &= [L_0 - \int_0^t \exp(As)dM_s - \int_t^T \exp(As)dM_s]Y \\
+    L_TY&= [L_t - \int_t^T \exp(As)dM_s]Y
+    \intertext{Or, $L_TY = \mathbf{1}_{\{\tau > T\}} \exp(\int_0^T \lambda_sds) X \exp(-\int_0^T \lambda_sds) = X \mathbf{1}_{\{\tau > T\}}$. Donc,}
+    \mathbb{E}[X \mathbf{1}_{\{\tau > T\}} \mid \mathcal{F}_t] &= \mathbb{E}[L_tY - Y \int_t^T \exp(A_s)dM_s \mid \mathcal{F}_t] \\
+    \mathbb{E}[X \mathbf{1}_{\{\tau > T\}} \mid \mathcal{F}_t] &= \mathbb{E}[L_tY \mid \mathcal{F}_t] - \mathbb{E}[Y \int_t^T \exp(A_s)dM_s \mid \mathcal{F}_t]
+    \intertext{Comme $M$ est une $(\mathcal{F}_t)-martingale$ et $\exp(A_s)$ est prévisible, le processus $\int_0^t \exp(A_s)dM_s$ est une martingale. Donc ses accroissements futurs sont orthogonaux à $\mathcal{F}_t$, et $ \forall Y \in \mathcal{F}_t: \mathbb{E}[Y\int_t^T \exp(A_s)dM_s \mid \mathcal{F}_t] = 0$. D'où,}
+    \mathbb{E}[X \mathbf{1}_{\{\tau > T\}} \mid \mathcal{F}_t] &= \mathbb{E}[L_tY \mid \mathcal{F}_t] \\
+    &= \mathbb{E}[\mathbf{1}_{\{\tau > t\}} \exp(\int_0^t \lambda_s ds) X \exp(-\int_0^T \lambda_s ds \mid \mathcal{F}_t)] \\
+    &= \mathbb{E}[\mathbf{1}_{\{\tau > t\}} \exp(\int_0^t \lambda_s ds) X \exp(-\int_0^t \lambda_s ds -\int_t^T \lambda_s ds) \mid \mathcal{F}_t)] \\
+    &= \mathbb{E}[\mathbf{1}_{\{\tau > t\}} \exp(\int_0^t \lambda_s ds) X \exp(-\int_0^t \lambda_s ds) \exp(-\int_t^T \lambda_s ds) \mid \mathcal{F}_t)] \\
+    \mathbb{E}[X \mathbf{1}_{\{\tau > T\}} \mid \mathcal{F}_t] &= \mathbb{E}[\mathbf{1}_{\{\tau > t\}} X \exp(-\int_t^T \lambda_s ds) \mid \mathcal{F}_t]
+    % \intertext{Or $\mathcal{F}_t = \mathcal{G}_t \lor \sigma(H_s, s \le t)$ et $Y$ est une variable $\mathcal{G}_T-mesurable$, donc $Y$ ne dépend pas de l'information de défaut passée contenue dans $\sigma(H_s, s \le t)$. Ainsi:}
+    % \mathbb{E}[X \mathbf{1}_{\{\tau > T\}} \mid \mathcal{F}_t] &= \mathbf{1}_{\{\tau > t\}}\mathbb{E}[X\exp(-\int_t^T \lambda_s ds) \mid \mathcal{G}_t] \\
+    % \intertext{Et dans le cas où $X = 1$, on a la probabilité de survie conditionnelle à deux dates:}
+    % \mathbf{P}[\tau > T \mid \mathcal{F}_t] &= \mathbf{1}_{\{\tau > t\}}\mathbb{E}[\exp(-\int_t^T \lambda_s ds) \mid \mathcal{G}_t] \\
+    % \intertext{Et pour $X = 1$, $t = 0$ et $T = u$ on a la formule de la probabilité de survie au temps t:}
+    % \mathbf{P}[\tau > u \mid \mathcal{F}_0] &= \mathbf{1}_{\{\tau > 0\}}\mathbb{E}[\exp(-\int_0^u \lambda_s ds) \mid \mathcal{G}_0] = \mathbb{E}[\exp(-\int_0^u \lambda_s ds)] = \mathbf{P}[\tau > u]
+\end{align*}
+Or $\mathcal{F}_t = \mathcal{G}_t \lor \sigma(H_s, s \le t)$ et $Y$ est une variable $\mathcal{G}_T-mesurable$, donc $Y$ ne dépend pas de l'information de défaut passée contenue dans $\sigma(H_s, s \le t)$. Ainsi:
+\begin{equation}
+    \mathbb{E}[X \mathbf{1}_{\{\tau > T\}} \mid \mathcal{F}_t] = \mathbf{1}_{\{\tau > t\}}\mathbb{E}[X\exp(-\int_t^T \lambda_s ds) \mid \mathcal{G}_t]
+    \label{eq:formule_reduction}
+\end{equation}
+Et dans le cas où $X = 1$, on a la probabilité de survie conditionnelle à deux dates:
+\begin{equation*}
+    \mathbf{P}[\tau > T \mid \mathcal{F}_t] = \mathbf{1}_{\{\tau > t\}}\mathbb{E}[\exp(-\int_t^T \lambda_s ds) \mid \mathcal{G}_t]
+\end{equation*}
+Et pour $X = 1$, $t = 0$ et $T = u$ on a la formule de la probabilité de survie au temps t:
+\begin{equation*}
+    \mathbf{P}[\tau > u] = \mathbf{1}_{\{\tau > 0\}}\mathbb{E}[\exp(-\int_0^u \lambda_s ds) \mid \mathcal{G}_0] = \mathbb{E}[\exp(-\int_0^u \lambda_s ds)]
+\end{equation*}
+où $\mathbf{1}_{\{\tau > 0\}} = 1$ car on se place à la date de signature du contrat.
+
+Ces deux dernières formules joueront ensuite un rôle fondamentale dans le calcul des paiements du \gls{cds}.
+
+Il nous faut maintenant choisir le modèle approprié au processus.
+
+
+
+\chapter{Modélisation de l'intensité de défaut par le modèle CIR}
+
+\section{Justification et critère de sélection du modèle}
+
+Dans l'approche à intensité, on suppose que le risque est décrit par un processus stochastique positif $(\lambda_t)_{t \ge 0}$ appelé intensité de défaut qui représente le taux instantanné que l'entité de référence fasse défaut sachant qu'elle a survécu jusqu'à l'instant considéré.
+
+Le fait d'opter pour une intensité de défaut stochastique vient du fait que la qualité de défaut de l'entreprise au cours du temps est variable et non déterministe. En effet, la probabilité de défaut de l'entité de référence dépend de plusieurs facteurs économiques au sein de son environnement et du marché que l'on ne peut anticiper de manière certaine.
+
+Ainsi, pour modéliser l'intensité de défaut, on cherche un processus stochastique capable de refléter le comportement de $(\lambda_t)_{t \ge 0}$.
+
+Voici ce que nous savons de l'intensité de défaut:
+
+\begin{itemize}
+    \item positivité: la présence du risque de crédit à tout instant justifiant le \gls{cds} en lui-même, donc l'intensité de défaut doit neecessairement être positive en tout temps.
+    \item retour vers la moyenne: les observations empiriques montrent que le risque de crédit tend à revenir vers un niveau de long terme. En effet, une entreprise en difficulté en un instant donné peut toujours voir sa situation s'améliorer à travers le temps, tandis qu'une entreprise présentant une nette amélioration de sa situation à un certain moment peut voir son risque de crédit augmenter sur le long terme.
+    \item volatilité: on constate que pour une entité solide dont le risque de crédit est faible, la fluctuation du risque face aux nouvelle informations est faible, alors que pour une entité déjà en difficulté, chaque nouvelle information peut avoir un puissant impact sur l'anticipation du défaut.
+\end{itemize}
+
+Donc nous cherchon un modèle possédant ces propriétés. D'autre part, nous aurons besoin entre autre de calculer la valeur de la prime du \gls{cds} ainsi que la valeur du paiement contingent à chaque instant. Or ces valeurs dépendent de la probabilité conditionnelle de survie: $S(t, T) = \mathbb{E}[exp(-\int_t^T \lambda_s ds) \mid \mathcal{F}_t]$. D'où, si possible, on cherche un modèle pour lequel cette probabilité conditionnelle pourra être calculée analytiquement.
+
+\section{Construction du modèle}
+
+Nous allons maintenant construire notre modèle à partir des critères présentés ci-dessus.
+
+
+\subsection{Le terme de dérive}
+
+Représentons par $b$ le niveau moyen vers lequel l'intensité tend à évoluer et par $a$ la vitesse à laquelle l'intensité tend vers $b$. Ainsi, la propriété de retour vers la moyenne sur un intervalle $dt$ peut être capturées par $a(b - \lambda_t)dt$, noté terme de dérive.
+
+Aussi, lorsque $\lambda_t > b$, le terme de dérive devient négatif et tend à faire diminuer l'intensité; alors que quand $\lambda_t < b$, le terme de dérive devient positif et tend à faire augmenter l'intesité. Et la vitesse de diminution ou d'augmentation de ce terme en question est ajustée par $a$.
+
+
+\subsection{Le terme de diffusion}
+
+On introduit ensuite une composante aléatoire afin de modéliser les chocs imprévisibles sur l’intensité de défaut, appelée terme de diffusion.
+
+Représentons par $dW_t$ les fluctuations aléatoires qui influencent l'intensité $(\lambda_t)$ et $\sigma$ la volatilité de l'intensité par rapport aux fluctuations entrainnés par $dW_t$. 
+
+Une première idée est d'utiliser $\sigma dW_t$. On constate que dans le cas où le terme de diffusion est $\sigma dW_t$, pour un pas de temps $dt$, il équivaut à $\sigma \sqrt{dt} \times \epsilon \text{ où } \epsilon \sim \mathcal{N}(0, 1)$. Donc il peut prendre des valeurs négatifs. Or si $\lambda_t$ est proche de 0, alors un choc négatif suffisamment fort l'emporte sur la dérive positive et fait passer $\lambda_t$ en dessous de 0.
+
+Choisissons alors $\sigma \sqrt{\lambda_t} dW_t$. On remarque que pour un pas de temps $dt$, il équivaut à $\sigma \sqrt{\lambda_t} \sqrt{dt} \times \epsilon \text{ où } \epsilon \sim \mathcal{N}(0, 1)$. Donc l'amplitude du bruit dépend du niveau courant de l’intensité et s'accroit et décroit en même temps que lui, et quand $\lambda_t$ s'approche de 0, le bruit s'approche lui aussi de 0 et la dérive positive fait que l'intensité ne devient pas négatif.
+
+Ainsi, $\sigma \sqrt{\lambda_t} dW_t$ est un bon candidat pour le terme de diffusion.
+
+
+\subsection{Synthèse du modèle}
+
+En combinant le terme de dérive avec le terme de diffusion, nous identifions le modèle de \glsentrylong{cir} (\gls{cir}):
+
+\begin{equation}
+    d\lambda_t = a(b - \lambda_t)dt + \sigma \sqrt{\lambda_t} dW_t
+    \label{eq:cir}
+\end{equation}
+
+où:
+\begin{itemize}
+    \item $\lambda_t$ désigne l'intensité de défaut à l'instant $t$
+    \item $a$ est la vitesse de retour à la moyenne
+    \item $b$ représente le niveau moyen de long terme
+    \item $\sigma$ est le paramètre de volatilité
+    \item $W_t$ est un mouvement brownien sous la mesure risque neutre, représentant les fluctuations aléatoires du facteur d’intensité.
+\end{itemize}
+
+\bigskip
+
+Le modèle \gls{cir} constitue une modélisation particulièrement adaptée de l’intensité de défaut en raison de ses propriétés de positivité, de retour à la moyenne et de tractabilité analytique. Sa structure affine permet en outre d’obtenir des expressions fermées des probabilités de survie, ce qui sera fondamental pour la valorisation des Credit Default Swaps dans le chapitre suivant.
+
+
+\chapter{Valorisation des Credit Default Swaps}
+
+Comme nous l'avons introduit dans la première partie, un \gls{cds} est un contrat d'assurance entre une partie acheteuse et une partie vendeuse de protection face au risque de défaut d'une entité de référence. Ainsi, d'un côté, l'acheteur verse une prime régulière, appelée jambe fixe, noté $\gls{pv}_{Premium}$, au vendeur; et de l'autre côté, en cas de défaut, le vendeur effectue le paiement contigent, appelé jambe de protection, noté $\gls{pv}_{Protection}$, à l'acheteur.
+
+La valorisation du \gls{cds} consiste alors essentiellement à déterminer la valeur de ces deux jambes de façon à avoir un équilibre économique entre les deux à la signature du contrat.
+
+Il est important de remarquer ici qu'en finance on a le principe de "valeur temporelle de l'argent". Cela veut dire qu'un même montant (par exemple 1 euro) aujourd'hui n'aura pas la même valeur que ce même montant (1 euro) à une date future. En effet, le montant perçu aujourd'hui peut être investi sans risque, résiste mieux à l'inflation, et ne comporte aucun risque de non-paiement. Ainsi, pour un même montant, la valeur future est généralement inférieure à la valeur d'aujourd'hui.
+
+Cette précision est importante pour déterminer l'équilibre entre les deux jambes car elle nous permet de constater que pour pouvoir calculer chaque jambe et obtenier l'équilibre, il nous faut alors ramener tous les paiements à la date de signature du contrat pour pouvoir comparer et faire des calculs sur eux. Pour cela on utilise ce qu'on appelle "un facteur d'actualisation".
+
+
+\section{Calcul du facteur d'actualisation}
+
+Notons $D(0, t)$ le facteur d'actualisation pour la date future $t$. Pour un taux sans risque constant $r$, on a la formule d'actualisation en continue suivante: $D(0, t) = \exp(-rt)$.
+Or dans la réalité, le taux change dans le temps, donc on doit cumuler tous les taux sur la période $[0, t]$. Ainsi, pour un capital $B(t)$ à l'instant $t$, on a:
+\begin{align*}
+    dB(t) &= r_t B(t) dt \\
+    \frac{dB(t)}{B(t)} &= r_tdt \\
+    ln[B(t)] &= \int_0^t r_s ds \\
+    B(t) &= \exp(\int_0^t r_s ds)
+\end{align*}
+
+$B(t)$ désignant le capital à l'instant $t$, le facteur d'actualisation s'obtient alors en prenant son inverse:
+\begin{equation}
+    D(0, t) = \frac{1}{B(t)} = \exp(-\int_0^t r_s ds)
+    \label{eq:facteur_actualisation}
+\end{equation}
+
+
+\section{Valorisation de la jambe fixe}
+
+Considérons un \gls{cds}.
+Notons:
+\begin{itemize}
+    \item $T$ la date de maturité et $\tau$ le temps de défaut
+    \item $r_t$ le processus de taux sans risque
+    \item $0 = t_0 < t_1 < t_2 < \cdots < t_n = T$ les dates de paiements, où $t_0$ désigne la date actuelle.
+    \item $D(0, t_i)$ le facteur d'actualisation à la date $t_i$
+\end{itemize}
+
+\subsection{Valeur actualisée de la jambe fixe}
+
+À chaque date $t_i$, l'acheteur verse un coupon $c_i$. Ce paiement n'est effectué que si l'entité de référence n'a pas fait défaut avant cette date. Le flux de trésorerie associé au paiement de prime à cette date est donc: $c_i \mathbf{1}_{\{\tau > t_i\}}$
+
+Puis, en tenant compte du facteur d'actualisation, nous avons la valeur actuelle du paiement: $c_i D(0, t_i) \mathbf{1}_{\{\tau > t_i\}}$.
+
+Ainsi, en sommant tous les paiements jusqu'à la date de maturité $T$, nous obtenons la jambe fixe du \gls{cds}:
+
+$$\sum_{i = 1}^n c_i D(0, t_i) \mathbf{1}_{\tau > t_i}$$
+
+Les prix des actifs à maturité étant fonction de variables de marché stochastiques, ils sont des variables aléatoires sur l’espace probabilisé sous-jacent. Par conséquent, les flux futurs actualisés sont également des variables aléatoires, dont la valorisation s’effectue via leur espérance sous une mesure de probabilité dite risque-neutre. Sous l’hypothèse d’absence d’arbitrage, les prix des actifs actualisés par le numéraire sans risque sont des martingales sous cette mesure risque neutre. Il en résulte que la valeur d’un instrument financier à la date initiale s’exprime comme l’espérance de ses flux futurs actualisés. Dans ce cadre, la jambe fixe du \gls{cds} s’écrit alors comme l’espérance des paiements de primes actualisés et conditionnés par la survie de l’entité de référence:
+
+$$\mathrm{PV}_{Premium} = \mathbb{E}[\sum_{i = 1}^n c_i D(0, t_i) \mathbf{1}_{\tau > t_i}]$$
+
+Or, d'une part $c_i$ est déterminé au moment de la signature du \gls{cds}, il est donc déterministe, d'autre part, on a la linéarité de l'espérance.
+Ainsi,
+
+\begin{equation}
+    \mathrm{PV}_{Premium} = \sum_{i = 1}^n c_i \mathbb{E}[D(0, t_i) \mathbf{1}_{\tau > t_i}]
+    \label{eq:jambe_fixe_actuel}
+\end{equation}
+
+
+\subsection{Application de la formule de réduction pour la jambe fixe}
+
+Nous valorisons le \gls{cds} à la date $t = 0$. Ainsi, la formule de réduction \ref{eq:formule_reduction} appliquée à cette date nous donne:
+\begin{align*}
+    \mathbb{E}[X \mathbf{1}_{\tau > T}] &= \mathbf{1}_{\tau > 0} \mathbb{E}[X \exp(-\int_0^T \lambda_s ds)] \\
+    \intertext{Or il est trivial que $\mathbf{1}_{\tau > 0} = 1$, sinon il n'y aurai pas de \gls{cds}. Donc}
+    \mathbb{E}[X \mathbf{1}_{\tau > T}] &= \mathbb{E}[X \exp(-\int_0^T \lambda_s ds)] \\
+    \intertext{On prend $X = D(0, t_i)$ et $T = t_i$:}
+    \mathbb{E}[D(0, t_i) \mathbf{1}_{\tau > t_i}] &= \mathbb{E}[D(0, t_i) \exp(-\int_0^{t_i} \lambda_s ds)] \\
+    &= \mathbb{E}[\exp(-\int_0^{t_i} r_s ds) \times \exp(-\int_0^{t_i} \lambda_s ds)] \\
+    \mathbb{E}[D(0, t_i) \mathbf{1}_{\tau > t_i}] &= \mathbb{E}[\exp(-\int_0^{t_i} (r_s + \lambda_s) ds)]
+    \intertext{Ainsi, on obtient la valeur de la jambe fixe:}
+    \mathrm{PV}_{Premium} &= \sum_0^n c_i \mathbb{E}[\exp(-\int_0^{t_i} (r_s + \lambda_s) ds)]
+\end{align*}
+
+Afin de simplifier la valorisation, on suppose que le processus de taux d’intérêt sans risque est indépendant du processus d’intensité de défaut. Cette hypothèse revient à considérer que les facteurs macroéconomiques gouvernant la dynamique des taux ne sont pas directement corrélés aux facteurs spécifiques de crédit. Elle permet notamment de factoriser les espérances et d’obtenir des expressions semi-explicites pour la valorisation des instruments de crédit. Ainsi,
+\begin{align*}
+    \mathrm{PV}_{Premium} &= \sum_0^n c_i \mathbb{E}[\exp(-\int_0^{t_i} (r_s + \lambda_s) ds)] \\
+    \mathrm{PV}_{Premium} &= \sum_0^n c_i \mathbb{E}[\exp(-\int_0^{t_i} r_s ds)] \times \mathbb{E}[\exp(-\int_0^{t_i} \lambda_s ds)]
+\end{align*}
+Or, $B(0, ti) = \mathbb{E}[\exp(-\int_0^{t_i} r_s ds)]$ est le prix de l'obligation zéro coupon sans risque en l'absence d'arbitrage, donc:
+\begin{equation}
+    \mathrm{PV}_{Premium} = \sum_0^n c_i B(0, t_i) \mathbb{E}[\exp(-\int_0^{t_i} \lambda_s ds)]
+    \label{eq:jambe_fixe_reduite}
+\end{equation}
+
+
+\subsection{Application du modèle CIR pour la jambe fixe}
+
+Nous avons montré que l'intensité de défaut suit un modèle \gls{cir}-multifactorielle:
+
+$$\lambda_t = \sum_{i = 1}^n X_i(t)$$
+
+où les $X_i$ sont des processus \gls{cir} indépendants, avec
+
+$$dX_i(t) = a_i(b_i - X_i(t)) + \sigma_i \sqrt{X_i(t)}dW_i(t)$$
+
+Par conséquent, la survie conditionnelle peux s'écrire sous la forme:
+
+$$\mathbb{E} [\exp(-\int_t^T \lambda_s ds) \mid \mathcal{F}_t] = \exp\left( \sum_{i = 1}^n \left( \Phi_i(t, T) - \Psi_i(t, T)X_i(t \right) \right)$$
+
+Ainsi,
+\begin{equation}
+    \mathrm{PV}_{Premium} = \sum_0^n c_i B(0, t_i) \exp\left( \sum_{i = 1}^n \left( \Phi_i(0, t_i) - \Psi_i(0, t_i)X_0(t \right) \right)
+    \label{eq:jambe_fixe}
+\end{equation}
+
+
+\section{Valorisation de la jambe de protection}
+
+Dans cette section nous reprenons les notations pour le calcul de jambe fixe.
+
+
+\subsection{Le modèle de recouvrement}
+
+On considère un portefeuille générant des flux de trésorerie ${(w_i, s_i)}_{i \ge 1}$ où $w_i$ représente un paiement à la date $s_i$.
+
+Le prix du portefeuille, dit \gls{cc}, à la date t, noté $\gls{cc}(t)$, est déterminé en tenant compte à la fois du risque de taux et du risque de défaut.
+
+Sous l’hypothèse d’intensité, la probabilité de défaut sur un intervalle infinitésimal vérifie la relation \ref{eq:relation_survie_intensite}.
+
+On suppose que, en cas de défaut à une date $t$, l’investisseur récupère une fraction $\delta \in [0, 1]$ de la valeur de marché du portefeuille. Ainsi, la perte instantanée est donnée par : $(1 - \delta)\mathrm{CC}(t)$.
+
+Sur un intervalle $[t, t + dt]$, la perte attendue conditionnellement à $\mathcal{F}_t$ s’écrit comme le produit de la probabilité de défaut $\lambda_t dt$ et de la perte instantannée $(1 - \delta)\mathrm{CC}(t)$.
+
+Ainsi:
+
+$$ \mathbb{E}[\text{perte sur dt} \mid \mathcal{F}_t] = (1 - \delta) \lambda_t \mathrm{CC}(t)$$
+
+En combinant la rémunération sans risque et la perte attendue liée au défaut, la dynamique de $\gls{cc}(t)$ peut être écrite sous la forme :
+
+$$ d\mathrm{CC}(t) = \theta \mathrm{CC}(t) dt + dM_t $$
+
+où $\theta = r_t + (1 - \delta)\lambda_t$
+
+En appliquant le principe de valorisation sans arbitrage, la valeur du portefeuille s’exprime comme l’espérance conditionnelle des flux futurs actualisés:
+\begin{align*}
+    \mathrm{CC}(t) &= \mathbb{E}[\sum_{s_i \ge t} w_i \exp(-\int_t^{s_i}(r_u + (1 - \delta) \lambda_u)du \mid \mathcal{F}_t] \\
+    &= \mathbb{E}[\sum_{s_i \ge t} w_i \exp(-\int_t^{s_i} r_u du) \exp(-\int_t^{s_i}(1 - \delta) \lambda_u)du \mid \mathcal{F}_t] \\
+    \mathrm{CC}(t) &= \mathbb{E}[\sum_{s_i \ge t} w_i B(t, s_i) \exp(-(1 - \delta)\int_t^{s_i} \lambda_u)du \mid \mathcal{F}_t]
+\end{align*}
+Ainsi:
+\begin{equation}
+    \mathrm{CC}(t) = \sum_{s_i \ge t} w_i B(t, s_i) \mathbb{E}[\exp(-(1 - \delta)\int_t^{s_i} \lambda_u)du \mid \mathcal{F}_t]
+    \label{eq:prix_portefeuil}
+\end{equation}
+
+
+\subsection{Valeur actualisée de la jambe de protection}
+
+ La jambe de protection donne lieu à un paiement lorsque le défaut survient, auquel cas le recouvrement est proportionnel à la valeur de marché de l'obligation. Si le défaut survient à la date aléatoire $\tau \le T$, le paiement est alors: $1 - \delta \mathrm{CC}(\tau)$.
+
+ En tenant compte du facteur d'actualisation, ce paiement devient: $D(0, \tau)(1 - \delta \mathrm{CC}(\tau))$.
+
+Comme dans le cas de la jambe fixe, la valorisation de la jambe de protection repose sur le principe d'absence d'arbitrage et s'effectue sous la mesure risque-neutre. La valeur actuelle de cette jambe est donc obtenue comme l'espérance des flux de protection futurs actualisés. Toutefois, contrairement aux paiements de primes, les paiements de protection ne sont effectués qu'en cas de défaut de l'entité de référence avant l'échéance du contrat. La valeur de la jambe de protection s'écrit alors:
+\begin{align*}
+    \mathrm{PV}_{Protection} &= \mathbb{E} [D(0, \tau) (1 - \delta \mathrm{CC}(\tau)) \mathbf{1}_{\tau \le T}] \\
+    \mathrm{PV}_{Protection} &= \mathbb{E} [D(0, \tau) \mathbf{1}_{\tau \le T} - \delta D(0, \tau) \mathrm{CC}(\tau) \mathbf{1}_{\tau \le T}]
+\end{align*}
+D'où,
+\begin{equation}
+    \mathrm{PV}_{Protection} = \mathbb{E} [D(0, \tau) \mathbf{1}_{\tau \le T}] - \delta \mathbb{E}[D(0, \tau) \mathrm{CC}(\tau) \mathbf{1}_{\tau \le T}]
+    \label{eq:jambe_protection_actuel}
+\end{equation}
+
+
+\subsection{Application de la formule du compensateur pour la jambe de protection}
+
+Soit un processus prévisible $X_t$. En multipliant par $X_t$ dans la formule du compensateur \ref{eq:differentiel_compensateur}, on a:
+\begin{align*}
+    X_t dH_t &= X_t \lambda_t \mathbf{1}_{\{\tau \le t\}}dt + X_t dM_t \\
+    \int_0^T X_t dH_t &= \int_0^T X_t \lambda_t \mathbf{1}_{\{\tau \le t\}} dt + \int_0^T X_t dM_t \\
+    \mathbb{E}[\int_0^T X_t dH_t] &= \mathbb{E}[\int_0^T X_t \lambda_t \mathbf{1}_{\{\tau \le t\}} dt + \int_0^T X_t dM_t] \\
+    \mathbb{E}[\int_0^T X_t dH_t] &= \mathbb{E}[\int_0^T X_t \lambda_t \mathbf{1}_{\{\tau \le t\}} dt] + \mathbb{E}[\int_0^T X_t dM_t] \\
+    \intertext{Comme $M_t$ est une martingale et $X_t$ est prévisible, alors $\mathbb{E}[\int_0^T X_t dM_t] = 0$. Alors:}
+    \mathbb{E}[\int_0^T X_t dH_t] &= \mathbb{E}[\int_0^T X_t \lambda_t \mathbf{1}_{\{\tau \le t\}} dt]
+\end{align*}
+
+Appliquons maintenant cette formule au calcul des deux termes de la jambe de protection, où $X_t = D(0, t)$.
+
+Pour le premier terme, on a:
+\begin{align*}
+    \mathbb{E}[D(0, \tau) \mathbf{1}_{\{\tau \le T\}}] &= \mathbb{E}[\int_0^T D(0, t)dH_t] \text{, car $H$ ne saute qu'une fois au temps $\tau$} \\
+    &= \mathbb{E}[\int_0^T D(0, t) \lambda_t \mathbf{1}_{\{\tau \le t\}} dt] \\
+    \mathbb{E}[D(0, \tau) \mathbf{1}_{\{\tau \le T\}}] &= \int_0^T \mathbb{E}[D(0, t) \lambda_t \mathbf{1}_{\{\tau \le t\}}]dt
+\end{align*}
+
+De même pour le second terme, on obtient:
+\begin{align*}
+    \delta \mathbb{E}[D(0, \tau) \mathrm{CC}(\tau) \mathbf{1}_{\tau \le T}] &= \delta \mathbb{E}[\int_0^T D(0, t) \mathrm{CC}(t) dH_t] \text{, car $H$ ne saute qu'une fois au temps $\tau$} \\
+    &= \delta \mathbb{E}[\int_0^T D(0, t) \mathrm{CC}(t)  \lambda_t \mathbf{1}_{\{\tau \le t\}} dt] \\
+    \delta \mathbb{E}[D(0, \tau) \mathrm{CC}(\tau) \mathbf{1}_{\tau \le T}] &= \delta \int_0^T \mathbb{E}[D(0, t) \mathrm{CC}(t)  \lambda_t \mathbf{1}_{\{\tau \le t\}}] dt
+\end{align*}
+
+
+\subsection{Application de la formule de réduction et du modèle CIR pour la jambe de protection}
+
+D'un côté, en appliquant la formule de réduction \ref{eq:formule_reduction} pour le premier terme, on obtient:
+\begin{align*}
+    \mathbb{E}[D(0, \tau) \mathbf{1}_{\{\tau \le T\}}] &= \int_0^T \mathbb{E}[D(0, t) \lambda_t \mathbf{1}_{\{\tau \le t\}}]dt \\
+    \intertext{Par indépendance entre le taux sans risque et l'intensité, nous avons:}
+    \mathbb{E}[D(0, \tau) \mathbf{1}_{\{\tau \le T\}}] &= \int_0^T B(0, t) \mathbb{E}[\lambda_t \mathbf{1}_{\{\tau \le t\}}]dt \\
+    \mathbb{E}[D(0, \tau) \mathbf{1}_{\{\tau \le T\}}] &= \int_0^T B(0, t) \mathbb{E}[\lambda_t \exp(-\int_0^t \lambda_u du)]dt \\
+    \intertext{En utilisant la définition \gls{cir}-multifactorielle de l'intesité, nous obtenons:}
+    \mathbb{E}[D(0, \tau) \mathbf{1}_{\{\tau \le T\}}] &= \int_0^T B(0, t) \mathbb{E}[\sum_{k=1}^n X_k(t) \exp(-\sum_{k = 1}^n \int_0^t X_k(u) du)]dt
+\end{align*}
+
+De l'autre côté, en appliquant la formule de réduction \ref{eq:formule_reduction} pour le second terme, on a:
+\begin{align*}
+    \delta \mathbb{E}[D(0, \tau) \mathrm{CC}(\tau) \mathbf{1}_{\tau \le T}] &= \delta \int_0^T \mathbb{E}[D(0, t) \mathrm{CC}(t)  \lambda_t \mathbf{1}_{\{\tau \le t\}}] dt \\
+    \intertext{Par indépendance entre le taux sans risque et l'intensité, nous avons:}
+    \delta \mathbb{E}[D(0, \tau) \mathrm{CC}(\tau) \mathbf{1}_{\tau \le T}] &= \delta \int_0^T B(0, t) \mathbb{E}[\mathrm{CC}(t)\lambda_t\mathbf{1}_{\{\tau \le T\}}]dt \\
+    \delta \mathbb{E}[D(0, \tau) \mathrm{CC}(\tau) \mathbf{1}_{\tau \le T}] &= \delta \int_0^T B(0, t) \mathbb{E}[\mathrm{CC}(t)\lambda_t \exp(-\int_0^t \lambda_u du)]dt \\
+    \intertext{En remplaçant $\mathrm{CC}(t)$ par sa définition dans la formule, on a:}
+    \delta \mathbb{E}[D(0, \tau) \mathrm{CC}(\tau) \mathbf{1}_{\tau \le T}] &= \delta \int_0^T B(0, t) \mathbb{E}[\lambda_t \exp(-\int_0^t \lambda_u du) \\
+    & \sum_{s_i \ge t} w_i B(t, s_i) \mathbb{E}[\exp(-(1 - \delta)\int_t^{s_i} \lambda_u)du]]dt \\
+    &= \delta \int_0^T \mathbb{E}[\lambda_t \exp(-\int_0^t \lambda_u du) \\
+    & \sum_{s_i \ge t} w_i B(0, s_i) \mathbb{E}[\exp(-(1 - \delta)\int_t^{s_i} \lambda_u)du]]dt \\
+    \delta \mathbb{E}[D(0, \tau) \mathrm{CC}(\tau) \mathbf{1}_{\tau \le T}] &= \delta \sum_{s_i \ge t} w_i B(0, s_i) \int_0^T \mathbb{E}[\lambda_t \exp(-\int_0^t \lambda_u du) \\
+    & \mathbb{E}[\exp(-(1 - \delta)\int_t^{s_i} \lambda_u)du]]dt \\
+    \intertext{Grace aux propriétés \gls{cir}-multifactorielle de l'intensité, nous avons:}
+    \delta \mathbb{E}[D(0, \tau) \mathrm{CC}(\tau) \mathbf{1}_{\tau \le T}] &= \delta \sum_{s_i \ge t} w_i B(0, s_i) \int_0^T \mathbb{}{E}[\sum_{k = 1}^n X_k(t) \exp(-\sum_{k = 1}^n \int_0^t X_k(u) du) \\
+    & \exp(-(1 - \delta) \sum_{k = 1}^n \left( \Phi_k(t, s_i) - \Psi_k(t, s_i) X_k(t) \right))]dt
+\end{align*}
+
+Ainsi, nous déduisons la formule de la jambe de protection:
+\begin{equation}
+    \begin{split}
+        \mathrm{PV}_{Protection} &= \int_0^T B(0, t) \, \mathbb{E}\Bigg[\sum_{k=1}^n X_k(t) \exp\Bigg(-\sum_{k = 1}^n \int_0^t X_k(u) du\Bigg)\Bigg] dt \\
+        &\quad - \delta \sum_{s_i \ge t} w_i B(0, s_i) \int_0^T \mathbb{E}\Bigg[\sum_{k = 1}^n X_k(t) \exp\Bigg(-\sum_{k = 1}^n \int_0^t X_k(u) du\Bigg) \\
+        &\qquad\qquad \exp\Bigg(-(1 - \delta) \sum_{k = 1}^n \Big( \Phi_k(t, s_i) - \Psi_k(t, s_i) X_k(t) \Big)\Bigg)\Bigg] dt
+    \end{split}
+\label{eq:jambe_protection}
+\end{equation}
+
+
+\section{Spread théorique du CDS}
+
+A la date de signature du contrat, on doit avoir l'égalité entre les deux jambes du \gls{cds}. En effet, le contrat est établi de manière à être équitable pour chaque partie. Ainsi, la valeur actuelle des primes versées par l'acheteur doit être égale à la valeur actuelle de la protection.
+
+Cette valeur de la prime, c'est-à-dire le spread du \gls{cds}, reflète directement le risque de défaut de l'entité de référence: plus le spread est élevé, plus la valeur des jambes le seront également.
+
+
+\chapter{Estimation des paramètres du modèle}
+
+Dans ce chapitre, nous proposons une méthode d'estimation des paramètres du modèle \gls{cir}, s'appuyant sur les données de spread de crédit observables sur le marché des obligations.
+
+Face à la réalité des données disponibles sur le marché, il est important de faire les remarques suivantes:
+
+\begin{itemize}
+    \item l'intensité de défaut n'est pas une donnée observable du marché, seule la prime de risque exigée par les investisseurs est cotée. Il faut donc, avant l'étape d'estimation proprement dite, établir une relation permettant de convertir le spread de marché observé en une valeur de l'intensité de défaut
+    \item la rareté des données de marché rend l’estimation conjointe des paramètres du modèle sous-déterminé (le nombre d’inconnues excédant celui des observations disponibles). En effet, en pratique, une entreprise n’émet qu’un nombre limité d’obligations, ce qui restreint l’observation de la courbe des spreads à un petit nombre de maturités.
+    \item la modélisation multifactorielle est très rarement envisageable dans la pratique. En effet, la quantité d'information nécessaire pour calibrer de manière robuste un modèle multifactorielle est bien au delà de ce que l'on a à disposition dans la réalité. Aussi, le modèle \gls{cir} monofactoriel (cas $n = 1$) reste l'approche la plus couramment retenue dans les applications pratiques.
+\end{itemize}
+
+
+Nous adoptons par conséquent la démarche suivante :
+\begin{enumerate}
+    \item on considère un modèle \gls{cir} monofactoriel
+	\item les paramètres $b$ et $\delta$ sont fixés de manière exogène, à partir de données par catégorie de notation et de secteur, obtenues auprès des agences de notation
+	\item les paramètres $a$ et $\sigma$ sont ensuite estimés par la méthode des moments, appliquée à une distribution stationnaire du processus \gls{cir}.
+\end{enumerate}
+
+% D'autres méthodes, plus fines, permettent d'estimer le taux de recouvrement à partir de facteurs propres à l'émetteur au moment du défaut (structure du capital, tangibilité des actifs, conjoncture macroéconomique) : régression linéaire simple (OLS), arbres de régression additifs (MART), arbres de classification et de régression (CART), ou encore le modèle dit \emph{Waterfall}. Ces approches, plus gourmandes en données, sortent du cadre de ce mémoire, mais constituent une piste d'amélioration naturelle de l'estimation.
+
+
+\section{Relation entre spread de crédit et intensité de défaut}
+
+Pour convertir les spreads de marché en valeurs de l'intensité de défaut, nous devons expliciter le prix d'une obligation zéro-coupon risquée sous notre modèle, puis en déduire la relation liant ce prix au spread de crédit.
+\begin{align*}
+    \intertext{Considérons une obligation zéro-coupon risquée de notionnel 1 et de maturité $T$, émise par l'entité de référence. Son prix à la date $t$ s'écrit:}
+    D(t,T) &= B(t,T)\, \mathbb{E}\left[\exp\left(-(1-\delta)\int_t^T \lambda_s \, ds\right) \mid \mathcal{F}_t\right]
+    \intertext{où $B(t,T)$ désigne, le prix de l'obligation zéro-coupon sans risque de même maturité. Le facteur $(1-\delta)$ traduit le fait que seule la fraction $(1-\delta)$ du flux est effectivement perdue en cas de défaut. Nous obtenons à partir de cette égalité la relation:}
+    \frac{D(t,T)}{B(t,T)} &= \mathbb{E}\left[\exp\left(-(1-\delta)\int_t^T \lambda_s \, ds\right) \mid \mathcal{F}_t\right]
+    \intertext{Or, le spread de crédit $S(t,T)$ de l'obligation à la date $t$ peut être exprimé par la relation:}
+    \frac{D(t,T)}{B(t,T)} &= \exp\big(-S(t,T)(T-t)\big)
+    \intertext{Ainsi, on a:}
+    \exp\big(-S(t,T)(T-t)\big) &= \mathbb{E}\left[\exp\left(-(1-\delta)\int_t^T \lambda_s \, ds\right) \mid \mathcal{F}_t\right]
+    \intertext{En utilisant la modélisation \gls{cir} du défaut, nous obtenons:}
+    \exp\big(-S(t,T)(T-t)\big) &= (1-\delta) \big(\Phi(t,T) - \Psi(t,T)\lambda_t\big)
+\end{align*}
+
+Finalement, à partir de cette dernière égalité, nous obtenons l'expression de l'intensité de défaut en fonction du spread observé:
+\begin{equation}
+    \lambda_t = \frac{1}{\Psi(t,T)}\left[\Phi(t,T) + \frac{S(t,T)(T-t)}{1-\delta}\right]
+    \label{eq:relation_spread_lambda}
+\end{equation}
+
+
+\section{Estimation de $a$ et $\sigma$ par la méthode des moments}
+
+Pour l'estimation de $a$ et de $\sigma$, nous utilisons la méthode des moments appliquée à la loi asymptotique du processus \gls{cir}.
+
+\subsection{Distribution stationnaire du processus CIR}
+
+Nous avons les formules de l'espérance et de la variance conditionnelles du processus \gls{cir} :
+\begin{align*}
+    \mathbb{E}[\lambda_t \mid \mathcal{F}_s] &= \lambda_s e^{-a(t-s)} + b\left(1-e^{-a(t-s)}\right) \\
+    Var(\lambda_t \mid \mathcal{F}_s) &= \lambda_s \frac{\sigma^2}{a}\left[e^{-a(t-s)}-e^{-2a(t-s)}\right] + b\frac{\sigma^2}{2a}\left[1-e^{-a(t-s)}\right]^2
+\end{align*}
+
+En fixant $s=0$ et en faisant tendre $t$ vers l'infini, on a les convergences:
+\begin{equation}
+\lim_{t\to\infty} \mathbb{E}[X_t] = b, \qquad
+\lim_{t\to\infty} Var(X_t) = \frac{\sigma^2 b}{2a}.
+\label{eq:limites-cir}
+\end{equation}
+
+Autrement dit, l'intensité de défaut \gls{cir} admet, en régime stationnaire, une loi limite de moyenne $b$ et de variance $\sigma^2 b /(2a)$. Nous supposerons, que cette approximation asymptotique reste raisonnable pour les valeurs finies de $t$ considérées en pratique, ce qui permet de contourner la lourdeur du calcul de la loi exacte, non stationnaire, du processus.
+
+
+\subsection{Moments empiriques et système d'estimation}
+
+Soit $t_1 < t_2 < \dots < t_n$ les $n$ maturités pour lesquelles on dispose d'un spread de crédit coté $S(0,t_k)$ pour l'entité considérée. Pour toute valeur candidate du couple $(a,\sigma)$, la formule d'inversion permet de calculer la série des intensités de défaut implicites
+
+\[
+\lambda(t_k; a,\sigma) = \frac{1}{\Psi(0,t_k)}\left[\Phi(0,t_k) + \frac{S(0,t_k)\, t_k}{1-\delta}\right], \qquad k=1,\dots,n.
+\]
+
+La méthode des moments consiste alors à choisir $(a,\sigma)$ de sorte que la moyenne et la variance empiriques de cette série coïncident avec les moments théoriques \eqref{eq:limites-cir}, le paramètre $b$ étant fixé. On pose ainsi le système:
+
+\begin{equation}
+\left\{
+\begin{aligned}
+\frac{1}{n}\sum_{k=1}^{n} \lambda(t_k; a,\sigma) &= b, \\[4pt]
+\frac{1}{n}\sum_{k=1}^{n} \Big(\lambda(t_k; a,\sigma) - b\Big)^2 &= \frac{\sigma^2 b}{2a}.
+\end{aligned}
+\right.
+\label{eq:systeme-moments}
+\end{equation}
+
+Il s'agit d'un système de deux équations non linéaires à deux inconnues $(a,\sigma)$, puisque $a$ et $\sigma$ interviennent à la fois explicitement, dans le membre de droite de la seconde équation, et implicitement, à travers $\Phi(0,t_k)$, $\Psi(0,t_k)$ et $h$, dans le calcul même de $\lambda(t_k;a,\sigma)$.
+
+
+\subsection{Reformulation en problème d'optimisation}
+
+La résolution directe d'un tel système étant en général délicate, nous le reformulons, comme un problème de minimisation sous contrainte. En posant les deux fonctions résidus:
+
+\[
+\chi_1^2(a,\sigma) = \left(\frac{1}{n}\sum_{k=1}^{n} \lambda(t_k;a,\sigma) - b\right)^2, \qquad
+\chi_2^2(a,\sigma) = \left(\frac{1}{n}\sum_{k=1}^{n} \big(\lambda(t_k;a,\sigma)-b\big)^2 - \frac{\sigma^2 b}{2a}\right)^2,
+\]
+
+l'estimation de $(a,\sigma)$ revient à résoudre
+\[
+(\hat{a}, \hat{\sigma}) = \underset{a>0,\, \sigma \geq 0}{\arg\min} \; \Big[\chi_1^2(a,\sigma) + \chi_2^2(a,\sigma)\Big].
+\]
+
+Cette formulation présente deux avantages pratiques : elle se prête à une résolution numérique directe par un algorithme d'optimisation sous contrainte, et elle permet de contrôler, une fois la solution obtenue, la qualité de la calibration à travers la valeur résiduelle de la fonction objectif.
+
+\section{Mise en \oe uvre numérique}
+
+La procédure complète d'estimation, pour une entité de référence donnée, se résume ainsi :
+
+\begin{enumerate}
+	\item collecter les spreads de crédit cotés $S(0,t_k)$ de l'entité pour les maturités disponibles;
+	\item fixer les paramètres exogènes $b$ et $\delta$ à partir des données agrégées de notation et de recouvrement propres à la catégorie de l'entité;
+	\item pour un couple d'essai $(a,\sigma)$, calculer $h=\sqrt{a^2+2\sigma^2}$, puis $\Phi(0,t_k)$ et $\Psi(0,t_k)$ pour chaque maturité, et en déduire les intensités implicites $\lambda(t_k;a,\sigma)$;
+	\item évaluer les résidus $\chi_1^2$ et $\chi_2^2$ associés à ce couple ;
+	\item ajuster $(a,\sigma)$ par un algorithme d'optimisation numérique jusqu'à convergence, en répétant la procédure à partir de plusieurs points de départ afin de limiter le risque de convergence vers un optimum local non pertinent.
+\end{enumerate}
+
