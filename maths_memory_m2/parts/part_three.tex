@@ -8,5 +8,59 @@ Dans cette dernière partie, nous allons modéliser un jeu de données du march�
 
 \chapter{Présentation des données et calibration du modèle}
 
-Dans cette partie, nous utiliserons un jeu de données sur les \gls{cds} issu de la plateforme kaggle: \href{https://www.kaggle.com/datasets/debashish311601/credit-default-swap-cds-prices}{Kaggle - Credit Default Swap CDS Prices}. \footnote{Kaggle est une plateforme en ligne dédiée à la science des données (data science) et à l'intelligence artificielle, rattachée à Google.}
+\section{Présentation des données}
 
+Nous utilisons le jeu de données suivant sur les \gls{cds}, issu de la plateforme kaggle: \href{https://www.kaggle.com/datasets/debashish311601/credit-default-swap-cds-prices}{Kaggle - Credit Default Swap CDS Prices}. \footnote{Kaggle est une plateforme en ligne dédiée à la science des données (data science) et à l'intelligence artificielle, rattachée à Google.}. Il contient des séries chronologiques de spreads en points de base pour plus de 600 entités de référence, sur 10 échéances différentes, entre la période de Janvier 2015 à Septembre 2021.
+
+Dans notre étude, nous considérons les trois entités de référence suivantes pour calibrer le modèle CIR: Johnson & Johnson, Motorola Solutions, et Bombardier Inc.
+
+Ce choix se justifie par la volonté de tester le modèle sur des profils de risque de crédit variés. Johnson \& Johnson représente un profil de haute qualité de crédit (son spread médian est de 24.775 bps); puis Motorolla Solutions est considéré comme ayant un risque intermédiaire (son spread médian est de 90.85 bps); et enfin, Bombardier Inc est une entité à haut rendement, c'est-à-dire à haut risque (son spread médian est de 550.51 bps). \footnote{En l'absence de notations officielles portant sur les agences dans notre jeu de données, nous nous basons sur le niveau médian du spread durant la période pour catégoriser le niveau du risque pour les entités}
+
+De plus, ces trois entités appartiennent à des secteurs distincts (santé, technologie, aéronautique), ce qui limite le risque que les résultats obtenus reflètent un effet sectoriel plutôt qu'une propriété générale du modèle.
+
+Enfin, ces trois séries disposent d'un historique complet sans donnée manquante sur l'intégralité de la période 2015-2021.
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth, height=0.6\textheight, keepaspectratio]{../figures/spread_jnj.png}
+    \caption[Court titre pour la table des matières]{Spread de maturité 5 ans pour Johnson \& Johnson}
+    \label{fig:spread_jnj}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth, height=0.6\textheight, keepaspectratio]{../figures/spread_msi.png}
+    \caption[Court titre pour la table des matières]{Spread de maturité 5 ans pour Motorola Solutions}
+    \label{fig:spread_msi}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth, height=0.6\textheight, keepaspectratio]{../figures/spread_bbdbcn.png}
+    \caption[Court titre pour la table des matières]{Spread de maturité 5 ans pour Bombardier Inc}
+    \label{fig:spread_bbdbcn}    
+\end{figure}
+
+
+\section{Paramètres exogènes du modèle}
+
+D'une part, on retient les hypothèses suivantes pour ces entités:
+
+\begin{itemize}
+    \item un taux de recouvrement constant $R$ que nous fixons à 40\%
+    \item un taux d'intérêt sans risque constant $r$ que nous fixons à 2\%
+\end{itemize}
+
+D'autre part, nous calculons la moyenne long terme $b$ à partir de la moyenne des spreads pour la maturité 5 ans. Ce choix est motivé par la recherche d'une valeur représentative du risque de crédit des entités, donc on utilise une valeur médiane du spread (ni une valeur instantanée ni une valeur extrême de long terme). Par ailleurs, dans la pratique les spreads à 5 ans sont souvent utilisés comme référence et servent notamment à construire les principaux indices de crédits.
+
+Ainsi, en appliquant la formule, on obtient les valeurs suivantes pour la moyenne long terme $b$:
+
+\begin{itemize}
+    \item Johnson \& Johnson: 42.94 bps
+    \item Motorola Solutions: 168.62 bps
+    \item Bombardier Inc: 1147.49 bps
+\end{itemize}
+
+
+\chapter{Implémentation numérique du modèle}
