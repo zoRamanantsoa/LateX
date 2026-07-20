@@ -31,6 +31,7 @@
 	// Edit the following property to change export directory
 	"latex-workshop.latex.outDir": "./PDF",
 	"latex-workshop.latex.autoClean.run": "onBuilt",
+	// "latex-workshop.latex.recipe.default": "latexmk",
 	"latex-workshop.synctex.afterBuild.enabled": true,
 	"latex-workshop.view.pdf.viewer": "tab",
 	"latex-workshop.latex.clean.subfolder.enabled": true,
