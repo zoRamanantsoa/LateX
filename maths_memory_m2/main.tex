@@ -6,6 +6,10 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{adjustbox}
 
 \usepackage{biblatex}
 \usepackage[french]{babel}
@@ -24,7 +28,23 @@
 
 \include{title_page}
 
+\pagenumbering{roman}
+
+% --- Table des matières ---
 \tableofcontents
+\newpage
+
+% --- Liste des tableaux ---
+\listoftables
+\addcontentsline{toc}{chapter}{Liste des tableaux}  % Pour report/book
+\newpage
+
+% --- Liste des figures ---
+\listoffigures
+\addcontentsline{toc}{chapter}{Liste des figures}  % Pour report/book
+\newpage
+
+\pagenumbering{arabic}
 
 \include{parts/part_one}
 \include{parts/part_two}

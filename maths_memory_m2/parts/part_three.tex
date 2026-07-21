@@ -12,7 +12,31 @@ Dans cette dernière partie, nous allons modéliser un jeu de données du march�
 
 Nous utilisons le jeu de données suivant sur les \gls{cds}, issu de la plateforme kaggle: \href{https://www.kaggle.com/datasets/debashish311601/credit-default-swap-cds-prices}{Kaggle - Credit Default Swap CDS Prices}. \footnote{Kaggle est une plateforme en ligne dédiée à la science des données (data science) et à l'intelligence artificielle, rattachée à Google.}. Il contient des séries chronologiques de spreads en points de base pour plus de 600 entités de référence, sur 10 échéances différentes, entre la période de Janvier 2015 à Septembre 2021.
 
-Dans notre étude, nous considérons les trois entités de référence suivantes pour calibrer le modèle CIR: Johnson & Johnson, Motorola Solutions, et Bombardier Inc.
+\begin{table}[htbp]
+\centering
+\caption{Extrait des données de spreads de CDS}
+\label{tab:kaggle_cds_prices}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l l p{4cm} *{10}{r}}
+\toprule
+\textbf{Date} & \textbf{Ticker} & \textbf{Company} & \textbf{PX1} & \textbf{PX2} & \textbf{PX3} & \textbf{PX4} & \textbf{PX5} & \textbf{PX6} & \textbf{PX7} & \textbf{PX8} & \textbf{PX9} & \textbf{PX10} \\
+\midrule
+2015-01-01 & A          & Agilent Technologies Inc   & 14.850  & 25.050  & 39.055  & 73.715  & 86.300  & 111.305 & 125.905 & 144.300 & 158.600 & 168.195 \\
+2015-01-01 & VERAV      & Verbund AG                 & 13.495  & 23.545  & 35.050  & 48.325  & 61.570  & 70.960  & 80.345  & 85.370  & 90.400  & 95.430  \\
+2015-01-01 & HON        & Honeywell International Inc & 2.925   & 6.665   & 7.150   & 10.220  & 16.300  & 20.505  & 23.530  & 28.165  & 31.825  & 34.720  \\
+2015-01-01 & MASQUH     & Mashreqbank psc            & 116.215 & 134.580 & 160.915 & 192.000 & 221.170 & 244.270 & 267.445 & 270.575 & 273.495 & 275.820 \\
+2015-01-01 & CAR        & Avis Budget                & 34.000  & 72.410  & 121.105 & 185.715 & 244.500 & 295.945 & 330.905 & 340.970 & 349.775 & 357.040 \\
+\bottomrule
+\end{tabular}%
+}
+\setlength{\tabcolsep}{6pt}
+\par\medskip
+\footnotesize \textit{Source :} Jeu de données Kaggle "Crédit Default Swap CDS Prices" (Debashish, 2021). \\ Extrait des 5 premières lignes.
+\end{table}
+
+Dans notre étude, nous considérons les trois entités de référence suivantes pour calibrer le modèle CIR: Johnson \& Johnson, Motorola Solutions, et Bombardier Inc.
 
 Ce choix se justifie par la volonté de tester le modèle sur des profils de risque de crédit variés. Johnson \& Johnson représente un profil de haute qualité de crédit (son spread médian est de 24.775 bps); puis Motorolla Solutions est considéré comme ayant un risque intermédiaire (son spread médian est de 90.85 bps); et enfin, Bombardier Inc est une entité à haut rendement, c'est-à-dire à haut risque (son spread médian est de 550.51 bps). \footnote{En l'absence de notations officielles portant sur les agences dans notre jeu de données, nous nous basons sur le niveau médian du spread durant la période pour catégoriser le niveau du risque pour les entités}
 
@@ -21,24 +45,24 @@ De plus, ces trois entités appartiennent à des secteurs distincts (santé, tec
 Enfin, ces trois séries disposent d'un historique complet sans donnée manquante sur l'intégralité de la période 2015-2021.
 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth, height=0.6\textheight, keepaspectratio]{../figures/spread_jnj.png}
-    \caption[Court titre pour la table des matières]{Spread de maturité 5 ans pour Johnson \& Johnson}
+    \includegraphics[scale=0.5]{../figures/spread_jnj.png}
+    \caption[Spread de J\&J]{Spread de maturité 5 ans pour Johnson \& Johnson}
     \label{fig:spread_jnj}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth, height=0.6\textheight, keepaspectratio]{../figures/spread_msi.png}
-    \caption[Court titre pour la table des matières]{Spread de maturité 5 ans pour Motorola Solutions}
+    \includegraphics[scale=0.5]{../figures/spread_msi.png}
+    \caption[Spread de Motorola]{Spread de maturité 5 ans pour Motorola Solutions}
     \label{fig:spread_msi}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth, height=0.6\textheight, keepaspectratio]{../figures/spread_bbdbcn.png}
-    \caption[Court titre pour la table des matières]{Spread de maturité 5 ans pour Bombardier Inc}
+    \includegraphics[scale=0.5]{../figures/spread_bbdbcn.png}
+    \caption[Spread de Bombardier]{Spread de maturité 5 ans pour Bombardier Inc}
     \label{fig:spread_bbdbcn}    
 \end{figure}
 
@@ -54,7 +78,21 @@ D'une part, on retient les hypothèses suivantes pour ces entités:
 
 D'autre part, nous calculons la moyenne long terme $b$ à partir de la moyenne des spreads pour la maturité 5 ans. Ce choix est motivé par la recherche d'une valeur représentative du risque de crédit des entités, donc on utilise une valeur médiane du spread (ni une valeur instantanée ni une valeur extrême de long terme). Par ailleurs, dans la pratique les spreads à 5 ans sont souvent utilisés comme référence et servent notamment à construire les principaux indices de crédits.
 
-Ainsi, on obtient les valeurs suivantes pour la moyenne long terme $b$:
+En appliquant:
+
+$$b = \frac{1}{n} \sum_{k = 1}^n \frac{s(t_k)}{10000 * (1 - \delta)}$$
+
+où:
+
+\begin{itemize}
+    \item[\textbullet] $s(t_k)$ est le spread observé à la date $t_k$ pour la maturité 5 ans de l'entité considéré
+    \item[\textbullet] $n$ est le nombre d'observations pour la période considérée
+    \item[\textbullet] la division par 10 000 convertit les bps en décimal
+    \item[\textbullet] la division par $1 - \delta$ permet d'isoler la probabilité de défaut du spread
+\end{itemize}
+
+
+On obtient les valeurs suivantes pour la moyenne long terme $b$:
 
 \begin{itemize}
     \item Johnson \& Johnson: 42.94 bps
