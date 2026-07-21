@@ -150,4 +150,167 @@ Le code source complet de l'implémentation est disponible dans le dépôt GitHu
 \end{figure}
 
 
-\section{Résultat numérique}
+\section{Résultats}
+
+Nous présentons ci-dessous les résultats de la calibration du modèle CIR pour les trois entités de référence considérées. Les paramètres estimés sont résumés dans le tableau \ref{tab:calibration_cir}.
+
+\begin{table}[H]
+    \centering
+    \caption{Paramètres calibrés du modèle CIR pour les trois entreprises}
+    \label{tab:calibration_cir}
+
+    \small
+    \setlength{\tabcolsep}{4pt}
+
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X Y Y Y}
+        \toprule
+        \textbf{Paramètres} &
+        \textbf{Johnson \& Johnson} &
+        \textbf{Motorola Solutions} &
+        \textbf{Bombardier Inc} \\
+        \midrule
+
+        Date de calibration & 2021-09-10 & 2021-09-10 & 2021-09-10 \\
+
+        $b$ (bps) & 42.94 & 168.62 & 1147.49 \\
+
+        $\delta$ (\%) & 40.0 & 40.0 & 40.0 \\
+
+        $\hat{a}$ & 0.0517 & 0.1531 & 0.0779 \\
+
+        $\hat{\sigma}$ & 0.0119 & 0.3279 & 0.2203 \\
+
+        $\lambda_0$ (bps) & 40.39 & 61.83 & 590.45 \\
+
+        Résidu d'optimisation &
+        $3.235\times10^{-36}$ &
+        $5.857\times10^{-5}$ &
+        $3.754\times10^{-3}$ \\
+
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+
+\subsection{Test de cohérence}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/validation_survie_JNJ.png}
+    \caption[Test de cohérence pour Johnson \& Johnson]{Test de cohérence pour Johnson \& Johnson}
+    \label{fig:validation_coherence_jnj}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/validation_survie_MSI.png}
+    \caption[Test de cohérence pour Motorola Solutions]{Test de cohérence pour Motorola Solutions}
+    \label{fig:validation_coherence_msi}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/validation_survie_BBDBCN.png}
+    \caption[Test de cohérence pour Bombardier Inc]{Test de cohérence pour Bombardier Inc}
+    \label{fig:validation_coherence_bbdbcn}
+\end{figure}
+
+
+\subsection{Qualité d'ajustement économique}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/validation_courbe_JNJ.png}
+    \caption[Qualité d'ajustement économique pour Johnson \& Johnson]{Qualité d'ajustement économique pour Johnson \& Johnson}
+    \label{fig:validation_economic_jnj}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/validation_courbe_MSI.png}
+    \caption[Qualité d'ajustement économique pour Motorola Solutions]{Qualité d'ajustement économique pour Motorola Solutions}
+    \label{fig:validation_economic_msi}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/validation_courbe_BBDBCN.png}
+    \caption[Qualité d'ajustement économique pour Bombardier Inc]{Qualité d'ajustement économique pour Bombardier Inc}
+    \label{fig:validation_economic_bbdbcn}
+\end{figure}
+
+
+\subsection{Simulations des trajectoires de l'intensité de défaut}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/simulation_trajectoires_JNJ.png}
+    \caption[Trajectoires de l'intensité de défaut]{Trajectoires de l'intensité de défaut pour Johnson \& Johnson}
+    \label{fig:simulation_jnj}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/simulation_trajectoires_MSI.png}
+    \caption[Trajectoires de l'intensité de défaut]{Trajectoires de l'intensité de défaut pour Motorola Solutions}
+    \label{fig:simulation_msi}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/simulation_trajectoires_BBDBCN.png}
+    \caption[Trajectoires de l'intensité de défaut]{Trajectoires de l'intensité de défaut pour Bombardier Inc}
+    \label{fig:simulation_bbdbcn}
+\end{figure}
+
+
+\section{Analyse de sensibilité}
+
+\subsection{Sensibilité à la moyenne à long terme}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/sensibilite_b.png}
+    \caption[Sensibilité à la moyenne à long terme]{Sensibilité à la moyenne à long terme pour JNJ}
+    \label{fig:sensibilite_b}
+\end{figure}
+
+\subsection{Sensibilité à la vitesse de retour à la moyenne}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/sensibilite_a.png}
+    \caption[Sensibilité à la vitesse de retour à la moyenne]{Sensibilité à la vitesse de retour à la moyenne pour JNJ}
+    \label{fig:sensibilite_a}
+\end{figure}
+
+
+\subsection{Sensibilité à la volatilité}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/sensibilite_sigma.png}
+    \caption[Sensibilité à la volatilité]{Sensibilité à la volatilité pour JNJ}
+    \label{fig:sensibilite_sigma}
+\end{figure}
+
+
+\subsection{Sensibilité à l'intensité de défaut initiale}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/sensibilite_lambda0.png}
+    \caption[Sensibilité à l'intensité de défaut initiale]{Sensibilité à l'intensité de défaut initiale pour JNJ}
+    \label{fig:sensibilite_lambda0}
+\end{figure}
+
+
+\subsection{Sensibilité au taux de recouvrement}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{../figures/sensibilite_delta.png}
+    \caption[Sensibilité au taux de recouvrement]{Sensibilité au taux de recouvrement pour JNJ}
+    \label{fig:sensibilite_delta}
+\end{figure}
+
