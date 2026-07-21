@@ -13,27 +13,27 @@ Dans cette dernière partie, nous allons modéliser un jeu de données du march�
 Nous utilisons le jeu de données suivant sur les \gls{cds}, issu de la plateforme kaggle: \href{https://www.kaggle.com/datasets/debashish311601/credit-default-swap-cds-prices}{Kaggle - Credit Default Swap CDS Prices}. \footnote{Kaggle est une plateforme en ligne dédiée à la science des données (data science) et à l'intelligence artificielle, rattachée à Google.}. Il contient des séries chronologiques de spreads en points de base pour plus de 600 entités de référence, sur 10 échéances différentes, entre la période de Janvier 2015 à Septembre 2021.
 
 \begin{table}[htbp]
-\centering
-\caption{Extrait des données de spreads de CDS}
-\label{tab:kaggle_cds_prices}
-\footnotesize
-\setlength{\tabcolsep}{3pt}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{l l p{4cm} *{10}{r}}
-\toprule
-\textbf{Date} & \textbf{Ticker} & \textbf{Company} & \textbf{PX1} & \textbf{PX2} & \textbf{PX3} & \textbf{PX4} & \textbf{PX5} & \textbf{PX6} & \textbf{PX7} & \textbf{PX8} & \textbf{PX9} & \textbf{PX10} \\
-\midrule
-2015-01-01 & A          & Agilent Technologies Inc   & 14.850  & 25.050  & 39.055  & 73.715  & 86.300  & 111.305 & 125.905 & 144.300 & 158.600 & 168.195 \\
-2015-01-01 & VERAV      & Verbund AG                 & 13.495  & 23.545  & 35.050  & 48.325  & 61.570  & 70.960  & 80.345  & 85.370  & 90.400  & 95.430  \\
-2015-01-01 & HON        & Honeywell International Inc & 2.925   & 6.665   & 7.150   & 10.220  & 16.300  & 20.505  & 23.530  & 28.165  & 31.825  & 34.720  \\
-2015-01-01 & MASQUH     & Mashreqbank psc            & 116.215 & 134.580 & 160.915 & 192.000 & 221.170 & 244.270 & 267.445 & 270.575 & 273.495 & 275.820 \\
-2015-01-01 & CAR        & Avis Budget                & 34.000  & 72.410  & 121.105 & 185.715 & 244.500 & 295.945 & 330.905 & 340.970 & 349.775 & 357.040 \\
-\bottomrule
-\end{tabular}%
-}
-\setlength{\tabcolsep}{6pt}
-\par\medskip
-\footnotesize \textit{Source :} Jeu de données Kaggle "Crédit Default Swap CDS Prices" (Debashish, 2021). \\ Extrait des 5 premières lignes.
+    \centering
+    \caption{Extrait des données de spreads de CDS}
+    \label{tab:kaggle_cds_prices}
+    \footnotesize
+    \setlength{\tabcolsep}{3pt}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{l l p{4cm} *{10}{r}}
+        \toprule
+        \textbf{Date} & \textbf{Ticker} & \textbf{Company} & \textbf{PX1} & \textbf{PX2} & \textbf{PX3} & \textbf{PX4} & \textbf{PX5} & \textbf{PX6} & \textbf{PX7} & \textbf{PX8} & \textbf{PX9} & \textbf{PX10} \\
+        \midrule
+        2015-01-01 & A          & Agilent Technologies Inc   & 14.850  & 25.050  & 39.055  & 73.715  & 86.300  & 111.305 & 125.905 & 144.300 & 158.600 & 168.195 \\
+        2015-01-01 & VERAV      & Verbund AG                 & 13.495  & 23.545  & 35.050  & 48.325  & 61.570  & 70.960  & 80.345  & 85.370  & 90.400  & 95.430  \\
+        2015-01-01 & HON        & Honeywell International Inc & 2.925   & 6.665   & 7.150   & 10.220  & 16.300  & 20.505  & 23.530  & 28.165  & 31.825  & 34.720  \\
+        2015-01-01 & MASQUH     & Mashreqbank psc            & 116.215 & 134.580 & 160.915 & 192.000 & 221.170 & 244.270 & 267.445 & 270.575 & 273.495 & 275.820 \\
+        2015-01-01 & CAR        & Avis Budget                & 34.000  & 72.410  & 121.105 & 185.715 & 244.500 & 295.945 & 330.905 & 340.970 & 349.775 & 357.040 \\
+        \bottomrule
+    \end{tabular}%
+    }
+    \setlength{\tabcolsep}{6pt}
+    \par\medskip
+    \footnotesize \textit{Source :} Jeu de données Kaggle "Crédit Default Swap CDS Prices" (Debashish, 2021). \\ Extrait des 5 premières lignes.
 \end{table}
 
 Dans notre étude, nous considérons les trois entités de référence suivantes pour calibrer le modèle CIR: Johnson \& Johnson, Motorola Solutions, et Bombardier Inc.
@@ -102,3 +102,53 @@ On obtient les valeurs suivantes pour la moyenne long terme $b$:
 
 
 \chapter{Implémentation numérique du modèle}
+
+Pour l'implémentation numérique du modèle, nous avons utilisé le langage Python et les librairies \texttt{NumPy} et \texttt{Scipy} pour les calculs numériques. Nous avons également utilisé \texttt{Pandas} pour la manipulation des données et \texttt{Matplotlib} pour la visualisation des résultats.
+
+Dans un premier temps, nous avons appliqué la méthodologie développée dans la partie précédente afin de construire les intensités de défaut et estimer les paramètres du modèle CIR pour les trois entités de référence considérées. 
+
+Dans un second temps, nous avons simulé le processus CIR, calculé les probabilités de survie puis valorisé les contrats CDS correspondants, afin d'évaluer la capacité du modèle à reproduire les données de marché. 
+
+Enfin, nous faisons une analyse de sensibilité pour étudier l'influence des principaux paramètres du modèle sur la courbe des spreads. Pour ce faire, nous avons pris l'entité Johnson \& Johnson (JNJ) à titre d'illustration (la démarche étant identique pour les deux autres entités).
+
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[ node distance=1.1cm, every node/.style={draw, rounded corners, align=center, minimum width=7cm, minimum height=0.9cm, fill=gray!10}, >=latex]
+        \node (data) {Importation des données CDS};
+
+        \node (hazard) [below=of data] {Construction des intensités de défaut};
+
+        \node (calib) [below=of hazard] {Calibration des paramètres du modèle CIR \\ ($a$, $b$, $\sigma$, $\lambda_0$)};
+
+        \node (simu) [below=of calib] {Simulation du processus CIR};
+
+        \node (survie) [below=of simu] {Calcul des probabilités de survie};
+
+        \node (pricing) [below=of survie] {Valorisation des CDS \\ et calcul de la courbe des spreads};
+
+        \node (valid) [below=of pricing] {Validation du modèle \\ (RMSE et comparaison avec les données de marché)};
+
+        \node (sensi) [below=of valid] {Analyse de sensibilité};
+
+        \node (output) [below=of sensi] {Génération des tableaux et figures};
+
+        \draw[->] (data) -- (hazard);
+        \draw[->] (hazard) -- (calib);
+        \draw[->] (calib) -- (simu);
+        \draw[->] (simu) -- (survie);
+        \draw[->] (survie) -- (pricing);
+        \draw[->] (pricing) -- (valid);
+        \draw[->] (valid) -- (sensi);
+        \draw[->] (sensi) -- (output);
+    \end{tikzpicture}
+
+    \caption{Implémentation numérique du modèle CIR.}
+    \label{fig:organigramme_impl}
+\end{figure}
+
+
+Le code source complet de l'implémentation est disponible dans le dépôt GitHub associé à ce mémoire, accessible à l'adresse suivante : \href{https://github.com/zoRamanantsoa/Modelisation-et-Estimation-CDS/blob/main/cds.py}{Code Python pour la modélisation et l'estimation des CDS}.
+
+
+\section{Résultat numérique}
