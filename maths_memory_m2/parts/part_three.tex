@@ -374,14 +374,7 @@ C'est exactement la complémentarité attendue d'un modèle de structure par ter
 
 \chapter{Discussion générale et limite du modèle}
 
-Au cours de ce travail, nous avons développé un cadre de modélisation du risque de crédit fondé sur un modèle d'intensité de défaut de type Cox\allowbreak--Ingersoll\allowbreak--Ross (CIR). Après avoir établi les fondements probabilistes du modèle et les formules de valorisation des Credit Default Swaps (CDS), nous avons proposé une méthode d'estimation des paramètres reposant sur la méthode des moments appliquée à la distribution stationnaire du processus. Cette approche a ensuite été implémentée numériquement et testée sur plusieurs entreprises présentant des profils de risque différents.
-
-Les résultats obtenus permettent d'évaluer la pertinence de cette approche, mais également d'en identifier les limites. Ce chapitre propose une discussion des principaux résultats de l'étude, met en évidence les forces et les faiblesses du modèle CIR, puis présente plusieurs perspectives susceptibles d'améliorer la modélisation du risque de crédit.
-
-
-\section{Discussion des résultats}
-
-L'implémentation numérique réalisée dans ce mémoire montre que le modèle CIR constitue un cadre cohérent pour représenter la dynamique d'une intensité de défaut et valoriser des contrats de Credit Default Swaps.
+L'implémentation numérique du chapitre précédent montre que le modèle CIR constitue un cadre cohérent pour représenter la dynamique d'une intensité de défaut et valoriser des contrats de Credit Default Swaps.
 
 Le premier résultat important concerne la validation de l'implémentation numérique. Les probabilités de survie obtenues par la formule analytique sont en accord avec celles estimées par simulation de Monte-Carlo, avec des écarts très faibles pour les trois entreprises étudiées. Cette concordance confirme la validité des expressions analytiques dérivées dans les chapitres précédents ainsi que la bonne implémentation du modèle.
 
@@ -396,13 +389,13 @@ Ainsi, les résultats obtenus confirment que le modèle CIR constitue un outil p
 
 \section{Forces du modèle CIR}
 
-Le modèle de Cox–Ingersoll–Ross possède plusieurs propriétés qui expliquent son succès dans la modélisation des taux d'intérêt et des intensités de défaut.
+Le modèle de CIR possède plusieurs propriétés qui expliquent son succès dans la modélisation des taux d'intérêt et des intensités de défaut.
 
 La première qualité du modèle réside dans la garantie de non-négativité du processus. Une intensité de défaut représentant une probabilité instantanée de défaut, elle ne peut prendre que des valeurs positives. Grâce au terme de diffusion proportionnel à la racine carrée du processus, le modèle respecte naturellement cette contrainte, tandis que la condition de Feller garantit même la stricte positivité du processus.
 
 Le modèle présente également une propriété naturelle de retour vers la moyenne. Cette caractéristique traduit le fait que le risque de crédit d'une entreprise tend généralement à évoluer autour d'un niveau d'équilibre de long terme plutôt que de croître ou décroître indéfiniment. Cette hypothèse apparaît particulièrement réaliste pour représenter les cycles de détérioration puis de redressement de la qualité de crédit.
 
-Un autre avantage important réside dans la structure même de la diffusion. La volatilité étant proportionnelle à $\sqrt{\lambda_t}$, les fluctuations de l'intensité augmentent naturellement lorsque le risque de défaut devient plus élevé. Cette propriété permet de reproduire une hétéroscédasticité absente de modèles à volatilité constante.
+Un autre avantage important réside dans la structure même de la diffusion. La volatilité étant proportionnelle à $\sqrt{\lambda_t}$, les fluctuations de l'intensité augmentent naturellement lorsque le risque de défaut devient plus élevé. Cette caractéristique permet de représenter des variations de prix réalistes, ce que les modèles à volatilité constante ne savent pas faire.
 
 Le modèle CIR appartient également à la famille des modèles affines. Cette propriété constitue l'un de ses principaux intérêts pratiques puisqu'elle conduit à des expressions analytiques fermées ou semi-fermées pour les probabilités de survie, les facteurs d'actualisation et la valorisation des CDS. Cette tractabilité réduit considérablement le recours aux méthodes de simulation et diminue le coût de calcul lors de la calibration.
 
@@ -413,7 +406,7 @@ Enfin, le modèle peut être généralisé au cas multifactoriel. Cette extensio
 
 \section{Limites du modèle CIR}
 
-Malgré ses nombreuses qualités, le modèle CIR présente plusieurs limites qui apparaissent à la fois dans notre étude et dans la littérature.
+Malgré ses nombreuses qualités, le modèle CIR présente plusieurs limites qui apparaissent à la fois dans notre étude et dans le cadre générale.
 
 \subsection{Limites observées dans notre étude}
 
@@ -429,7 +422,7 @@ Enfin, le choix d'un modèle monofactoriel, motivé par la disponibilité limit�
 
 Au-delà des limites propres à notre implémentation, le modèle CIR présente plusieurs limitations plus générales.
 
-Le processus CIR est avant tout un modèle de diffusion continue. Il ne peut donc pas reproduire les ruptures brutales observées sur les marchés financiers, telles que les dégradations soudaines de notation, les faillites inattendues ou les crises financières. Les spreads de CDS présentent pourtant fréquemment ce type de comportements.
+Le processus CIR est avant tout un modèle de diffusion continue. Il ne peut donc pas reproduire les ruptures brutales observées sur les marchés financiers, telles que les dégradations soudaines de notation, les faillites inattendues ou les crises financières.
 
 La structure de volatilité imposée par le terme $\sqrt{\lambda_t}$ constitue également une hypothèse restrictive. Bien qu'elle garantisse la positivité du processus, elle ne permet pas toujours de reproduire fidèlement les fortes asymétries, les queues épaisses ou les épisodes de volatilité extrême observés sur les marchés du crédit.
 
@@ -448,15 +441,9 @@ Les limites identifiées dans ce mémoire ouvrent plusieurs perspectives de rech
 
 Une première amélioration concerne les méthodes de calibration. L'utilisation de la méthode du maximum de vraisemblance permettrait d'exploiter l'ensemble de la dynamique temporelle des observations et de réduire les biais introduits par l'hypothèse de stationnarité. Des approches bayésiennes pourraient également être envisagées afin d'intégrer explicitement l'incertitude associée aux paramètres et de produire des estimations plus robustes, notamment lorsque les données disponibles sont limitées.
 
-Une seconde perspective consiste à revenir au modèle CIR multifactoriel en autorisant une corrélation entre les différents facteurs de risque. Une telle approche permettrait de distinguer plusieurs composantes du risque de crédit, par exemple les risques spécifiques à l'entreprise, les risques sectoriels et les risques macroéconomiques, tout en tenant compte de leurs interactions.
-
-Il serait également envisageable de remplacer les paramètres constants du modèle par des paramètres dépendant du temps. Une telle extension offrirait davantage de flexibilité pour représenter les changements de régime économique, les périodes de crise ou les modifications progressives des conditions de marché.
+Une seconde perspective consiste à remplacer les paramètres constants du modèle par des paramètres dépendant du temps. Une telle extension offrirait davantage de flexibilité pour représenter les changements de régime économique, les périodes de crise ou les modifications progressives des conditions de marché.
 
 L'introduction de processus à sauts constitue également une voie prometteuse. Les modèles de type Jump-CIR ou Affine Jump-Diffusion permettent de représenter les variations brutales des spreads provoquées par des annonces importantes, des défauts inattendus ou des événements macroéconomiques majeurs, tout en conservant une partie de la structure analytique des modèles affines.
-
-Plus généralement, des modèles affines plus riches que le CIR pourraient être étudiés. Les modèles développés par Duffie et Kan ou encore les modèles affines avec diffusion et sauts offrent une plus grande flexibilité tout en préservant une tractabilité analytique satisfaisante pour la valorisation des produits dérivés de crédit.
-
-Une autre perspective consisterait à comparer les modèles à intensité, tels que le CIR, aux modèles structurels du risque de crédit, notamment les modèles de Merton ou de Black-Cox. Contrairement aux modèles à intensité, ces derniers expliquent le défaut comme la conséquence directe de l'évolution de la valeur des actifs de l'entreprise. Une étude comparative permettrait de mieux cerner les domaines d'application respectifs de ces deux grandes familles de modèles.
 
 Enfin, les progrès récents de l'intelligence artificielle ouvrent de nouvelles perspectives pour la modélisation du risque de crédit. Les techniques d'apprentissage automatique, telles que les réseaux de neurones, les méthodes d'ensemble ou les processus gaussiens, pourraient être utilisées pour améliorer la calibration des modèles, estimer directement les paramètres à partir des données de marché ou encore approcher la dynamique des spreads sans imposer une structure paramétrique aussi restrictive que celle du modèle CIR. Le développement d'approches hybrides combinant modèles stochastiques et apprentissage automatique constitue aujourd'hui un domaine de recherche particulièrement prometteur pour la valorisation des dérivés de crédit.
 

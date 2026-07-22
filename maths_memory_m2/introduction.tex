@@ -1,0 +1,66 @@
+% !TEX root = ./main.tex
+
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+
+Depuis la fin des ann\'ees 1990, les d\'eriv\'es de cr\'edit occupent une place de
+plus en plus importante dans la gestion et le transfert du risque de cr\'edit.
+Parmi ces instruments, le \emph{Credit Default Swap} (CDS) s'est impos\'e comme
+le produit de r\'ef\'erence, permettant \`a un acheteur de protection de se
+pr\'emunir contre le risque de d\'efaut d'une entit\'e tierce moyennant le
+versement d'une prime p\'eriodique \`a un vendeur de protection. Au-del\`a de
+son rôle de couverture, le CDS constitue \'egalement un indicateur de march\'e
+pr\'ecieux : le spread qui lui est associ\'e refl\`ete en temps r\'eel la
+perception, par les investisseurs, de la qualit\'e de cr\'edit de l'entit\'e de
+r\'ef\'erence.
+
+La valorisation de ces contrats repose n\'ecessairement sur une mod\'elisation
+math\'ematique du risque de d\'efaut. Deux grandes familles d'approches
+coexistent dans la litt\'erature : les mod\`eles structurels, issus des travaux
+de Merton, qui relient le d\'efaut \`a la valeur des actifs de l'entreprise, et
+les mod\`eles \`a intensit\'e (ou \emph{reduced-form models}), dans lesquels le
+d\'efaut est mod\'elis\'e comme l'instant de saut d'un processus de comptage dont
+l'intensit\'e, appel\'ee intensit\'e de d\'efaut, est elle-m\^eme un processus
+stochastique. Cette seconde approche pr\'esente l'avantage de ne pas exiger
+d'hypoth\`eses sur la structure du bilan de l'entreprise et de se pr\^eter
+naturellement \`a la valorisation des produits d\'eriv\'es de cr\'edit \`a partir
+des donn\'ees de march\'e observables.
+
+Dans ce cadre, le choix du processus stochastique retenu pour repr\'esenter
+l'intensit\'e de d\'efaut est d\'eterminant. Ce processus doit en effet respecter
+certaines propri\'et\'es \'economiques essentielles : rester positif \`a tout
+instant, puisqu'il s'agit d'un taux instantan\'e de d\'efaut, et pr\'esenter un
+comportement de retour vers un niveau d'\'equilibre de long terme, conform\'ement
+aux observations empiriques sur l'\'evolution du risque de cr\'edit. Le mod\`ele
+de Cox--Ingersoll--Ross (CIR), initialement d\'evelopp\'e pour la mod\'elisation
+des taux d'int\'er\^et courts, satisfait ces deux exigences et offre de surcro\^it
+une tractabilit\'e analytique remarquable gr\^ace \`a sa structure affine, ce qui
+en fait un candidat naturel pour la mod\'elisation de l'intensit\'e de d\'efaut.
+
+L'objectif de ce m\'emoire est double. Il s'agit, d'une part, de construire un
+cadre probabiliste rigoureux permettant de mod\'eliser le d\'efaut d'une entit\'e
+de r\'ef\'erence \`a l'aide d'un processus d'intensit\'e de type CIR, puis d'en
+d\'eduire les formules de valorisation des deux jambes d'un CDS, la jambe fixe
+et la jambe de protection, ainsi que le spread th\'eorique du contrat.
+D'autre part, il s'agit de proposer et de mettre en \oe uvre une m\'ethode
+d'estimation des param\`etres du mod\`ele \`a partir des spreads de CDS
+observ\'es sur le march\'e, puis d'appliquer cette m\'ethode \`a des donn\'ees
+r\'eelles afin d'\'evaluer la capacit\'e du mod\`ele \`a reproduire les
+observations de march\'e et d'en discuter les forces et les limites.
+
+Pour r\'epondre \`a ces objectifs, ce m\'emoire est organis\'e en trois parties.
+La premi\`ere partie pose les bases th\'eoriques n\'ecessaires \`a l'\'etude :
+elle pr\'esente le fonctionnement des Credit Default Swaps, rappelle les
+notions fondamentales de th\'eorie des probabilit\'es et de calcul stochastique
+utiles \`a la suite du m\'emoire, et introduit le mod\`ele CIR ainsi que les
+principales m\'ethodes d'estimation statistique. La deuxi\`eme partie
+d\'eveloppe le cadre de mod\'elisation du d\'efaut dans un espace probabilis\'e
+filtr\'e, construit le mod\`ele CIR multifactoriel retenu pour l'intensit\'e de
+d\'efaut, \'etablit les formules de valorisation des deux jambes du CDS, puis
+propose une m\'ethode d'estimation des param\`etres du mod\`ele fond\'ee sur la
+m\'ethode des moments appliqu\'ee \`a la distribution stationnaire du processus
+CIR. Enfin, la troisi\`eme partie est consacr\'ee \`a l'application num\'erique du
+mod\`ele sur des donn\'ees r\'eelles de spreads de CDS pour trois entreprises
+pr\'esentant des profils de risque de cr\'edit contrast\'es, \`a l'analyse des
+r\'esultats obtenus, \`a une \'etude de sensibilit\'e des param\`etres, ainsi
+qu'\`a une discussion critique des forces et des limites du mod\`ele CIR.

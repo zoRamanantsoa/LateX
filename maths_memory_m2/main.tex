@@ -17,6 +17,7 @@
 \usepackage{biblatex}
 \usepackage[french]{babel}
 \usepackage{tikz}
+\usepackage{setspace}
 
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 
@@ -39,24 +40,47 @@
 \pagenumbering{roman}
 
 % --- Table des matières ---
+{
+\begin{spacing}{0.99}
 \tableofcontents
+\end{spacing}
+}
 \newpage
 
 % --- Liste des tableaux ---
+{
+\begin{spacing}{0.99}
 \listoftables
 \addcontentsline{toc}{chapter}{Liste des tableaux}  % Pour report/book
+\end{spacing}
+}
 \newpage
 
 % --- Liste des figures ---
+{
+\begin{spacing}{0.99}
 \listoffigures
 \addcontentsline{toc}{chapter}{Liste des figures}  % Pour report/book
+\end{spacing}
+}
 \newpage
 
 \pagenumbering{arabic}
 
+% --- Introduction ---
+\include{introduction}
+
+% --- Partie 1 ---
 \include{parts/part_one}
+
+% --- Partie 2 ---
 \include{parts/part_two}
+
+% --- Partie 3 ---
 \include{parts/part_three}
+
+% --- Conclusion ---
+\include{conclusion}
 
 \printglossary[type=\acronymtype,title=Liste des abréviations]
 
