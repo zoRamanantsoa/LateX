@@ -19,17 +19,17 @@ Nous utilisons le jeu de données suivant sur les \gls{cds}, issu de la platefor
     \footnotesize
     \setlength{\tabcolsep}{3pt}
     \resizebox{\textwidth}{!}{%
-    \begin{tabular}{l l p{4cm} *{10}{r}}
-        \toprule
-        \textbf{Date} & \textbf{Ticker} & \textbf{Company} & \textbf{PX1} & \textbf{PX2} & \textbf{PX3} & \textbf{PX4} & \textbf{PX5} & \textbf{PX6} & \textbf{PX7} & \textbf{PX8} & \textbf{PX9} & \textbf{PX10} \\
-        \midrule
-        2015-01-01 & A          & Agilent Technologies Inc   & 14.850  & 25.050  & 39.055  & 73.715  & 86.300  & 111.305 & 125.905 & 144.300 & 158.600 & 168.195 \\
-        2015-01-01 & VERAV      & Verbund AG                 & 13.495  & 23.545  & 35.050  & 48.325  & 61.570  & 70.960  & 80.345  & 85.370  & 90.400  & 95.430  \\
-        2015-01-01 & HON        & Honeywell International Inc & 2.925   & 6.665   & 7.150   & 10.220  & 16.300  & 20.505  & 23.530  & 28.165  & 31.825  & 34.720  \\
-        2015-01-01 & MASQUH     & Mashreqbank psc            & 116.215 & 134.580 & 160.915 & 192.000 & 221.170 & 244.270 & 267.445 & 270.575 & 273.495 & 275.820 \\
-        2015-01-01 & CAR        & Avis Budget                & 34.000  & 72.410  & 121.105 & 185.715 & 244.500 & 295.945 & 330.905 & 340.970 & 349.775 & 357.040 \\
-        \bottomrule
-    \end{tabular}%
+        \begin{tabular}{l l p{4cm} *{10}{r}}
+            \toprule
+            \textbf{Date} & \textbf{Ticker} & \textbf{Company}            & \textbf{PX1} & \textbf{PX2} & \textbf{PX3} & \textbf{PX4} & \textbf{PX5} & \textbf{PX6} & \textbf{PX7} & \textbf{PX8} & \textbf{PX9} & \textbf{PX10} \\
+            \midrule
+            2015-01-01    & A               & Agilent Technologies Inc    & 14.850       & 25.050       & 39.055       & 73.715       & 86.300       & 111.305      & 125.905      & 144.300      & 158.600      & 168.195       \\
+            2015-01-01    & VERAV           & Verbund AG                  & 13.495       & 23.545       & 35.050       & 48.325       & 61.570       & 70.960       & 80.345       & 85.370       & 90.400       & 95.430        \\
+            2015-01-01    & HON             & Honeywell International Inc & 2.925        & 6.665        & 7.150        & 10.220       & 16.300       & 20.505       & 23.530       & 28.165       & 31.825       & 34.720        \\
+            2015-01-01    & MASQUH          & Mashreqbank psc             & 116.215      & 134.580      & 160.915      & 192.000      & 221.170      & 244.270      & 267.445      & 270.575      & 273.495      & 275.820       \\
+            2015-01-01    & CAR             & Avis Budget                 & 34.000       & 72.410       & 121.105      & 185.715      & 244.500      & 295.945      & 330.905      & 340.970      & 349.775      & 357.040       \\
+            \bottomrule
+        \end{tabular}%
     }
     \setlength{\tabcolsep}{6pt}
     \par\medskip
@@ -63,7 +63,7 @@ Enfin, ces trois séries disposent d'un historique complet sans donnée manquant
     \centering
     \includegraphics[scale=0.5]{../figures/spread_bbdbcn.png}
     \caption[Spread de Bombardier]{Spread de maturité 5 ans pour Bombardier Inc}
-    \label{fig:spread_bbdbcn}    
+    \label{fig:spread_bbdbcn}
 \end{figure}
 
 
@@ -105,9 +105,9 @@ On obtient les valeurs suivantes pour la moyenne long terme $b$:
 
 Pour l'implémentation numérique du modèle, nous avons utilisé le langage Python et les librairies \texttt{NumPy} et \texttt{Scipy} pour les calculs numériques. Nous avons également utilisé \texttt{Pandas} pour la manipulation des données et \texttt{Matplotlib} pour la visualisation des résultats.
 
-Dans un premier temps, nous avons appliqué la méthodologie développée dans la partie précédente afin de construire les intensités de défaut et estimer les paramètres du modèle CIR pour les trois entités de référence considérées. 
+Dans un premier temps, nous avons appliqué la méthodologie développée dans la partie précédente afin de construire les intensités de défaut et estimer les paramètres du modèle CIR pour les trois entités de référence considérées.
 
-Dans un second temps, nous avons simulé le processus CIR, calculé les probabilités de survie puis valorisé les contrats CDS correspondants, afin d'évaluer la capacité du modèle à reproduire les données de marché. 
+Dans un second temps, nous avons simulé le processus CIR, calculé les probabilités de survie puis valorisé les contrats CDS correspondants, afin d'évaluer la capacité du modèle à reproduire les données de marché.
 
 Enfin, nous faisons une analyse de sensibilité pour étudier l'influence des principaux paramètres du modèle sur la courbe des spreads. Pour ce faire, nous avons pris l'entité Johnson \& Johnson (JNJ) à titre d'illustration (la démarche étant identique pour les deux autres entités).
 
@@ -164,30 +164,30 @@ Nous présentons ci-dessous les résultats de la calibration du modèle CIR pour
 
     \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X Y Y Y}
         \toprule
-        \textbf{Paramètres} &
+        \textbf{Paramètres}         &
         \textbf{Johnson \& Johnson} &
         \textbf{Motorola Solutions} &
-        \textbf{Bombardier Inc} \\
+        \textbf{Bombardier Inc}                                            \\
         \midrule
 
-        Date de calibration & 2021-09-10 & 2021-09-10 & 2021-09-10 \\
+        Date de calibration         & 2021-09-10 & 2021-09-10 & 2021-09-10 \\
 
-        $b$ (bps) & 42.94 & 168.62 & 1147.49 \\
+        $b$ (bps)                   & 42.94      & 168.62     & 1147.49    \\
 
-        $\delta$ (\%) & 40.0 & 40.0 & 40.0 \\
+        $\delta$ (\%)               & 40.0       & 40.0       & 40.0       \\
 
-        $\hat{a}$ & 0.0517 & 0.1531 & 0.0779 \\
+        $\hat{a}$                   & 0.0517     & 0.1531     & 0.0779     \\
 
-        $\hat{\sigma}$ & 0.0119 & 0.3279 & 0.2203 \\
+        $\hat{\sigma}$              & 0.0119     & 0.3279     & 0.2203     \\
 
-        $\lambda_0$ (bps) & 40.39 & 61.83 & 590.45 \\
+        $\lambda_0$ (bps)           & 40.39      & 61.83      & 590.45     \\
 
-        RMSE (bps) & 11 & 22 & 126 \\
+        RMSE (bps)                  & 11         & 22         & 126        \\
 
-        Résidu d'optimisation &
-        $3.235\times10^{-36}$ &
-        $5.857\times10^{-5}$ &
-        $3.754\times10^{-3}$ \\
+        Résidu d'optimisation       &
+        $3.235\times10^{-36}$       &
+        $5.857\times10^{-5}$        &
+        $3.754\times10^{-3}$                                               \\
 
         \bottomrule
     \end{tabularx}
@@ -252,12 +252,16 @@ Dans cette section, nous comparons les courbes de spreads observées sur le marc
 
 \subsection{Simulations des trajectoires de l'intensité de défaut}
 
+Intéressons nous maintenant à la simulation des trajectoires de l'intensité de défaut pour les trois entités considérées. Nous avons simulé 15 trajectoires pour chaque entité, en utilisant les paramètres calibrés du modèle CIR. Les résultats sont présentés dans les figures \ref{fig:simulation_jnj}, \ref{fig:simulation_msi} et \ref{fig:simulation_bbdbcn}.
+
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.5]{../figures/simulation_trajectoires_JNJ.png}
     \caption[Trajectoires de l'intensité de défaut]{Trajectoires de l'intensité de défaut pour Johnson \& Johnson}
     \label{fig:simulation_jnj}
 \end{figure}
+
+Les trajectoires partent toutes du même point ($\lambda_0 \approx 40 bps$) puis divergent progressivement les unes des autres au fil du temps, sans jamais vraiment se resserrer autour de la moyenne de long terme. Par ailleurs, on remarque une faible volatilité instantanée : absence d'à-coups brusques. Enfin, on ne voit aucun retour visible vers la droite b sur l'horizon simulé. Cela illustre concrètement une vitesse de retour à la moyenne trop faible pour se manifester sur un horizon de 20 ans.
 
 \begin{figure}[H]
     \centering
@@ -266,6 +270,8 @@ Dans cette section, nous comparons les courbes de spreads observées sur le marc
     \label{fig:simulation_msi}
 \end{figure}
 
+Le comportement est visuellement très différent : les trajectoires sont beaucoup plus agitées, avec des pics brusques et localisés dans le temps. On observe ici un net phénomène d'aller-retour : chaque pic est suivi d'une redescente rapide vers la zone proche de b (168.6 bps) ou même en dessous, ce qui traduit une vitesse de retour à la moyenne plus rapide. On remarque aussi que la plupart des trajectoires stagnent près de zéro pendant de longues périodes, avant qu'une ou deux ne reprennent brutalement de l'amplitude — ce comportement est la signature visuelle de la violation de la condition de Feller.
+
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.5]{../figures/simulation_trajectoires_BBDBCN.png}
@@ -273,8 +279,22 @@ Dans cette section, nous comparons les courbes de spreads observées sur le marc
     \label{fig:simulation_bbdbcn}
 \end{figure}
 
+Les trajectoires démarrent toutes autour de 590 bps et connaissent d'emblée une forte dispersion précoce : certaines culminent à plus de 5 000 bps tandis que la majorité des autres redescendent et stagnent dans une bande basse pendant une grande partie de la simulation. Ce contraste entre une masse de trajectoires basses et quelques trajectoires extrêmes illustre bien le caractère asymétrique de la distribution du processus CIR — un émetteur déjà fragile a une probabilité non négligeable de voir son risque de crédit s'envoler brutalement, alors que la zone proche de 0 contient mécaniquement les scénarios favorables.
+
+\medskip
+
+Ainsi, nous pouvons déduire les points suivants :
+
+\begin{itemize}
+    \item aucune trajectoires ne devient négative, ce qui est conforme à la nature du processus CIR
+    \item plus l'entité est risquée, plus le processus « visite » le voisinage de zéro et plus les trajectoires sont dispersées et agitées, ce qui est conforme à la violation de la condition de Feller
+    \item l'amplitude des sauts croît avec le niveau courant de $\lambda_t$, ce qui est conforme à la nature multiplicative du terme de diffusion
+\end{itemize}
+
 
 \section{Analyse de sensibilité}
+
+Dans cette section, nous analysons l'impact des variations des paramètres du modèle CIR sur la courbe des spreads. Nous étudions individuellement l'effet de chaque paramètre sur la courbe afin de comprendre leur influence sur celle-ci. Dans cette analyse, nous considérons l'entité Johnson \& Johnson (JNJ) à titre d'illustration, mais la démarche est identique pour les deux autres entités.
 
 \subsection{Sensibilité à la moyenne à long terme}
 
@@ -285,6 +305,9 @@ Dans cette section, nous comparons les courbes de spreads observées sur le marc
     \label{fig:sensibilite_b}
 \end{figure}
 
+C'est le paramètre qui a l'effet le plus puissant sur la pente de la courbe (le spread de maturité 20 ans varie de 20 à 34 bps selon b, alors que ceux de moins d'un an bouge à peine). C'est dûe au fait que b est le niveau vers lequel converge $\lambda_t$ à très long terme, donc il détermine directement le niveau des maturités longues, sans affecter le très court terme. Si $b < \lambda_0$ (cas où $b=21.5bps < \lambda_0=40.4bps$), la courbe devient décroissante — le marché anticipe une amélioration de la qualité de crédit dans le temps. Ce paramètre pilote donc la forme structurelle de la courbe (normale, plate ou inversée).
+
+
 \subsection{Sensibilité à la vitesse de retour à la moyenne}
 
 \begin{figure}[H]
@@ -293,6 +316,8 @@ Dans cette section, nous comparons les courbes de spreads observées sur le marc
     \caption[Sensibilité à la vitesse de retour à la moyenne]{Sensibilité à la vitesse de retour à la moyenne pour JNJ}
     \label{fig:sensibilite_a}
 \end{figure}
+
+Ici $\lambda_0$ (40.4 bps) est légèrement en dessous de b (42.9 bps) : le modèle anticipe une remontée progressive vers la moyenne de long terme. Plus a est grand, plus cette remontée est rapide, donc plus les intensités moyennes intégrées sur les maturités longues se rapprochent de b — d'où une pente positive qui s'accentue avec a. À la limite $a \rightarrow 0$, l'intensité reste proche de $\lambda_0$ indéfiniment et la courbe est quasi plate. C'est le paramètre qui gouverne directement la vitesse de convergence de la courbe de spread vers son régime asymptotique b.
 
 
 \subsection{Sensibilité à la volatilité}
@@ -304,6 +329,8 @@ Dans cette section, nous comparons les courbes de spreads observées sur le marc
     \label{fig:sensibilite_sigma}
 \end{figure}
 
+Les spreads de moins d'un an sont quasiment insensibles à $\sigma$ : sur un horizon très court, l'incertitude n'a pas eu le temps de se manifester. L'effet se concentre sur la partie longue de la courbe : plus $\sigma$ est élevé, plus le spread long terme baisse. La courbe s'aplatit, puis s'inverse (pente négative) pour $\sigma$ très élevé. Économiquement, ce résultat est contre-intuitif si on pense « plus de volatilité = plus de risque » : ici c'est un pur effet mathématique de convexité de la probabilité de survie, pas un effet de prime de risque (le modèle est déjà sous la mesure risque-neutre).
+
 
 \subsection{Sensibilité à l'intensité de défaut initiale}
 
@@ -313,6 +340,8 @@ Dans cette section, nous comparons les courbes de spreads observées sur le marc
     \caption[Sensibilité à l'intensité de défaut initiale]{Sensibilité à l'intensité de défaut initiale pour JNJ}
     \label{fig:sensibilite_lambda0}
 \end{figure}
+
+$\lambda_0$ domine totalement les spreads de maturités moins d'un an, en effet c'est quasiment la valeur instantanée de l'intensité. Son effet s'estompe progressivement à mesure que la maturité augmente, car le mécanisme de retour à la moyenne (piloté par a) « efface » l'information initiale au profit de b. On observe un effet de pivot : quand $\lambda_0 < b$, la courbe est croissante (le marché s'attend à une dégradation depuis un niveau bas) ; quand $\lambda_0 > b$, elle devient décroissante (dégradation actuelle jugée transitoire, amélioration anticipée). C'est le paramètre qui capte le mieux le niveau de stress immédiat perçu par le marché.
 
 
 \subsection{Sensibilité au taux de recouvrement}
@@ -324,3 +353,111 @@ Dans cette section, nous comparons les courbes de spreads observées sur le marc
     \label{fig:sensibilite_delta}
 \end{figure}
 
+On a un effet quasi proportionnel et parallèle : le spread scale essentiellement en $(1 - \delta)$ à tous les tenors — normal puisque la jambe de protection est multipliée par $(1 - \delta)$ dans la formule (6.6)/(6.7), pour une même dynamique de $\lambda$. La forme de la courbe (la pente) change très peu ; c'est un pur effet de niveau. Économiquement, $\delta$ traduit l'hypothèse sur ce que récupère l'acheteur de protection en cas de défaut : plus $\delta$ est élevé, moins la perte anticipée est importante, donc moins la prime exigée est élevée.
+
+
+\subsection{Synthèse de l'analyse de sensibilité}
+
+Les cinq paramètres jouent des rôles bien différenciés et complémentaires, ce qui valide a posteriori le choix du modèle CIR pour cet usage :
+
+\begin{itemize}
+    \item $b$ : domine le long terme, quasi neutre à court terme — reflète le niveau de risque structurel/permanent anticipé par le marché.
+    \item $a$ : gouverne la vitesse à laquelle on passe de $\lambda_0$ à $b$ — reflète la rapidité anticipée de normalisation (ou de dégradation) de la qualité de crédit.
+    \item $\lambda_0$ : domine le court terme, s'estompe à long terme — reflète le stress de crédit actuel.
+    \item $\delta$ : effet de niveau pur, presque parallèle sur toute la courbe — reflète la sévérité anticipée de la perte en cas de défaut.
+    \item $\sigma$ : effet plus subtil et de second ordre, lié à la convexité de la probabilité de survie — n'a pas d'interprétation économique aussi directe que les autres ; c'est davantage un paramètre "technique" ajustant la courbure fine de la courbe.
+\end{itemize}
+
+
+C'est exactement la complémentarité attendue d'un modèle de structure par termes à un facteur : $\lambda_0$ et $b$ bornent la courbe (départ et asymptote), $a$ règle la transition entre les deux, et $\delta$ est un facteur d'échelle indépendant de la dynamique. $\sigma$, en revanche, a un rôle plus marginal.
+
+
+\chapter{Discussion générale et limite du modèle}
+
+Au cours de ce travail, nous avons développé un cadre de modélisation du risque de crédit fondé sur un modèle d'intensité de défaut de type Cox\allowbreak--Ingersoll\allowbreak--Ross (CIR). Après avoir établi les fondements probabilistes du modèle et les formules de valorisation des Credit Default Swaps (CDS), nous avons proposé une méthode d'estimation des paramètres reposant sur la méthode des moments appliquée à la distribution stationnaire du processus. Cette approche a ensuite été implémentée numériquement et testée sur plusieurs entreprises présentant des profils de risque différents.
+
+Les résultats obtenus permettent d'évaluer la pertinence de cette approche, mais également d'en identifier les limites. Ce chapitre propose une discussion des principaux résultats de l'étude, met en évidence les forces et les faiblesses du modèle CIR, puis présente plusieurs perspectives susceptibles d'améliorer la modélisation du risque de crédit.
+
+
+\section{Discussion des résultats}
+
+L'implémentation numérique réalisée dans ce mémoire montre que le modèle CIR constitue un cadre cohérent pour représenter la dynamique d'une intensité de défaut et valoriser des contrats de Credit Default Swaps.
+
+Le premier résultat important concerne la validation de l'implémentation numérique. Les probabilités de survie obtenues par la formule analytique sont en accord avec celles estimées par simulation de Monte-Carlo, avec des écarts très faibles pour les trois entreprises étudiées. Cette concordance confirme la validité des expressions analytiques dérivées dans les chapitres précédents ainsi que la bonne implémentation du modèle.
+
+L'analyse de sensibilité met également en évidence le rôle économique des différents paramètres du modèle. Les paramètres $a$, $b$, $\sigma$, $\lambda_0$ et $\delta$ influencent chacun la structure des spreads de manière identifiable et conforme, dans l'ensemble, à leur interprétation théorique. En particulier, le niveau moyen de long terme $b$ contrôle principalement le niveau général des spreads, tandis que le paramètre $a$ détermine la vitesse de retour vers ce niveau d'équilibre. L'intensité initiale $\lambda_0$ agit essentiellement sur les maturités courtes, alors que le taux de recouvrement $\delta$ produit un effet d'échelle sur les spreads.
+
+Les simulations montrent également que le modèle reproduit plusieurs caractéristiques attendues de l'intensité de défaut. Les trajectoires simulées demeurent positives, présentent un retour vers une moyenne de long terme et affichent une volatilité qui augmente avec le niveau courant de l'intensité. Ces propriétés traduisent fidèlement plusieurs mécanismes observés dans l'évolution du risque de crédit.
+
+En revanche, l'ajustement des courbes de spreads met en évidence certaines insuffisances. Si le modèle reproduit correctement le niveau moyen des spreads, il peine à restituer leur structure par termes observée sur le marché. Les courbes théoriques obtenues apparaissent relativement plates alors que les spreads observés présentent généralement une croissance plus marquée avec la maturité. Les erreurs de calibration obtenues, notamment pour les entreprises les plus risquées, montrent ainsi que le modèle monofactoriel retenu ne possède pas une flexibilité suffisante pour représenter l'ensemble de la dynamique observée sur les marchés du crédit.
+
+Ainsi, les résultats obtenus confirment que le modèle CIR constitue un outil pertinent pour une première modélisation du risque de crédit, mais qu'il demeure limité lorsqu'il s'agit de reproduire fidèlement les comportements complexes observés sur les marchés financiers.
+
+
+\section{Forces du modèle CIR}
+
+Le modèle de Cox–Ingersoll–Ross possède plusieurs propriétés qui expliquent son succès dans la modélisation des taux d'intérêt et des intensités de défaut.
+
+La première qualité du modèle réside dans la garantie de non-négativité du processus. Une intensité de défaut représentant une probabilité instantanée de défaut, elle ne peut prendre que des valeurs positives. Grâce au terme de diffusion proportionnel à la racine carrée du processus, le modèle respecte naturellement cette contrainte, tandis que la condition de Feller garantit même la stricte positivité du processus.
+
+Le modèle présente également une propriété naturelle de retour vers la moyenne. Cette caractéristique traduit le fait que le risque de crédit d'une entreprise tend généralement à évoluer autour d'un niveau d'équilibre de long terme plutôt que de croître ou décroître indéfiniment. Cette hypothèse apparaît particulièrement réaliste pour représenter les cycles de détérioration puis de redressement de la qualité de crédit.
+
+Un autre avantage important réside dans la structure même de la diffusion. La volatilité étant proportionnelle à $\sqrt{\lambda_t}$, les fluctuations de l'intensité augmentent naturellement lorsque le risque de défaut devient plus élevé. Cette propriété permet de reproduire une hétéroscédasticité absente de modèles à volatilité constante.
+
+Le modèle CIR appartient également à la famille des modèles affines. Cette propriété constitue l'un de ses principaux intérêts pratiques puisqu'elle conduit à des expressions analytiques fermées ou semi-fermées pour les probabilités de survie, les facteurs d'actualisation et la valorisation des CDS. Cette tractabilité réduit considérablement le recours aux méthodes de simulation et diminue le coût de calcul lors de la calibration.
+
+Par ailleurs, le modèle repose sur un nombre limité de paramètres dont chacun possède une interprétation économique claire. Cette simplicité facilite aussi bien la calibration que l'analyse de sensibilité et permet d'identifier facilement l'influence de chaque paramètre sur le prix des contrats.
+
+Enfin, le modèle peut être généralisé au cas multifactoriel. Cette extension permet de représenter simultanément plusieurs sources de risque de crédit tout en conservant la structure affine et les principales propriétés analytiques du modèle initial. Cette flexibilité constitue un avantage important lorsque les données disponibles permettent l'estimation de plusieurs facteurs.
+
+
+\section{Limites du modèle CIR}
+
+Malgré ses nombreuses qualités, le modèle CIR présente plusieurs limites qui apparaissent à la fois dans notre étude et dans la littérature.
+
+\subsection{Limites observées dans notre étude}
+
+La première limite concerne la qualité de l'ajustement des courbes de spreads. Les résultats de calibration montrent que le modèle monofactoriel reproduit correctement le niveau général des spreads mais peine à représenter leur pente. Les courbes simulées demeurent relativement plates alors que les courbes observées présentent une croissance plus importante avec la maturité. Cette limitation se traduit par des erreurs de calibration parfois significatives, notamment pour les entreprises présentant un risque de crédit élevé.
+
+La seconde limite concerne la condition de Feller. Pour certaines entreprises, les paramètres estimés ne satisfont pas la condition de Feller: $2ab > \sigma^2$. Les trajectoires simulées s'approchent alors fréquemment de zéro avant de connaître des variations importantes. Bien que ce comportement reste mathématiquement admissible, il apparaît moins convaincant d'un point de vue économique.
+
+Notre méthode d'estimation constitue également une source de limitation. L'utilisation de la méthode des moments appliquée à la distribution stationnaire suppose que le régime asymptotique fournit une approximation satisfaisante des observations disponibles. Cette hypothèse simplifie considérablement les calculs mais peut introduire un biais lorsque les séries observées restent éloignées du régime stationnaire. De plus, certains paramètres, notamment $b$ et $\delta$, sont fixés de manière exogène et ne sont pas estimés conjointement avec les autres paramètres du modèle.
+
+Enfin, le choix d'un modèle monofactoriel, motivé par la disponibilité limitée des données, réduit nécessairement la capacité du modèle à représenter simultanément plusieurs sources de risque de crédit.
+
+\subsection{Limites intrinsèques du modèle CIR}
+
+Au-delà des limites propres à notre implémentation, le modèle CIR présente plusieurs limitations plus générales.
+
+Le processus CIR est avant tout un modèle de diffusion continue. Il ne peut donc pas reproduire les ruptures brutales observées sur les marchés financiers, telles que les dégradations soudaines de notation, les faillites inattendues ou les crises financières. Les spreads de CDS présentent pourtant fréquemment ce type de comportements.
+
+La structure de volatilité imposée par le terme $\sqrt{\lambda_t}$ constitue également une hypothèse restrictive. Bien qu'elle garantisse la positivité du processus, elle ne permet pas toujours de reproduire fidèlement les fortes asymétries, les queues épaisses ou les épisodes de volatilité extrême observés sur les marchés du crédit.
+
+Le modèle suppose également que ses paramètres demeurent constants au cours du temps. Or les caractéristiques du risque de crédit évoluent naturellement avec le cycle économique, les politiques monétaires ou la situation financière des entreprises. Cette hypothèse de stationnarité limite donc la capacité du modèle à représenter les changements de régime.
+
+Par ailleurs, dans sa formulation standard, le modèle suppose généralement l'indépendance entre le processus de taux d'intérêt et celui de l'intensité de défaut. Cette hypothèse simplifie considérablement les calculs mais ne reflète pas toujours les interactions observées entre le risque de crédit, les taux d'intérêt, la liquidité ou les conditions macroéconomiques.
+
+L'extension multifactorielle permet certes d'accroître la flexibilité du modèle, mais elle requiert une augmentation importante du nombre de paramètres à estimer. La calibration devient alors plus complexe et plusieurs jeux de paramètres peuvent produire des résultats très proches, ce qui complique leur interprétation économique.
+
+Enfin, comme tout modèle paramétrique, le modèle CIR reste fortement dépendant de la qualité de la calibration. Les performances obtenues dépendent directement des données disponibles, de la méthode d'estimation retenue et des hypothèses de modélisation, ce qui peut conduire à des résultats sensiblement différents selon les jeux de données considérés.
+
+
+\section{10.4 Perspectives}
+
+Les limites identifiées dans ce mémoire ouvrent plusieurs perspectives de recherche permettant d'améliorer la modélisation du risque de crédit.
+
+Une première amélioration concerne les méthodes de calibration. L'utilisation de la méthode du maximum de vraisemblance permettrait d'exploiter l'ensemble de la dynamique temporelle des observations et de réduire les biais introduits par l'hypothèse de stationnarité. Des approches bayésiennes pourraient également être envisagées afin d'intégrer explicitement l'incertitude associée aux paramètres et de produire des estimations plus robustes, notamment lorsque les données disponibles sont limitées.
+
+Une seconde perspective consiste à revenir au modèle CIR multifactoriel en autorisant une corrélation entre les différents facteurs de risque. Une telle approche permettrait de distinguer plusieurs composantes du risque de crédit, par exemple les risques spécifiques à l'entreprise, les risques sectoriels et les risques macroéconomiques, tout en tenant compte de leurs interactions.
+
+Il serait également envisageable de remplacer les paramètres constants du modèle par des paramètres dépendant du temps. Une telle extension offrirait davantage de flexibilité pour représenter les changements de régime économique, les périodes de crise ou les modifications progressives des conditions de marché.
+
+L'introduction de processus à sauts constitue également une voie prometteuse. Les modèles de type Jump-CIR ou Affine Jump-Diffusion permettent de représenter les variations brutales des spreads provoquées par des annonces importantes, des défauts inattendus ou des événements macroéconomiques majeurs, tout en conservant une partie de la structure analytique des modèles affines.
+
+Plus généralement, des modèles affines plus riches que le CIR pourraient être étudiés. Les modèles développés par Duffie et Kan ou encore les modèles affines avec diffusion et sauts offrent une plus grande flexibilité tout en préservant une tractabilité analytique satisfaisante pour la valorisation des produits dérivés de crédit.
+
+Une autre perspective consisterait à comparer les modèles à intensité, tels que le CIR, aux modèles structurels du risque de crédit, notamment les modèles de Merton ou de Black-Cox. Contrairement aux modèles à intensité, ces derniers expliquent le défaut comme la conséquence directe de l'évolution de la valeur des actifs de l'entreprise. Une étude comparative permettrait de mieux cerner les domaines d'application respectifs de ces deux grandes familles de modèles.
+
+Enfin, les progrès récents de l'intelligence artificielle ouvrent de nouvelles perspectives pour la modélisation du risque de crédit. Les techniques d'apprentissage automatique, telles que les réseaux de neurones, les méthodes d'ensemble ou les processus gaussiens, pourraient être utilisées pour améliorer la calibration des modèles, estimer directement les paramètres à partir des données de marché ou encore approcher la dynamique des spreads sans imposer une structure paramétrique aussi restrictive que celle du modèle CIR. Le développement d'approches hybrides combinant modèles stochastiques et apprentissage automatique constitue aujourd'hui un domaine de recherche particulièrement prometteur pour la valorisation des dérivés de crédit.
+
+En définitive, le modèle CIR demeure un outil particulièrement intéressant grâce à son équilibre entre simplicité, interprétabilité et tractabilité analytique. Toutefois, l'évolution des marchés financiers et la complexité croissante des phénomènes de risque de crédit justifient le développement de modèles plus flexibles, capables de mieux représenter les interactions entre les différents facteurs de risque tout en conservant des propriétés de calcul compatibles avec les applications de valorisation et de gestion des risques.
