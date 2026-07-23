@@ -2,71 +2,71 @@
 \chapter*{Conclusion}
 \addcontentsline{toc}{chapter}{Conclusion}
 
-Ce m\'emoire s'est donn\'e pour objectif de construire un cadre coh\'erent de
-mod\'elisation et d'estimation du risque de d\'efaut \`a l'aide du mod\`ele
-Cox--Ingersoll--Ross, puis d'en \'evaluer la pertinence pour la valorisation
-des Credit Default Swaps \`a partir de donn\'ees de march\'e r\'eelles.
+Ce mémoire s'est donné pour objectif de construire un cadre cohérent de
+modélisation et d'estimation du risque de défaut à l'aide du modêle
+\gls{cir}, puis d'en évaluer la pertinence pour la valorisation
+des Credit Default Swaps à partir de données de marché réelles.
 
-Dans un premier temps, nous avons pos\'e les fondations th\'eoriques
-n\'ecessaires \`a l'\'etude : pr\'esentation des CDS et du risque de cr\'edit,
+Dans un premier temps, nous avons posé les fondations théoriques
+nécessaires à l'étude : présentation des \gls{cds} et du risque de crédit,
 rappels de calcul stochastique et de statistique. Nous avons ensuite
-d\'evelopp\'e, dans un espace probabilis\'e filtr\'e, un cadre rigoureux de
-mod\'elisation du d\'efaut fond\'e sur la notion d'intensit\'e, \'etabli la
-formule de r\'eduction permettant de ramener le calcul de flux contingents au
-d\'efaut \`a une esp\'erance sous la mesure risque-neutre, puis justifi\'e le
-choix du mod\`ele CIR au regard des propri\'et\'es de positivit\'e, de retour \`a
-la moyenne et de tractabilit\'e analytique qu'il requiert. Ce cadre nous a
-permis de d\'eriver les expressions de la jambe fixe et de la jambe de
-protection d'un CDS, et donc de son spread th\'eorique, ainsi qu'une m\'ethode
-d'estimation des param\`etres du mod\`ele par la m\'ethode des moments appliqu\'ee
-\`a la distribution stationnaire du processus.
+développé, dans un espace probabilisé filtré, un cadre rigoureux de
+modélisation du défaut fondé sur la notion d'intensité, établi la
+formule de réduction permettant de ramener le calcul de flux contingents au
+défaut à une espérance sous la mesure risque-neutre, puis justifié le
+choix du modêle \gls{cir} au regard des propriétés de positivité, de retour à
+la moyenne et de tractabilité analytique qu'il requiert. Ce cadre nous a
+permis de dériver les expressions de la jambe fixe et de la jambe de
+protection d'un \gls{cds}, et donc de son spread théorique, ainsi qu'une méthode
+d'estimation des paramêtres du modêle par la méthode des moments appliquée
+à la distribution stationnaire du processus.
 
-L'application num\'erique men\'ee sur trois entreprises pr\'esentant des profils
-de risque contrast\'es, Johnson \& Johnson, Motorola Solutions et Bombardier
-Inc, a permis de valider l'impl\'ementation du mod\`ele : les probabilit\'es de
-survie calcul\'ees analytiquement co\"incident avec celles obtenues par
-simulation de Monte-Carlo, avec des \'ecarts n\'egligeables. L'analyse de
-sensibilit\'e a par ailleurs confirm\'e le r\^ole \'economique attendu de chacun
-des param\`etres du mod\`ele : le niveau moyen de long terme $b$ gouverne le
-niveau g\'en\'eral des spreads longs, la vitesse de retour \`a la moyenne $a$
-en r\`egle la dynamique de convergence, l'intensit\'e initiale $\lambda_0$
+L'application numérique menée sur trois entreprises présentant des profils
+de risque contrastés, Johnson \& Johnson, Motorola Solutions et Bombardier
+Inc, a permis de valider l'implémentation du modêle : les probabilités de
+survie calculées analytiquement coïncident avec celles obtenues par
+simulation de Monte-Carlo, avec des écarts négligeables. L'analyse de
+sensibilité a par ailleurs confirmé le rôle économique attendu de chacun
+des paramêtres du modêle : le niveau moyen de long terme $b$ gouverne le
+niveau général des spreads longs, la vitesse de retour à la moyenne $a$
+en rêgle la dynamique de convergence, l'intensité initiale $\lambda_0$
 domine le court terme, et le taux de recouvrement $\delta$ produit un effet
-d'\'echelle quasi proportionnel sur l'ensemble de la courbe.
+d'échelle quasi proportionnel sur l'ensemble de la courbe.
 
-Ces r\'esultats confirment que le mod\`ele CIR constitue un outil pertinent et
-\'economiquement interpr\'etable pour une premi\`ere mod\'elisation du risque de
-cr\'edit. Il pr\'esente cependant des limites significatives, qui sont
-apparues clairement dans notre \'etude. D'une part, le mod\`ele monofactoriel
-retenu peine \`a reproduire la structure par termes observ\'ee sur le
-march\'e : les courbes de spreads simul\'ees restent relativement plates,
-tandis que les courbes observ\'ees, en particulier pour les entit\'es les plus
-risqu\'ees comme Bombardier, pr\'esentent une pente nettement marqu\'ee, ce dont
-t\'emoignent les erreurs quadratiques moyennes obtenues. D'autre part, pour
-certaines entit\'es, les param\`etres calibr\'es ne satisfont pas la condition
-de Feller, ce qui se traduit par des trajectoires simul\'ees visitant
-fr\'equemment le voisinage de z\'ero avant de conna\^itre des variations
-brutales, un comportement math\'ematiquement admissible mais moins convaincant
-d'un point de vue \'economique. Plus g\'en\'eralement, le caract\`ere continu du
-processus CIR, l'hypoth\`ese de param\`etres constants dans le temps et
-l'hypoth\`ese d'ind\'ependance entre taux d'int\'er\^et et intensit\'e de d\'efaut
-constituent autant de limites intrins\`eques au mod\`ele.
+Ces résultats confirment que le modêle \gls{cir} constitue un outil pertinent et
+économiquement interprétable pour une premiêre modélisation du risque de
+crédit. Il présente cependant des limites significatives, qui sont
+apparues clairement dans notre étude. D'une part, le modêle monofactoriel
+retenu peine à reproduire la structure par termes observée sur le
+marché : les courbes de spreads simulées restent relativement plates,
+tandis que les courbes observées, en particulier pour les entités les plus
+risquées comme Bombardier, présentent une pente nettement marquée, ce dont
+témoignent les erreurs quadratiques moyennes obtenues. D'autre part, pour
+certaines entités, les paramêtres calibrés ne satisfont pas la condition
+de Feller, ce qui se traduit par des trajectoires simulées visitant
+fréquemment le voisinage de zéro avant de connaître des variations
+brutales, un comportement mathématiquement admissible mais moins convaincant
+d'un point de vue économique. Plus généralement, le caractêre continu du
+processus \gls{cir}, l'hypothêse de paramêtres constants dans le temps et
+l'hypothêse d'indépendance entre taux d'intérêt et intensité de défaut
+constituent autant de limites intrinsêques au modêle.
 
 Plusieurs pistes permettraient de prolonger ce travail. Sur le plan de
-l'estimation, le recours \`a la m\'ethode du maximum de vraisemblance ou \`a des
-approches bay\'esiennes permettrait d'exploiter davantage la dynamique
-temporelle des observations, plut\^ot que de s'appuyer sur la seule
-distribution stationnaire du processus. Sur le plan de la mod\'elisation,
-l'introduction de param\`etres d\'ependant du temps ou de composantes \`a sauts,
-comme dans les mod\`eles de type Jump-CIR, offrirait une plus grande
-flexibilit\'e pour repr\'esenter les changements de r\'egime et les variations
-brutales de spread. Enfin, le recours \`a des techniques d'apprentissage
-automatique, en compl\'ement ou en substitution des approches param\'etriques
-classiques, constitue une voie de recherche prometteuse pour am\'eliorer la
-calibration et la valorisation des d\'eriv\'es de cr\'edit.
+l'estimation, le recours à la méthode du maximum de vraisemblance ou à des
+approches bayésiennes permettrait d'exploiter davantage la dynamique
+temporelle des observations, plutot que de s'appuyer sur la seule
+distribution stationnaire du processus. Sur le plan de la modélisation,
+l'introduction de paramêtres dépendant du temps ou de composantes à sauts,
+comme dans les modêles de type Jump-\gls{cir}, offrirait une plus grande
+flexibilité pour représenter les changements de régime et les variations
+brutales de spread. Enfin, le recours à des techniques d'apprentissage
+automatique, en complément ou en substitution des approches paramétriques
+classiques, constitue une voie de recherche prometteuse pour améliorer la
+calibration et la valorisation des dérivés de crédit.
 
-En d\'efinitive, ce m\'emoire montre que le mod\`ele CIR, par son \'equilibre
-entre simplicit\'e, interpr\'etabilit\'e \'economique et tractabilit\'e
-analytique, demeure un point de d\'epart pertinent pour la mod\'elisation du
-risque de cr\'edit, tout en soulignant la n\'ecessit\'e de d\'evelopper des
-mod\`eles plus riches pour rendre pleinement compte de la complexit\'e des
-march\'es du cr\'edit contemporains.
+En définitive, ce mémoire montre que le modêle \gls{cir}, par son équilibre
+entre simplicité, interprétabilité économique et tractabilité
+analytique, demeure un point de départ pertinent pour la modélisation du
+risque de crédit, tout en soulignant la nécessité de développer des
+modêles plus riches pour rendre pleinement compte de la complexité des
+marchés du crédit contemporains.

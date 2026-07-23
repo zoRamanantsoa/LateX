@@ -36,7 +36,7 @@ Nous utilisons le jeu de données suivant sur les \gls{cds}, issu de la platefor
     \footnotesize \textit{Source :} Jeu de données Kaggle "Crédit Default Swap CDS Prices" (Debashish, 2021). \\ Extrait des 5 premières lignes.
 \end{table}
 
-Dans notre étude, nous considérons les trois entités de référence suivantes pour calibrer le modèle CIR: Johnson \& Johnson, Motorola Solutions, et Bombardier Inc.
+Dans notre étude, nous considérons les trois entités de référence suivantes pour calibrer le modèle \gls{cir}: Johnson \& Johnson, Motorola Solutions, et Bombardier Inc.
 
 Ce choix se justifie par la volonté de tester le modèle sur des profils de risque de crédit variés. Johnson \& Johnson représente un profil de haute qualité de crédit (son spread médian est de 24.775 bps); puis Motorolla Solutions est considéré comme ayant un risque intermédiaire (son spread médian est de 90.85 bps); et enfin, Bombardier Inc est une entité à haut rendement, c'est-à-dire à haut risque (son spread médian est de 550.51 bps). \footnote{En l'absence de notations officielles portant sur les agences dans notre jeu de données, nous nous basons sur le niveau médian du spread durant la période pour catégoriser le niveau du risque pour les entités}
 
@@ -105,9 +105,9 @@ On obtient les valeurs suivantes pour la moyenne long terme $b$:
 
 Pour l'implémentation numérique du modèle, nous avons utilisé le langage Python et les librairies \texttt{NumPy} et \texttt{Scipy} pour les calculs numériques. Nous avons également utilisé \texttt{Pandas} pour la manipulation des données et \texttt{Matplotlib} pour la visualisation des résultats.
 
-Dans un premier temps, nous avons appliqué la méthodologie développée dans la partie précédente afin de construire les intensités de défaut et estimer les paramètres du modèle CIR pour les trois entités de référence considérées.
+Dans un premier temps, nous avons appliqué la méthodologie développée dans la partie précédente afin de construire les intensités de défaut et estimer les paramètres du modèle \gls{cir} pour les trois entités de référence considérées.
 
-Dans un second temps, nous avons simulé le processus CIR, calculé les probabilités de survie puis valorisé les contrats CDS correspondants, afin d'évaluer la capacité du modèle à reproduire les données de marché.
+Dans un second temps, nous avons simulé le processus \gls{cir}, calculé les probabilités de survie puis valorisé les contrats \gls{cds} correspondants, afin d'évaluer la capacité du modèle à reproduire les données de marché.
 
 Enfin, nous faisons une analyse de sensibilité pour étudier l'influence des principaux paramètres du modèle sur la courbe des spreads. Pour ce faire, nous avons pris l'entité Johnson \& Johnson (JNJ) à titre d'illustration (la démarche étant identique pour les deux autres entités).
 
@@ -117,17 +117,17 @@ Le code source complet de l'implémentation est disponible dans le dépôt GitHu
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[ node distance=1.1cm, every node/.style={draw, rounded corners, align=center, minimum width=7cm, minimum height=0.9cm, fill=gray!10}, >=latex]
-        \node (data) {Importation des données CDS};
+        \node (data) {Importation des données \gls{cds}};
 
         \node (hazard) [below=of data] {Construction des intensités de défaut};
 
-        \node (calib) [below=of hazard] {Calibration des paramètres du modèle CIR \\ ($a$, $b$, $\sigma$, $\lambda_0$)};
+        \node (calib) [below=of hazard] {Calibration des paramètres du modèle \gls{cir} \\ ($a$, $b$, $\sigma$, $\lambda_0$)};
 
-        \node (simu) [below=of calib] {Simulation du processus CIR};
+        \node (simu) [below=of calib] {Simulation du processus \gls{cir}};
 
         \node (survie) [below=of simu] {Calcul des probabilités de survie};
 
-        \node (pricing) [below=of survie] {Valorisation des CDS \\ et calcul de la courbe des spreads};
+        \node (pricing) [below=of survie] {Valorisation des \gls{cds} \\ et calcul de la courbe des spreads};
 
         \node (valid) [below=of pricing] {Validation du modèle \\ (RMSE et comparaison avec les données de marché)};
 
@@ -152,7 +152,7 @@ Le code source complet de l'implémentation est disponible dans le dépôt GitHu
 
 \section{Résultats}
 
-Nous présentons ci-dessous les résultats de la calibration du modèle CIR pour les trois entités de référence considérées. Les paramètres estimés sont résumés dans le tableau \ref{tab:calibration_cir}.
+Nous présentons ci-dessous les résultats de la calibration du modèle \gls{cir} pour les trois entités de référence considérées. Les paramètres estimés sont résumés dans le tableau \ref{tab:calibration_cir}.
 
 \begin{table}[H]
     \centering
@@ -226,7 +226,7 @@ Nous effectuons un test de Monte--Carlo afin de vérifier la cohérence de l'imp
 
 \subsection{Qualité d'ajustement économique}
 
-Dans cette section, nous comparons les courbes de spreads observées sur le marché avec celles prédites par le modèle CIR. L'objectif est d'évaluer la capacité du modèle à reproduire les données de marché et à fournir des estimations fiables. Dans notre cas, nous constatons que la courbe de spreads prédite par le modèle est quasiment plate alors que la courbe observée sur le marché est croissante, ce qui est en accord avec les valeurs du RMSE. Le modèle CIR ne parvient donc pas à reproduire l'évolution du spread en fonction de la maturité, ce qui constitue une limite importante du modèle.
+Dans cette section, nous comparons les courbes de spreads observées sur le marché avec celles prédites par le modèle \gls{cir}. L'objectif est d'évaluer la capacité du modèle à reproduire les données de marché et à fournir des estimations fiables. Dans notre cas, nous constatons que la courbe de spreads prédite par le modèle est quasiment plate alors que la courbe observée sur le marché est croissante, ce qui est en accord avec les valeurs du RMSE. Le modèle \gls{cir} ne parvient donc pas à reproduire l'évolution du spread en fonction de la maturité, ce qui constitue une limite importante du modèle.
 
 \begin{figure}[H]
     \centering
@@ -252,7 +252,7 @@ Dans cette section, nous comparons les courbes de spreads observées sur le marc
 
 \subsection{Simulations des trajectoires de l'intensité de défaut}
 
-Intéressons nous maintenant à la simulation des trajectoires de l'intensité de défaut pour les trois entités considérées. Nous avons simulé 15 trajectoires pour chaque entité, en utilisant les paramètres calibrés du modèle CIR. Les résultats sont présentés dans les figures \ref{fig:simulation_jnj}, \ref{fig:simulation_msi} et \ref{fig:simulation_bbdbcn}.
+Intéressons nous maintenant à la simulation des trajectoires de l'intensité de défaut pour les trois entités considérées. Nous avons simulé 15 trajectoires pour chaque entité, en utilisant les paramètres calibrés du modèle \gls{cir}. Les résultats sont présentés dans les figures \ref{fig:simulation_jnj}, \ref{fig:simulation_msi} et \ref{fig:simulation_bbdbcn}.
 
 \begin{figure}[H]
     \centering
@@ -279,14 +279,14 @@ Le comportement est visuellement très différent : les trajectoires sont beauco
     \label{fig:simulation_bbdbcn}
 \end{figure}
 
-Les trajectoires démarrent toutes autour de 590 bps et connaissent d'emblée une forte dispersion précoce : certaines culminent à plus de 5 000 bps tandis que la majorité des autres redescendent et stagnent dans une bande basse pendant une grande partie de la simulation. Ce contraste entre une masse de trajectoires basses et quelques trajectoires extrêmes illustre bien le caractère asymétrique de la distribution du processus CIR — un émetteur déjà fragile a une probabilité non négligeable de voir son risque de crédit s'envoler brutalement, alors que la zone proche de 0 contient mécaniquement les scénarios favorables.
+Les trajectoires démarrent toutes autour de 590 bps et connaissent d'emblée une forte dispersion précoce : certaines culminent à plus de 5 000 bps tandis que la majorité des autres redescendent et stagnent dans une bande basse pendant une grande partie de la simulation. Ce contraste entre une masse de trajectoires basses et quelques trajectoires extrêmes illustre bien le caractère asymétrique de la distribution du processus \gls{cir} — un émetteur déjà fragile a une probabilité non négligeable de voir son risque de crédit s'envoler brutalement, alors que la zone proche de 0 contient mécaniquement les scénarios favorables.
 
 \medskip
 
 Ainsi, nous pouvons déduire les points suivants :
 
 \begin{itemize}
-    \item aucune trajectoires ne devient négative, ce qui est conforme à la nature du processus CIR
+    \item aucune trajectoires ne devient négative, ce qui est conforme à la nature du processus \gls{cir}
     \item plus l'entité est risquée, plus le processus « visite » le voisinage de zéro et plus les trajectoires sont dispersées et agitées, ce qui est conforme à la violation de la condition de Feller
     \item l'amplitude des sauts croît avec le niveau courant de $\lambda_t$, ce qui est conforme à la nature multiplicative du terme de diffusion
 \end{itemize}
@@ -294,7 +294,7 @@ Ainsi, nous pouvons déduire les points suivants :
 
 \section{Analyse de sensibilité}
 
-Dans cette section, nous analysons l'impact des variations des paramètres du modèle CIR sur la courbe des spreads. Nous étudions individuellement l'effet de chaque paramètre sur la courbe afin de comprendre leur influence sur celle-ci. Dans cette analyse, nous considérons l'entité Johnson \& Johnson (JNJ) à titre d'illustration, mais la démarche est identique pour les deux autres entités.
+Dans cette section, nous analysons l'impact des variations des paramètres du modèle \gls{cir} sur la courbe des spreads. Nous étudions individuellement l'effet de chaque paramètre sur la courbe afin de comprendre leur influence sur celle-ci. Dans cette analyse, nous considérons l'entité Johnson \& Johnson (JNJ) à titre d'illustration, mais la démarche est identique pour les deux autres entités.
 
 \subsection{Sensibilité à la moyenne à long terme}
 
@@ -358,7 +358,7 @@ On a un effet quasi proportionnel et parallèle : le spread scale essentiellemen
 
 \subsection{Synthèse de l'analyse de sensibilité}
 
-Les cinq paramètres jouent des rôles bien différenciés et complémentaires, ce qui valide a posteriori le choix du modèle CIR pour cet usage :
+Les cinq paramètres jouent des rôles bien différenciés et complémentaires, ce qui valide a posteriori le choix du modèle \gls{cir} pour cet usage :
 
 \begin{itemize}
     \item $b$ : domine le long terme, quasi neutre à court terme — reflète le niveau de risque structurel/permanent anticipé par le marché.
@@ -374,7 +374,7 @@ C'est exactement la complémentarité attendue d'un modèle de structure par ter
 
 \chapter{Discussion générale et limite du modèle}
 
-L'implémentation numérique du chapitre précédent montre que le modèle CIR constitue un cadre cohérent pour représenter la dynamique d'une intensité de défaut et valoriser des contrats de Credit Default Swaps.
+L'implémentation numérique du chapitre précédent montre que le modèle \gls{cir} constitue un cadre cohérent pour représenter la dynamique d'une intensité de défaut et valoriser des contrats de Credit Default Swaps.
 
 Le premier résultat important concerne la validation de l'implémentation numérique. Les probabilités de survie obtenues par la formule analytique sont en accord avec celles estimées par simulation de Monte-Carlo, avec des écarts très faibles pour les trois entreprises étudiées. Cette concordance confirme la validité des expressions analytiques dérivées dans les chapitres précédents ainsi que la bonne implémentation du modèle.
 
@@ -384,12 +384,12 @@ Les simulations montrent également que le modèle reproduit plusieurs caractér
 
 En revanche, l'ajustement des courbes de spreads met en évidence certaines insuffisances. Si le modèle reproduit correctement le niveau moyen des spreads, il peine à restituer leur structure par termes observée sur le marché. Les courbes théoriques obtenues apparaissent relativement plates alors que les spreads observés présentent généralement une croissance plus marquée avec la maturité. Les erreurs de calibration obtenues, notamment pour les entreprises les plus risquées, montrent ainsi que le modèle monofactoriel retenu ne possède pas une flexibilité suffisante pour représenter l'ensemble de la dynamique observée sur les marchés du crédit.
 
-Ainsi, les résultats obtenus confirment que le modèle CIR constitue un outil pertinent pour une première modélisation du risque de crédit, mais qu'il demeure limité lorsqu'il s'agit de reproduire fidèlement les comportements complexes observés sur les marchés financiers.
+Ainsi, les résultats obtenus confirment que le modèle \gls{cir} constitue un outil pertinent pour une première modélisation du risque de crédit, mais qu'il demeure limité lorsqu'il s'agit de reproduire fidèlement les comportements complexes observés sur les marchés financiers.
 
 
 \section{Forces du modèle CIR}
 
-Le modèle de CIR possède plusieurs propriétés qui expliquent son succès dans la modélisation des taux d'intérêt et des intensités de défaut.
+Le modèle de \gls{cir} possède plusieurs propriétés qui expliquent son succès dans la modélisation des taux d'intérêt et des intensités de défaut.
 
 La première qualité du modèle réside dans la garantie de non-négativité du processus. Une intensité de défaut représentant une probabilité instantanée de défaut, elle ne peut prendre que des valeurs positives. Grâce au terme de diffusion proportionnel à la racine carrée du processus, le modèle respecte naturellement cette contrainte, tandis que la condition de Feller garantit même la stricte positivité du processus.
 
@@ -397,7 +397,7 @@ Le modèle présente également une propriété naturelle de retour vers la moye
 
 Un autre avantage important réside dans la structure même de la diffusion. La volatilité étant proportionnelle à $\sqrt{\lambda_t}$, les fluctuations de l'intensité augmentent naturellement lorsque le risque de défaut devient plus élevé. Cette caractéristique permet de représenter des variations de prix réalistes, ce que les modèles à volatilité constante ne savent pas faire.
 
-Le modèle CIR appartient également à la famille des modèles affines. Cette propriété constitue l'un de ses principaux intérêts pratiques puisqu'elle conduit à des expressions analytiques fermées ou semi-fermées pour les probabilités de survie, les facteurs d'actualisation et la valorisation des CDS. Cette tractabilité réduit considérablement le recours aux méthodes de simulation et diminue le coût de calcul lors de la calibration.
+Le modèle \gls{cir} appartient également à la famille des modèles affines. Cette propriété constitue l'un de ses principaux intérêts pratiques puisqu'elle conduit à des expressions analytiques fermées ou semi-fermées pour les probabilités de survie, les facteurs d'actualisation et la valorisation des \gls{cds}. Cette tractabilité réduit considérablement le recours aux méthodes de simulation et diminue le coût de calcul lors de la calibration.
 
 Par ailleurs, le modèle repose sur un nombre limité de paramètres dont chacun possède une interprétation économique claire. Cette simplicité facilite aussi bien la calibration que l'analyse de sensibilité et permet d'identifier facilement l'influence de chaque paramètre sur le prix des contrats.
 
@@ -406,7 +406,7 @@ Enfin, le modèle peut être généralisé au cas multifactoriel. Cette extensio
 
 \section{Limites du modèle CIR}
 
-Malgré ses nombreuses qualités, le modèle CIR présente plusieurs limites qui apparaissent à la fois dans notre étude et dans le cadre générale.
+Malgré ses nombreuses qualités, le modèle \gls{cir} présente plusieurs limites qui apparaissent à la fois dans notre étude et dans le cadre générale.
 
 \subsection{Limites observées dans notre étude}
 
@@ -420,9 +420,9 @@ Enfin, le choix d'un modèle monofactoriel, motivé par la disponibilité limit�
 
 \subsection{Limites intrinsèques du modèle CIR}
 
-Au-delà des limites propres à notre implémentation, le modèle CIR présente plusieurs limitations plus générales.
+Au-delà des limites propres à notre implémentation, le modèle \gls{cir} présente plusieurs limitations plus générales.
 
-Le processus CIR est avant tout un modèle de diffusion continue. Il ne peut donc pas reproduire les ruptures brutales observées sur les marchés financiers, telles que les dégradations soudaines de notation, les faillites inattendues ou les crises financières.
+Le processus \gls{cir} est avant tout un modèle de diffusion continue. Il ne peut donc pas reproduire les ruptures brutales observées sur les marchés financiers, telles que les dégradations soudaines de notation, les faillites inattendues ou les crises financières.
 
 La structure de volatilité imposée par le terme $\sqrt{\lambda_t}$ constitue également une hypothèse restrictive. Bien qu'elle garantisse la positivité du processus, elle ne permet pas toujours de reproduire fidèlement les fortes asymétries, les queues épaisses ou les épisodes de volatilité extrême observés sur les marchés du crédit.
 
@@ -432,7 +432,7 @@ Par ailleurs, dans sa formulation standard, le modèle suppose généralement l'
 
 L'extension multifactorielle permet certes d'accroître la flexibilité du modèle, mais elle requiert une augmentation importante du nombre de paramètres à estimer. La calibration devient alors plus complexe et plusieurs jeux de paramètres peuvent produire des résultats très proches, ce qui complique leur interprétation économique.
 
-Enfin, comme tout modèle paramétrique, le modèle CIR reste fortement dépendant de la qualité de la calibration. Les performances obtenues dépendent directement des données disponibles, de la méthode d'estimation retenue et des hypothèses de modélisation, ce qui peut conduire à des résultats sensiblement différents selon les jeux de données considérés.
+Enfin, comme tout modèle paramétrique, le modèle \gls{cir} reste fortement dépendant de la qualité de la calibration. Les performances obtenues dépendent directement des données disponibles, de la méthode d'estimation retenue et des hypothèses de modélisation, ce qui peut conduire à des résultats sensiblement différents selon les jeux de données considérés.
 
 
 \section{10.4 Perspectives}
@@ -443,8 +443,8 @@ Une première amélioration concerne les méthodes de calibration. L'utilisation
 
 Une seconde perspective consiste à remplacer les paramètres constants du modèle par des paramètres dépendant du temps. Une telle extension offrirait davantage de flexibilité pour représenter les changements de régime économique, les périodes de crise ou les modifications progressives des conditions de marché.
 
-L'introduction de processus à sauts constitue également une voie prometteuse. Les modèles de type Jump-CIR ou Affine Jump-Diffusion permettent de représenter les variations brutales des spreads provoquées par des annonces importantes, des défauts inattendus ou des événements macroéconomiques majeurs, tout en conservant une partie de la structure analytique des modèles affines.
+L'introduction de processus à sauts constitue également une voie prometteuse. Les modèles de type Jump-\gls{cir} ou Affine Jump-Diffusion permettent de représenter les variations brutales des spreads provoquées par des annonces importantes, des défauts inattendus ou des événements macroéconomiques majeurs, tout en conservant une partie de la structure analytique des modèles affines.
 
-Enfin, les progrès récents de l'intelligence artificielle ouvrent de nouvelles perspectives pour la modélisation du risque de crédit. Les techniques d'apprentissage automatique, telles que les réseaux de neurones, les méthodes d'ensemble ou les processus gaussiens, pourraient être utilisées pour améliorer la calibration des modèles, estimer directement les paramètres à partir des données de marché ou encore approcher la dynamique des spreads sans imposer une structure paramétrique aussi restrictive que celle du modèle CIR. Le développement d'approches hybrides combinant modèles stochastiques et apprentissage automatique constitue aujourd'hui un domaine de recherche particulièrement prometteur pour la valorisation des dérivés de crédit.
+Enfin, les progrès récents de l'intelligence artificielle ouvrent de nouvelles perspectives pour la modélisation du risque de crédit. Les techniques d'apprentissage automatique, telles que les réseaux de neurones, les méthodes d'ensemble ou les processus gaussiens, pourraient être utilisées pour améliorer la calibration des modèles, estimer directement les paramètres à partir des données de marché ou encore approcher la dynamique des spreads sans imposer une structure paramétrique aussi restrictive que celle du modèle \gls{cir}. Le développement d'approches hybrides combinant modèles stochastiques et apprentissage automatique constitue aujourd'hui un domaine de recherche particulièrement prometteur pour la valorisation des dérivés de crédit.
 
-En définitive, le modèle CIR demeure un outil particulièrement intéressant grâce à son équilibre entre simplicité, interprétabilité et tractabilité analytique. Toutefois, l'évolution des marchés financiers et la complexité croissante des phénomènes de risque de crédit justifient le développement de modèles plus flexibles, capables de mieux représenter les interactions entre les différents facteurs de risque tout en conservant des propriétés de calcul compatibles avec les applications de valorisation et de gestion des risques.
+En définitive, le modèle \gls{cir} demeure un outil particulièrement intéressant grâce à son équilibre entre simplicité, interprétabilité et tractabilité analytique. Toutefois, l'évolution des marchés financiers et la complexité croissante des phénomènes de risque de crédit justifient le développement de modèles plus flexibles, capables de mieux représenter les interactions entre les différents facteurs de risque tout en conservant des propriétés de calcul compatibles avec les applications de valorisation et de gestion des risques.

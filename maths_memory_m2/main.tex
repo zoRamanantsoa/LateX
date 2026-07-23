@@ -39,6 +39,10 @@
 
 \pagenumbering{roman}
 
+% --- Remerciements ---
+\include{remerciements}
+\newpage
+
 % --- Table des matières ---
 {
 \begin{spacing}{0.99}
@@ -47,11 +51,20 @@
 }
 \newpage
 
+% --- Liste des acronymes ---
+{
+\begin{spacing}{0.99}
+\printglossary[type=\acronymtype, title=Liste des acronymes]
+\addcontentsline{toc}{chapter}{Liste des acronymes}
+\end{spacing}
+}
+\newpage
+
 % --- Liste des tableaux ---
 {
 \begin{spacing}{0.99}
 \listoftables
-\addcontentsline{toc}{chapter}{Liste des tableaux}  % Pour report/book
+\addcontentsline{toc}{chapter}{Liste des tableaux}
 \end{spacing}
 }
 \newpage
@@ -60,7 +73,7 @@
 {
 \begin{spacing}{0.99}
 \listoffigures
-\addcontentsline{toc}{chapter}{Liste des figures}  % Pour report/book
+\addcontentsline{toc}{chapter}{Liste des figures}
 \end{spacing}
 }
 \newpage
@@ -81,8 +94,6 @@
 
 % --- Conclusion ---
 \include{conclusion}
-
-\printglossary[type=\acronymtype,title=Liste des abréviations]
 
 \printbibliography
 
